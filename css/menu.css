@@ -1,0 +1,113 @@
+#barraMenu {
+	position:absolute; 
+	top:0px; 
+	left:0px; 
+	width:100%; 
+	height:17px; 
+	background-color: #336699; 
+	text-align:right; 
+	cursor:default; 
+	font-family:serif; 
+	font-weight:normal; 
+	font-style:normal; 
+	font-size:11
+}
+A {
+	text-decoration: none; 
+	color: black
+}
+
+#arxiu, #tutoria, #incidencies, #avaluacio, #opcions, #ajuda {
+	position:absolute; 
+	background-color: #336699; 
+	cursor:default; 
+	font-family:serif; 
+	font-weight:normal; 
+	font-style:normal; 
+	font-size:14; 
+	color:#ffffff; 
+	text-align:center; 
+	vertical-align:middle
+}
+
+#colArxiu, #colTutoria, #colIncidencies, #colAvaluacio, #colOpcions, #colAjuda /*<?=(privilegis('-', '-','-')?", #subConfiguracio ":"")?>*/ {
+	position:absolute; 
+	background-color: #aabbcc; 
+	cursor:pointer; 
+	visibility:hidden; 
+	font-family:serif; 
+	font-weight:normal; 
+	font-style:normal; 
+	font-size:14; 
+	color:#000000; 
+	text-align:left; 
+	vertical-align:middle; 
+	z-index:2
+}
+#colArxiuOmbra, #colTutoriaOmbra, #colIncidenciesOmbra, #colAvaluacioOmbra, #colOpcionsOmbra, #colAjudaOmbra /*<?=(privilegis('-', '-','-')?", #subConfiguracioOmbra ":"")?>*/
+{
+	position:absolute; 
+	background-color: #000000; 
+	cursor:auto; 
+	visibility:hidden; 
+	z-index:1
+}
+
+#arxiu
+{top:0px; height:17px; left:2px; width:40px}
+#tutoria
+{top:0px; height:17px; left:50px; width:54px}
+#incidencies
+{top:0px; height:17px; left:110px; width:82px}
+#avaluacio
+{top:0px; height:17px; left:196px; width:72px}
+#opcions
+{top:0px; height:17px; left:270px; width:70px}
+#ajuda
+{top:0px; height:17px; left:350px; width:50px}
+
+
+#colArxiu       
+{top:17px; left:0px; width:120px; height:42px}
+#colArxiuOmbra       
+{top:23px; left:6px; width:120px; height:42px}
+
+#colTutoria     
+{top:17px; left:50px; width:155px; height:147px}
+#colTutoriaOmbra     
+{top:23px; left:56px; width:155px; height:147px}
+
+/*bingen 21px * nombre de files*/
+#colIncidencies 
+{top:17px; left:110px; width:185px; height:189px}
+#colIncidenciesOmbra 
+{top:23px; left:116px; width:185px; height:189px}
+
+#colAvaluacio 
+{top:17px; left:196px; width:165px; height:105px}
+#colAvaluacioOmbra 
+{top:23px; left:202px; width:165px; height:105px}
+
+#colOpcions 
+{top:17px; left:270px; width:153px; height:42px}
+#colOpcionsOmbra 
+{top:23px; left:276px; width:153px; height:42px}
+
+#colAjuda 
+{top:17px; left:350px; width:110px; height:42px}
+#colAjudaOmbra 
+{top:23px; left:356px; width:110px; height:42px}
+
+/*<?php
+if (privilegis('-', '-','-')) {
+	print("#subConfiguracio 
+	{top:23px; left:421px; width:150px; height:189px}\n");
+	print("#subConfiguracioOmbra 
+	{top:29px; left:427px; width:150px; height:189px} ");
+}
+?>*/
+
+.elementActiu
+{background-color: transparent; padding: 2px 2px 2px 2px; border-style:solid; border-color:white; border-width: 0px 1px 1px 1px}
+.elementNoActiu
+{background-color: #c0c0c0; padding: 2px 2px 2px 2px; border-style:solid; border-color:white; border-width: 0px 1px 1px 1px; color:#000000; cursor:default}

@@ -1,0 +1,16 @@
+- More AJAX, instead of reloading and...
+- ..avoid so many submits
+- New pagination for tables, like ...
+- Translations, avoid text hardcoded
+- Get rid of iframes
+- CSS everywhere
+- New style (CSS)
+- XHTML validation
+- div instead of tables
+- More use of functions
+- More comments! (and in english)
+
+----------
+
+- join cons_alum.php and cons_alumpares.php 
+- merge informeincid.php, nou_informe_incid.php and regtut.php using functions (for INSERT and UPDATE informeincid)

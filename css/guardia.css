@@ -1,0 +1,14 @@
+.intro {
+  border: 1px solid;
+  width: 600px;
+  margin: 3px;
+}
+
+.taula {
+  float: left;
+  margin: 4px;
+}
+
+table, td, th {
+  border: 1px solid;
+}
