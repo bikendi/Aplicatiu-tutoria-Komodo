@@ -91,6 +91,8 @@ if(!$acces) {
   exit;
 }
 
+$localitzacio = "ca";
+
 $ref_incidencia= "F,R,E,A";
 $ref_incidenciaj= "F,FJ,R,RJ,E,A";
 $ref_incidencia_text= "Faltes, Retards, Expulsions, Anotacions";

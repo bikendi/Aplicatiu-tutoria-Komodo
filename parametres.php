@@ -136,6 +136,19 @@ function carregaLogoCentre()
 }
 
 </script>
+
+<link type="text/css" href="jQuery-UI/css/ui-lightness/jquery-ui.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="jQuery-UI/js/jquery.min.js"></script>
+<script type="text/javascript" src="jQuery-UI/js/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="jQuery-UI/development-bundle/ui/i18n/jquery.ui.datepicker-<?php echo $localitzacio ?>.js"></script>
+<script>
+	$(function() {
+		$( ".datepicker" ).datepicker({ 
+		      dateFormat: "D, d-m-yy",
+		      }, $.datepicker.regional[ "<?php echo $localitzacio ?>" ]);
+	});
+</script>
+
 </head>
 
 <body  bgcolor="#ccdd88" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="horaAra();">
@@ -251,9 +264,12 @@ print("
 		</td>
 	</tr>");
 print("<tr><td align='right'>Curs acad&egrave;mic: &nbsp;</td><td><input type='text' name='cursacademi' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.cursacademi.value='".addslashes($fila[8])."';</script></td></tr>\n");
-print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); alert(this.form.name + \".\" + camp.name); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."' onClick='camp=event.target || event.srcElement; blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+// print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+// print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); alert(this.form.name + \".\" + camp.name); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+// print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."' onClick='camp=event.target || event.srcElement; blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."'></td></tr>\n");
 print("<tr><td align='right'>Web centre: &nbsp;</td><td><input type='text' name='webcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.webcentr.value='".addslashes($fila[10])."';</script>\n");
 print("<tr><td align='right'>Email centre: &nbsp;</td><td><input type='text' name='emailcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila[11])."';</script>");
 print("<tr><td align='right'>Retards ESO</td><td><input type='text' name='retard_ESO' size='10' maxlength='10' value='$fila[31]'> Reset trimestral <input type='checkbox' name='rst_ESO' value='1'".(($fila[32]=="1")?" checked":"").">");
