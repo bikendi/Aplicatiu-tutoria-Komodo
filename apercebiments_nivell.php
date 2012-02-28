@@ -26,6 +26,7 @@
 @include("linkbd.inc.php");
 @include("comu.php");
 @include("comu.js.php");
+require_once $lib . 'mail.php';
 panyacces("Tutor");
 
 echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
@@ -79,56 +80,57 @@ if(isset($nouapercebiment)&&$nouapercebiment!='') {
 		echo "<script language='JavaScript'> genera_apercebiment_pdf( '$nouapercebiment', '$tipusapercebiment', '$quantnouapercebiment', '". addslashes($textnouapercebiment_1) ."' );</script>";
 
 	// cerquem e-mail, sms i nom de l'alumne
-	$consulta = "SELECT telfSMS, email, identificador FROM $bdtutoria.$tbl_prefix"."pares WHERE refalumne='$nouapercebiment'";
+	$consulta = "SELECT telfSMS, identificador FROM $bdtutoria.$tbl_prefix"."pares WHERE refalumne='$nouapercebiment'";
 	$conjunt_resultant = mysql_query($consulta, $connect);
-	$fila=mysql_fetch_row($conjunt_resultant);
+	$fila=mysql_fetch_object($conjunt_resultant);
 	$consulta = "SELECT COGNOM_ALU, COGNOM2_AL, NOM_ALUM, PLA_ESTUDI, CURS, GRUP FROM $bdtutoria.$tbl_prefix"."Estudiants WHERE numero_mat='$nouapercebiment'";
 	//echo "<p>Consulta: $consulta</p>\n";
 	$conjunt_resultant = mysql_query($consulta, $connect);
 	$fila2=mysql_fetch_row($conjunt_resultant);
-	$pares = "$fila[2]|Pares de $fila2[0] $fila2[1], $fila2[2] ($fila2[4]$fila2[3]$fila2[5])";
+	$pares = "$fila->identificador|Pares de $fila2[0] $fila2[1], $fila2[2] ($fila2[4]$fila2[3]$fila2[5])";
 	//print_r($fila);
 
 	// enviem e-mail
-	if( !empty($fila[1]) ) {
-		$email_pares = $fila[1];
-		$from = '"'. $sess_nomreal .'" <'. $sess_user .'@iesmediterrania.cat>';
-		$message = "El seu fill/a $fila2[2] ha rebut un apercebiment que hauria de retornar signat.\n\n";
-		if( $tipusapercebiment == 'F' ) {
-			$message .= "El motiu de l'apercebiment és l'acumulació de ". $quantnouapercebiment ." faltes injustificades.\n\n";
-		} elseif( $tipusapercebiment == 'R' ) { // retards
-			$message .= "El motiu de l'apercebiment és l'acumulació de ". $quantnouapercebiment ." retards.\n\n";
-		} elseif( $tipusapercebiment == 'CC' ) { // comissió de convivència
-			$message .= "El motiu de l'apercebiment és la reunió de la comissió de convivència.\n\n";
-		} elseif( $tipusapercebiment == 'DT' ) { // sanció dimecres tarda
-			$message .= "El seu fill/a haurà de venir ". addslashes($textnouapercebiment_2) . " " . addslashes($textnouapercebiment_3) . " per fer treball comunitari a causa de: ". addslashes($textnouapercebiment_1) .".\n\n";
-		} elseif( $tipusapercebiment == 'REC' ) { // sanció dimecres tarda
-			$message .= "El motiu de l'apercebiment és una sanció de dimecres tarda per acumulació de ". $quantnouapercebiment ." retards entre classes.\n\n";
-//		} elseif( $tipus == 'Ll' ) { // apercebiment lliure
-//			$message .= "El motiu de l'apercebiment és ";
-		} // fi if tipus
-		$message .= "Aquest és un missatge generat automàticament per l'Aplicatiu Tutoria de l'IES Mediterrània. Si desitja més informació posi's en contacte amb el/la tutor/a del seu fill/a.\n";
-		$message = wordwrap($message, 70);
-		$headers = 'Content-Type: text/plain; charset="utf-8"'."\n" .
-						'From: '. $from ."\n".
-						'Reply-To: '. $sess_user .'@iesmediterrania.cat' ."\n".
-						'X-Mailer: '. $_SERVER['SERVER_NAME'] .'/PHP/' . phpversion(). "\n";
-		$headers .= 'MIME-Version: 1.0' . "\n";
-		$subject = "IES Mediterrania - Notificació d'apercebiment";
-		if( mail($email_pares, $subject, $message, $headers) ) {
-    		echo "<p>E-mail enviat a: $email_pares</p>\n";
-			$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub=0, de='$sess_user|"."$sess_nomreal', per_a='$pares ($email_pares)', datahora='$datatimestamp', assumpte='Enviat e-mail: ".addslashes($subject)."', contingut='".addslashes($message)."', adjunts='', vist='EnviatE-mail_$sess_user/$datatimestamp'";
-    		//echo "<p>Consulta e-mail: $consulta</p>\n";
-			mysql_query($consulta, $connect);
-		} else
-			echo "<p> Resultat e-mail: Error </p> \n";
-	} // fi if email no buit
+	if( $enviar_mail ) {
+	  if( $tipusapercebiment == 'R' && $quantnouapercebiment < 15 ) { // retards avís
+		  $message = "El seu fill/a $fila2[2] ha acumulat $quantnouapercebiment retards en la seva assistència a classe. Preguem que millori la seva puntualitat.\n\n";
+	  } else {
+	    $message = "El seu fill/a $fila2[2] ha rebut un apercebiment que hauria de retornar signat.\n\n";
+	    if( $tipusapercebiment == 'F' ) {
+		  $message .= "El motiu de l'apercebiment és l'acumulació de ". $quantnouapercebiment ." faltes injustificades.\n\n";
+	    } elseif( $tipusapercebiment == 'R' ) { // retards
+		  $message .= "El motiu de l'apercebiment és l'acumulació de ". $quantnouapercebiment ." retards.\n\n";
+	    } elseif( $tipusapercebiment == 'CC' ) { // comissió de convivència
+		  $message .= "El motiu de l'apercebiment és la reunió de la comissió de convivència.\n\n";
+	    } elseif( $tipusapercebiment == 'DT' ) { // sanció dimecres tarda
+		  $message .= "El seu fill/a haurà de venir ". addslashes($textnouapercebiment_2) . " " . addslashes($textnouapercebiment_3) . " per fer treball comunitari a causa de: ". addslashes($textnouapercebiment_1) .".\n\n";
+	    } elseif( $tipusapercebiment == 'REC' ) { // retards entre classes
+		  $message .= "El motiu de l'apercebiment és una sanció de dimecres tarda per acumulació de ". $quantnouapercebiment ." retards entre classes.\n\n";
+    //	} elseif( $tipus == 'Ll' ) { // apercebiment lliure
+  //		$message .= "El motiu de l'apercebiment és ";
+	    } // fi if tipus
+	  } // fi if R < 15
+	  $message .= "Aquest és un missatge generat automàticament per l'Aplicatiu Tutoria de l'IES Mediterrània. Si desitja més informació posi's en contacte amb el/la tutor/a del seu fill/a.\n";
+	  $message = wordwrap($message, 70);
+	  $subject = "Institut Mediterrania - Notificació d'apercebiment";
+	  $from = meil_usuari( $sess_user );
+  //	print_r( $from );
+	  if( !empty($from[0]) ) {
+  // 	  echo "<p> From: $from[0] </p>\n";
+	    $meils = meil_usuari( $fila->identificador );
+	    foreach( $meils as $to ) {
+  // 	    echo "<p> to: $to </p>\n";
+	      if( !empty($to) )
+		enviar_mail_phpmailer_5( $from[0], $to, $subject, $message, $sess_nomreal, $pares );
+	    } // fi foreach
+	  } // fi if no empty from
+	} // fi send e-mail
 	// enviem SMS
 	if( $sms_auto && $enviar_sms ) {
 		@include_once("enviaSMS.php");
-		if( !empty($fila[0]) ) {
-			echo "<p> enviem SMS a: $fila[0] </p>\n";
-			$telfSMS = $fila[0];
+		if( !empty($fila->telfSMS) ) {
+			echo "<p> enviem SMS a: $fila->telfSMS </p>\n";
+			$telfSMS = $fila->telfSMS;
 			switch( $tipusapercebiment ) {
 				case 'R':
 						$conting = "El seu fill/a $fila2[2] ha acumulat $quantnouapercebiment retards en la seva assistència a classe. Preguem que millori la seva puntualitat.";
@@ -355,6 +357,10 @@ function nouApercebiment( tipus, nom, refalum, num_incid ) {
 				return false;
 				break;
 		} // fi switch
+		if( confirm ("Enviar e-mail a la família?") )
+			document.forms.introd1.enviar_mail.value=1;
+		else
+			document.forms.introd1.enviar_mail.value=0;
 		if( confirm ("Enviar SMS a la família?") )
 			document.forms.introd1.enviar_sms.value=1;
 		else
@@ -387,6 +393,7 @@ print("
 <input type='hidden' name='desatextal' value=''>
 <input type='hidden' name='refal' value=''>
 <input type='hidden' name='textal' value=''>
+<input type='hidden' name='enviar_mail' value=0>
 <input type='hidden' name='enviar_sms' value=0>
 <table border='0'>
 <tr><td><font size='6'>Apercebiments&nbsp; &nbsp; </font></td>

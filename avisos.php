@@ -20,7 +20,7 @@
 */
 @include("linkbd.inc.php");
 @include("comu.php");
-require_once 'mail.php';
+require_once $lib . 'mail.php';
 
 $g = $_REQUEST['grup'];
 if( $g ) $llista_grups = $g;
@@ -79,8 +79,7 @@ foreach( $llista_grups as $curs ) {
       if( !empty($tutor) ) {
 	$to = meil_usuari( $tutor );
       }
-      enviar_mail_phpmailer( '', $to[0], $subject, $message );
-      enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+      enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
     }
   } // fi $num_alumnes
   
@@ -110,8 +109,7 @@ foreach( $llista_grups as $curs ) {
 
     $to = meil_usuari( $coordbtx );
     
-    enviar_mail_phpmailer( '', $to, $subject, $message );
-    enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to, $subject, $message );
   } // fi $num_alumnes
   
 	    /////////// retards ////////////////////
@@ -146,8 +144,7 @@ foreach( $llista_grups as $curs ) {
     $message_2 .= "Missatge generat automàticament pel programa tutoria.\n";
     $message = $message_r_1 . $msg_alumnes . $message_r_2;
 
-    enviar_mail_phpmailer( '', $to, $subject, $message );
-    enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to, $subject, $message );
   } // fi $num_alumnes
   
     //////////////////// Avisos Cap d'estudis /////////////////////////////////
@@ -175,8 +172,7 @@ foreach( $llista_grups as $curs ) {
 
     $to = meil_usuari( $capdes );
     
-    enviar_mail_phpmailer( '', $to[0], $subject, $message );
-    //enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
   } // fi $num_alumnes
   
 	    /////////// retards ////////////////////
@@ -196,8 +192,7 @@ foreach( $llista_grups as $curs ) {
     $subject = "[Tutoria] Resum de retards ESO";
     $message = $message_r_1 . $msg_alumnes . $message_r_2;
 
-    enviar_mail_phpmailer( '', $to, $subject, $message );
-//     enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to, $subject, $message );
   } // fi $num_alumnes
   
     /////////////////// Avisos director //////////////////////////////
@@ -220,8 +215,7 @@ foreach( $llista_grups as $curs ) {
 
     $to = meil_usuari( $director );
     
-    enviar_mail_phpmailer( '', $to[0], $subject, $message );
-    //enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
   } // fi $num_alumnes
   
 ?>

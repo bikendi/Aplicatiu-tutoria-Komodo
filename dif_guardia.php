@@ -26,7 +26,7 @@
 @include("linkbd.inc.php");
 @include("comu.php");
 @include("comu.js.php");
-require_once('mail.php');
+require_once($lib . 'mail.php');
 panyacces("Privilegis");
 
 echo "\n";
@@ -162,8 +162,7 @@ if( isset($_POST['enviar_meil']) ) {
 //   	echo "m: ". $message ."\n";
 //   	echo "t: ". $taula ."\n";
     $to = meil_usuari( $profe );
-    enviar_mail_phpmailer( '', $to[0], '[Tutoria] expulsions', $message, '', TRUE );
-    enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', '[Tutoria] expulsions - ' . $profe, $message, '', TRUE );
+    enviar_mail_phpmailer_5( '', $to[0], '[Tutoria] expulsions', $message, '', '', TRUE );
   } // fi foreach
 } // fi if enviar_meil
 

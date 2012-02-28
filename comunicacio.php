@@ -32,7 +32,7 @@ if(isset($_GET['obrefitxer'])&& $_GET['obrefitxer']!='') {
 
 @include("comu.php");
 @include("enviaSMS.php");
-require_once 'mail.php';
+require_once $lib.'mail.php';
 $esPare=ereg("Pare_", $sess_privilegis);
 ?>
 <html>
@@ -656,9 +656,9 @@ if (isset($enviar) && $enviar!='') {
 		      if( !empty($to) )
 		      enviar_mail_phpmailer_5( $from[0], $to, $subject, $message, $sess_nomreal );
 // 		      echo "<p> From: $psplit[1] < $from[0] >, To: $to , Sbj: $subject , Msg: $message </p>\n";
-		    }
-		  }
-		}
+		    } // fi foreach
+		  } // fi if no empty from
+		} // fi else if SMS
 		$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub='".((isset($sub)&& $sub!='')?"$sub":"0")."', de='$sess_user|".(($esPare)?"Pares de ":"")."$sess_nomreal', per_a='$p', datahora='$datatimestamp', assumpte='".(($enviar!='siSMS')?addslashes($assumpte):((eregi("NOOK", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK"))."', contingut='".addslashes($conting)."', adjunts='', vist='".(($enviar!='siSMS')?"Enviat_$sess_user/$datatimestamp":"EnviatSMS_$sess_user/$datatimestamp;$res")."'";
 // 		echo "<p> Consulta: $consulta </p>\n";
 		mysql_query($consulta, $connect);

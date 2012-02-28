@@ -20,6 +20,8 @@
 */
 //echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
 
+$lib = "lib/";
+
 $quantitatget=count($_GET);
 for ($a=0; $a<$quantitatget; ++$a) {
 	$clauget=key($_GET);

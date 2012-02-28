@@ -19,8 +19,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 // @include("linkbd.inc.php");
-// @include("comu.php");
-require_once 'mail.php';
+@include("comu.php");
+require_once $lib . 'mail.php';
 
 function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
   $num_tutors = 1;
@@ -55,8 +55,7 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
     if( !empty($tutor) ) {
       $to = meil_usuari( $tutor );
     }
-    enviar_mail_phpmailer( '', $to[0], $subject, $message );
-    //enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+    enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
   }
   
 } // fi notificar
@@ -80,8 +79,7 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
 
   $to = meil_usuari( $coordbtx );
     
-  enviar_mail_phpmailer( '', $to[0], $subject, $message );
-  enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+  enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
 
 	    /////////// retards ////////////////////
   $query_retards = "SELECT E.numero_mat, E.NOM_ALUM, E.COGNOM_ALU, E.COGNOM2_AL, S.diferencia, S.num_faltes, E.PLA_ESTUDI 
@@ -109,8 +107,7 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
   $message_2 .= "Missatge generat automàticament pel programa tutoria.\n";
   $message = $message_r_1 . $msg_alumnes . $message_r_2;
 
-  enviar_mail_phpmailer( '', $to, $subject, $message );
-  enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+  enviar_mail_phpmailer_5( '', $to, $subject, $message );
 
     //////////////////// Avisos Cap d'estudis /////////////////////////////////
   $min_faltes_total = 30;
@@ -131,8 +128,7 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
 
   $to = meil_usuari( $capdes );
     
-  enviar_mail_phpmailer( '', $to[0], $subject, $message );
-  //enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+  enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
 
 	    /////////// retards ////////////////////
   $query = $query_retards . "'ESO'";
@@ -146,8 +142,7 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
   $subject = "[Tutoria] Resum de retards ESO";
   $message = $message_r_1 . $msg_alumnes . $message_r_2;
 
-  enviar_mail_phpmailer( '', $to, $subject, $message );
-//   enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+  enviar_mail_phpmailer_5( '', $to, $subject, $message );
 
     /////////////////// Avisos director //////////////////////////////
   $min_faltes_total = 60;
@@ -164,7 +159,6 @@ function notificar( $profe, $alumne=NULL, $curs=NULL, $subject, $message ) {
 
   $to = meil_usuari( $director );
     
-  enviar_mail_phpmailer( '', $to[0], $subject, $message );
-  //enviar_mail_phpmailer( '', 'bingen@iesmediterrania.cat', $subject.' - '.$to, $message );
+  enviar_mail_phpmailer_5( '', $to[0], $subject, $message );
 
 ?>
