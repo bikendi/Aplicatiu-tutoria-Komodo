@@ -93,14 +93,15 @@ if(!$acces) {
   exit;
 }
 
-$localitzacio = "ca";
+$localitzacio = "caca";
 
 $ref_incidencia= "F,R,E,A";
 $ref_incidenciaj= "F,FJ,R,RJ,E,A";
 $ref_incidencia_text= "Faltes, Retards, Expulsions, Anotacions";
 $ref_incidencia_textj= "Faltes, Faltes Justificades, Retards, Retards Justificats, Expulsions, Anotacions";
 
-$cop="Aplicatiu Tutoria Komodo v0.1<br>&copy; Artur Guillamet (2002-2007)<br>aguillam@xtec.net<br>&copy; ßingen Eguzkitza (2012)<br>beguzkit@xtec.cat";
+// $cop = "Aplicatiu Tutoria Komodo v0.1<br>&copy; Artur Guillamet (2002-2007)<br>aguillam@xtec.net<br>&copy; Bingen Eguzkitza (2012)<br>beguzkit@xtec.cat";
+$cop2 = "Aplicatiu Tutoria Komodo v0.1<br>&copy; Artur Guillamet (2002-2007)<br>aguillam@xtec.net<br>&copy; Bingen Eguzkitza (2012)<br>beguzkit@xtec.cat";
 
 $tipus_apercebiments = Array('Ll', 'F', 'R', 'DT', 'CC', 'REC');
 

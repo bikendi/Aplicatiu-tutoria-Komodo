@@ -42,7 +42,8 @@
 <br>
 <img src='im.php'>
         <br>
-  <?echo $cop?><br>
+<!--   <?echo $cop?><br> -->
+  <?echo $cop2?><br>
   <br>
    Sota llicència GPL <br>
   <textarea rows=3 cols=70>

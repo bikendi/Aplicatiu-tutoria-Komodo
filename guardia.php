@@ -377,9 +377,21 @@ echo "    <th>Grup</th>\n";
 echo "    <th>Alumne</th>\n";
 // echo "    <th>Retards</th>\n";
 echo "  </tr>\n";
-if( $reset_ESO )
-  $query_reset = " AND "; // TODO
-$query = "SELECT CONCAT(E.cognom_alu, ' ',  E.cognom2_al, ', ', E.nom_alum) AS alumne, CONCAT(E.curs, ' ', E.pla_estudi, ' ', E.grup) AS grup, count(*) retards FROM $bdtutoria.$tbl_prefix"."faltes F, $bdtutoria.$tbl_prefix"."Estudiants E WHERE F.refalumne = E.numero_mat AND F.incidencia = 'R' AND E.pla_estudi = 'ESO' GROUP BY F.refalumne HAVING COUNT(retards) > ". $retards_ESO ." ORDER BY grup, alumne";
+// TODO: Variable number of periods (more than 3)
+$ara = time();
+$query_reset = '';
+if( $reset_ESO ) {
+  if($datatimestampIniciCurs <= $ara && $ara < $datatimestampInici2T) {
+    $query_reset = " AND ($datatimestampIniciCurs <= data AND data < $datatimestampInici2T)"; 
+  } elseif ($datatimestampInici2T <= $ara && $ara < $datatimestampInici3T) {
+    $query_reset = " AND ($datatimestampInici2T <= data AND data < $datatimestampInici3T)"; 
+  } elseif ($datatimestampInici3T <= $ara) {
+    $query_reset = " AND $datatimestampInici3T <= data"; 
+  } else {
+      $query_reset = " AND FALSE ";
+  }
+} // fi reset_ESO
+$query = "SELECT CONCAT(E.cognom_alu, ' ',  E.cognom2_al, ', ', E.nom_alum) AS alumne, CONCAT(E.curs, ' ', E.pla_estudi, ' ', E.grup) AS grup, count(*) retards FROM $bdtutoria.$tbl_prefix"."faltes F, $bdtutoria.$tbl_prefix"."Estudiants E WHERE F.refalumne = E.numero_mat AND F.incidencia = 'R' AND E.pla_estudi = 'ESO' $query_reset GROUP BY F.refalumne HAVING COUNT(retards) >= ". $retards_ESO ." ORDER BY grup, alumne";
 // echo "<p> Query: $query </p>\n";
 $res = mysql_query($query);
 while( $fila = mysql_fetch_object($res) ) {
@@ -400,9 +412,19 @@ echo "    <th>Grup</th>\n";
 echo "    <th>Alumne</th>\n";
 // echo "    <th>Retards</th>\n";
 echo "  </tr>\n";
-if( $reset_BTX )
-  $query_reset = " AND "; // TODO
-$query = "SELECT CONCAT(E.cognom_alu, ' ',  E.cognom2_al, ', ', E.nom_alum) AS alumne, CONCAT(E.curs, ' ', E.pla_estudi, ' ', E.grup) AS grup, count(*) retards FROM $bdtutoria.$tbl_prefix"."faltes F, $bdtutoria.$tbl_prefix"."Estudiants E WHERE F.refalumne = E.numero_mat AND F.incidencia = 'R' AND E.pla_estudi = 'BATX' GROUP BY F.refalumne HAVING COUNT(retards) > ". $retards_BTX ." ORDER BY grup, alumne";
+$query_reset = '';
+if( $reset_BTX ) {
+  if($datatimestampIniciCurs <= $ara && $ara < $datatimestampInici2T) {
+    $query_reset = " AND ($datatimestampIniciCurs <= data AND data < $datatimestampInici2T)"; 
+  } elseif ($datatimestampInici2T <= $ara && $ara < $datatimestampInici3T) {
+    $query_reset = " AND ($datatimestampInici2T <= data AND data < $datatimestampInici3T)"; 
+  } elseif ($datatimestampInici3T <= $ara) {
+    $query_reset = " AND $datatimestampInici3T <= data"; 
+  } else {
+      $query_reset = " AND FALSE ";
+  }
+} // fi reset_BTX
+$query = "SELECT CONCAT(E.cognom_alu, ' ',  E.cognom2_al, ', ', E.nom_alum) AS alumne, CONCAT(E.curs, ' ', E.pla_estudi, ' ', E.grup) AS grup, count(*) retards FROM $bdtutoria.$tbl_prefix"."faltes F, $bdtutoria.$tbl_prefix"."Estudiants E WHERE F.refalumne = E.numero_mat AND F.incidencia = 'R' AND E.pla_estudi = 'BATX' $query_reset GROUP BY F.refalumne HAVING COUNT(retards) >= ". $retards_BTX ." ORDER BY grup, alumne";
 // echo "<p> Query: $query </p>\n";
 $res = mysql_query($query);
 while( $fila = mysql_fetch_object($res) ) {

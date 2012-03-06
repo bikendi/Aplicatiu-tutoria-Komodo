@@ -50,11 +50,8 @@ if(isset($idc)) {
    $ident=strtr($ident, $tra);
    $pass=strtr($pass, $tra);
    $consulta="SELECT passwd_crypt, nomreal FROM $bdusuaris.$tbl_prefix"."usu_profes WHERE usuari LIKE BINARY '$ident' limit 1";
-// 	echo "<p> Query: $consulta </p> \n";
    $conjunt_resultant=mysql_query($consulta, $connect);
    if(1==mysql_num_rows($conjunt_resultant)) {
-// 	echo "<p> md5 pass: ". md5($pass) ."</p> \n";
-// 	echo "<p> pass: ". mysql_result($conjunt_resultant, 0,0) ."</p> \n";
     if(md5($pass)==mysql_result($conjunt_resultant, 0,0)) {
       $nomreal=mysql_result($conjunt_resultant, 0,1);
       mysql_free_result($conjunt_resultant);
@@ -94,7 +91,7 @@ if(isset($idc)) {
       mysql_query($consulta, $connect);
       print("<script language='JavaScript'>location.href='menu.php?idsess=$idsess';</script>");
       exit;
-    }
+    } // fi if pwd ok
    } else { // no és profe => és pare?
    mysql_free_result($conjunt_resultant);
    $consulta="SELECT passwd, refalumne, permisos FROM $bdtutoria.$tbl_prefix"."pares WHERE identificador LIKE BINARY '$ident' limit 1";
@@ -128,59 +125,15 @@ if(isset($idc)) {
 print("
 <html>
 <head>
-<title>Tutoria</title>");
+<title>Aplicatiu Tutoria Komodo</title>");
 @include("comu.js.php");
 ?>
 
-<script language="javascript">
- var tm
- var nImg = 0
- function base() {
-   for( i=0; i<50; i++ ) {
-     document.writeln( '<img src="imatges/barra.gif" width="8"' )
-     document.write( 'height="16" name="quadre' + i + '">' )
-   }
- }
- function inicia() {
-   tm = setInterval( 'pinta()', 150 )
-   return false
- }
- function pinta() {
-   var nom = "quadre" + nImg
-   eval( 'document.' + nom + '.src = "imatges/punt.gif"' )
-   nImg++
-   if ( nImg==50 ) {
-    clearInterval( tm );
-    document.write("<html><body>");
-    document.write("<form name='f' method='post' action='<?=$PHP_SELF?>'>");
-    document.write("<input type='hidden' name='nologo' value=''>");
-	<?
-	if(isset($i)&&isset($p)) {
-    	print ("document.write(\"<input type='hidden' name='i' value='$i'>\");");
-    	print ("document.write(\"<input type='hidden' name='p' value='$p'>\");");
-	}
-	?>
-    document.write("</form>");
-    document.write("<scr"+"ipt language='JavaScript'>document.forms.f.submit();</scr"+"ipt>");
-    document.write("</body></html>");
-    }
- }
-</script>
 </head>
 <body bgcolor="#ffffff" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
 <?
-if(!isset($nologo)) {
-  print("
-    <br><br><br><br><br><br><br>
-    <div align='center'>
-    <img src='im.php'><br>
-    <font color='#808080'>Carregant aplicaci&oacute; ....</font><br>
-    <script language='javascript'>base(); inicia();</script>
-    </div>
-  ");
-}
-else {
+
   print("
    <table border='0' width='100%'>
    <tr><td width='33%'><br><br><br><br><br><br><br><br></td><td width='33%'>&nbsp;</td><td width='33%'>&nbsp;</td></tr>
@@ -209,7 +162,6 @@ else {
    <td>&nbsp;</td></tr>
    </table>
   ");
-}
 
 ?>
 

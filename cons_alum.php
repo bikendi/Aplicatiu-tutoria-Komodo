@@ -245,7 +245,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
 /*  else // no cal, podem filtrar per hores per seleccionar només les extraescolars
     $filtreextra = " AND hora IN (SELECT hora from $bdtutoria.$tbl_prefix"."frangeshoraries WHERE extraescolar) ";*/
   
-  $filtres = $filtredata . $filtredies . $filtrehores . $filtreprofe . $filtreextra;
+  $filtres = $filtredata . $filtredies . $filtrehores . $filtreprofe . $filtreincidencia . $filtreextra;
 
 // informes d'incidència
     $consulta="SELECT id, id_prof, data, hora, text, ref_alum FROM $bdtutoria.$tbl_prefix"."informeincid WHERE ref_alum='$nalumne' ORDER BY data desc, id DESC";
