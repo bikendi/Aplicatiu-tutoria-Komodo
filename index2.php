@@ -126,7 +126,7 @@ print("
 <html>
 <head>
 <title>Aplicatiu Tutoria Komodo</title>");
-@include("comu.js.php");
+include("comu.js.php");
 ?>
 
 </head>

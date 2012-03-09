@@ -11,6 +11,7 @@
 - More comments! (and in english)
 - ISO-8859-1 -> UTF8
 - Moodle integration
+- $_REQUEST in each file instead of clauget, claupost, etc. in comu.php
 
 ----------
 

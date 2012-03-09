@@ -1,9 +1,8 @@
-<?php
 /*
     Aplicatiu Tutoria Komodo v.0.1
-    AplicaciÛ web per a la gestiÛ de la tasca tutorial.
-    Copyright (C) 2002-2007  Artur Guillamet SabatÈ <aguillam(a)xtec.net>
-    Copyright (C) 2012 ﬂingen Eguzkitza <beguzkit@xtec.cat>
+    Aplicaci√≥ web per a la gesti√≥ de la tasca tutorial.
+    Copyright (C) 2002-2007  Artur Guillamet Sabat√© <aguillam(a)xtec.net>
+    Copyright (C) 2012 √üingen Eguzkitza <beguzkit@xtec.cat>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -18,14 +17,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-include_once("comu.php");
-?>
-<link rel="stylesheet" href="estils.css" media="screen" type="text/css">
-<style type="text/css" media="print">
-    #taulacos td {border-width:1px; border-style:solid; font-size:10px} 
-    body, td, select, input, submit, button, textarea {font-size:10px}
-</style>
-<script language="JavaScript">
-  var actual= <?print($datatimestamp*1000);?>;
-</script>
-<script language='JavaScript' src='<?php echo $js?>comu.js'></script>
+
+function sel_professor( list, usuari, nom)
+{
+  var valors = document.getElementById(list).value.split("|");
+  document.getElementById(usuari).value = valors[0];
+  document.getElementById(nom).value = valors[1];
+}
+
+

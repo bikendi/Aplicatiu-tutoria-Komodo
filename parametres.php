@@ -74,27 +74,38 @@ if (isset($gravargeneral)&& $gravargeneral==$fila[0]) {
     $datini3T=split(' ', $datainici3T);
     $di3T=split('-', $datini3T[1]);
     $di3Ttimestamp=mktime(0,0,0,$di3T[1],$di3T[0],$di3T[2],-1);
-    
-	$consulta="UPDATE $bdtutoria.$tbl_prefix"."parametres SET nomcentre='".addslashes($nomcentr)."', adrecacentre='".addslashes($adrecacentr)."', cpcentre='".addslashes($cpcentr)."', poblaciocentre='".addslashes($poblaciocentr)."', telfcentre='".addslashes($telfcentr)."', nomdirector='".addslashes($nomdirecto)."', sexdirector='".addslashes($sexdirecto)."', nomcapdes='".addslashes($nomcapdestudis)."', sexcapdes='".addslashes($sexcapdestudis)."', nomcoordbtx='".addslashes($nomcoordbatx)."', sexcoordbtx='".addslashes($sexcoordbatx)."', nom_cc_alumne='".addslashes($nomccalumne)."', sex_cc_alumne='".addslashes($sexccalumne)."', nom_cc_profe='".addslashes($nomccprofe)."', sex_cc_profe='".addslashes($sexccprofe)."', nom_cc_pare='".addslashes($nomccpare)."', sex_cc_pare='".addslashes($sexccpare)."', cursacademic='".addslashes($cursacademi)."', datainicicurs='$dictimestamp',
+    if($_REQUEST['reset_ESO']) $reset_ESO = 1; else $reset_ESO = 0;
+    if($_REQUEST['reset_BTX']) $reset_BTX = 1; else $reset_BTX = 0;
+  
+	$consulta="UPDATE $bdtutoria.$tbl_prefix"."parametres SET nomcentre='".addslashes($nomcentr)."', adrecacentre='".addslashes($adrecacentr)."', cpcentre='".addslashes($cpcentr)."', poblaciocentre='".addslashes($poblaciocentr)."', telfcentre='".addslashes($telfcentr)."', 
+	director='".addslashes($_REQUEST['director'])."',
+	nomdirector='".addslashes($nomdirector)."', sexdirector='".addslashes($sexdirector)."',
+	capdes='".addslashes($_REQUEST['capdes'])."',
+	nomcapdes='".addslashes($nomcapdes)."', 
+	sexcapdes='".addslashes($sexcapdes)."',
+	coordbtx='".addslashes($_REQUEST['coordbtx'])."',
+	nomcoordbtx='".addslashes($nomcoordbtx)."', sexcoordbtx='".addslashes($sexcoordbtx)."', nom_cc_alumne='".addslashes($nomccalumne)."', sex_cc_alumne='".addslashes($sexccalumne)."', nom_cc_profe='".addslashes($nomccprofe)."', sex_cc_profe='".addslashes($sexccprofe)."', nom_cc_pare='".addslashes($nomccpare)."', sex_cc_pare='".addslashes($sexccpare)."', cursacademic='".addslashes($cursacademi)."', datainicicurs='$dictimestamp',
 	datainici2T='$di2Ttimestamp', datainici3T='$di3Ttimestamp',
 	webcentre='".addslashes($webcentr)."', emailcentre='".addslashes($emailcentr)."', 
-	retards_ESO='$retard_ESO',
-	reset_ESO='$rst_ESO',
-	retards_BTX='$retard_BTX',
-	reset_BTX='$rst_BTX'
+	retards_ESO='". $_REQUEST['retards_ESO'] ."',
+	reset_ESO='$reset_ESO',
+	retards_BTX='". $_REQUEST['retards_BTX'] ."',
+	reset_BTX='$reset_BTX'
 	where id='$gravargeneral'";
-//	echo "<p>Query: $consulta</p>\n";
+// 	echo "<p>Query: $consulta</p>\n";
 	mysql_query($consulta, $connect);
 }
 if (isset($gravarsms)&& $gravarsms==$fila[0]) {
-	$consulta="UPDATE $bdtutoria.$tbl_prefix"."parametres SET remitentSMS='".addslashes($nomremSMS)."', proveidorSMS='".addslashes($actiuSMS)."', identificSMSLlNet='".addslashes($identificSMSLlNet)."', passwdSMSLlNet='".addslashes($passwdSMSLlNet)."' , identificSMSDinahosting='".addslashes($identificSMSDinHost)."', passwdSMSDinahosting='".addslashes($passwdSMSDinHost)."', sms_auto='$smsauto' where id='$gravarsms'";
-//	echo "<p> Query: $consulta </p> \n";
+	if($_REQUEST['sms_auto']) $sms_auto = 1; else $sms_auto = 0;
+	$consulta="UPDATE $bdtutoria.$tbl_prefix"."parametres SET remitentSMS='".addslashes($nomremSMS)."', proveidorSMS='".addslashes($actiuSMS)."', identificSMSLlNet='".addslashes($identificSMSLlNet)."', passwdSMSLlNet='".addslashes($passwdSMSLlNet)."' , identificSMSDinahosting='".addslashes($identificSMSDinahosting)."', passwdSMSDinahosting='".addslashes($passwdSMSDinahosting)."', sms_auto='$sms_auto' where id='$gravarsms'";
+// 	echo "<p> Query: $consulta </p> \n";
 	mysql_query($consulta, $connect);
 }
 mysql_free_result($conjunt_resultant);
 @include("enviaSMS.php");
 ?>
-<script language='JavaScript' src='comu.js'></script>
+<script language='JavaScript' src='<?php echo $js?>comu.js'></script>
+<script language='JavaScript' src='<?php echo $js?>funcions.js'></script>
 <script language='JavaScript'>
 // function calendariEscriuDia(di, i, mes, any) {
 //  var cad;
@@ -153,6 +164,7 @@ function carregaLogoCentre()
 
 <body  bgcolor="#ccdd88" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="horaAra();">
 <?php
+
 print("
 <div align='right'>
 <table border='0'><tr>
@@ -160,55 +172,97 @@ print("
 </tr></table>
 </div>
 <hr>");
-$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, nomcapdes, sexcapdes, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
-$conjunt_resultant=mysql_query($consulta, $connect);
-$fila=mysql_fetch_row($conjunt_resultant);
+$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, director, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, capdes, nomcapdes, sexcapdes, coordbtx, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
+// echo "<p> consulta: $consulta </p>\n";
+$conjunt_resultant=mysql_query($consulta, $connect);// OR die(mysql_error());
+$fila=mysql_fetch_object($conjunt_resultant);
 mysql_free_result($conjunt_resultant);
 print("<table border='0' width='100%'><tr><td width='5%'>&nbsp;</td><td width='90%'>");
 print("<fieldset style='border-width:3; border-style:ridge; border-color:#42A5A5'>");
 print("<table border='0' width='100%'><tr><td valign='top'>");
-print("<form name='params' method='post' action='$PHP_SELF?idsess=$idsess' onSubmit='document.forms.params.gravargeneral.value=\"$fila[0]\";'>");
+print("<form name='params' method='post' action='$PHP_SELF?idsess=$idsess' onSubmit='document.forms.params.gravargeneral.value=\"$fila->id\";'>");
 print("<table border='0'>");
 print("<tr><td width='20%'><input type='hidden' name='gravargeneral' value=''><input type='submit' value='Gravar'></td><td width='80%'><font size='+1'>Paràmetres configuració generals</font></td></tr>");
-print("<tr><td align='right'>Nom centre: &nbsp;</td><td><input type='text' name='nomcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomcentr.value='".addslashes($fila[1])."';</script></td></tr>");
-print("<tr><td align='right'>Adreça centre: &nbsp;</td><td><input type='text' name='adrecacentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.adrecacentr.value='".addslashes($fila[2])."';</script></td></tr>");
-print("<tr><td align='right'>Codi Postal centre: &nbsp;</td><td><input type='text' name='cpcentr' size='7' maxlength='7' value=''><script language='JavaScript'>document.forms.params.cpcentr.value='".addslashes($fila[3])."';</script></td></tr>");
-print("<tr><td align='right'>Població centre: &nbsp;</td><td><input type='text' name='poblaciocentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.poblaciocentr.value='".addslashes($fila[4])."';</script></td></tr>");
-print("<tr><td align='right'>Tel&egrave;fon centre: &nbsp;</td><td><input type='text' name='telfcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.telfcentr.value='".addslashes($fila[5])."';</script></td></tr>");
+print("<tr><td align='right'>Nom centre: &nbsp;</td><td><input type='text' name='nomcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomcentr.value='".addslashes($fila->nomcentre)."';</script></td></tr>");
+print("<tr><td align='right'>Adreça centre: &nbsp;</td><td><input type='text' name='adrecacentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.adrecacentr.value='".addslashes($fila->adrecacentre)."';</script></td></tr>");
+print("<tr><td align='right'>Codi Postal centre: &nbsp;</td><td><input type='text' name='cpcentr' size='7' maxlength='7' value=''><script language='JavaScript'>document.forms.params.cpcentr.value='".addslashes($fila->cpcentre)."';</script></td></tr>");
+print("<tr><td align='right'>Població centre: &nbsp;</td><td><input type='text' name='poblaciocentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.poblaciocentr.value='".addslashes($fila->poblaciocentre)."';</script></td></tr>");
+print("<tr><td align='right'>Tel&egrave;fon centre: &nbsp;</td><td><input type='text' name='telfcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.telfcentr.value='".addslashes($fila->telfcentre)."';</script></td></tr>");
 // director
-print("<tr><td align='right'>Nom director/a: &nbsp;</td><td><input type='text' name='nomdirecto' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomdirecto.value='".addslashes($fila[6])."';</script>");
-print("&nbsp; <select name='sexdirecto'><option ".(($fila[7]=='H')?'selected':'').">H</option><option ".(($fila[7]=='D')?'selected':'').">D</option></select></td></tr>");
+print("<tr>");
+  print("<td align='right'>");
+  print("<label for='director_list'>Director: </label>");
+  print("</td><td>\n");
+  print("<select name='director_list' id='director_list' onChange='sel_professor(\"director_list\", \"director\", \"nomdirector\");'>");
+  print("<option value='' ".(($director=='')?" selected":"")."> </option> \n");
+  $consulta1="SELECT usuari, nomreal FROM $bdtutoria.$tbl_prefix"."usu_profes order by usuari asc";
+  $conjunt_resultant1=mysql_query($consulta1, $connect);
+  while($fila1=mysql_fetch_row($conjunt_resultant1)) {
+    print("<option value='$fila1[0]|$fila1[1]' ".(($fila->director==$fila1[0])?" selected":"").">$fila1[0]</option> \n");
+  }
+  mysql_free_result($conjunt_resultant1);
+  print("</select>\n");
+  echo "<input type='hidden' name='director' id='director' value='$fila->director'>\n";
+// print("<td align='right'>Nom director/a: &nbsp;</td>");
+print("<input type='text' name='nomdirector' id='nomdirector' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomdirector.value='".addslashes($fila->nomdirector)."';</script>");
+print("&nbsp; <select name='sexdirector'><option ".(($fila->sexdirector == 'H')?'selected':'').">H</option><option ".(($fila->sexdirector == 'D')?'selected':'').">D</option></select></td></tr>");
 // cap d'estudis
 print("
-	<tr>
-		<td align='right'>Nom cap d'estudis: &nbsp;</td>
-		<td>
-			<input type='text' name='nomcapdestudis' size='50' maxlength='50' value=''>
-				<script language='JavaScript'>document.forms.params.nomcapdestudis.value='".addslashes($fila[18])."';
+	<tr>");
+  print("<td align='right'>");
+  print("<label for='capdes_list'>Cap d'estudis: </label>");
+  print("</td><td>\n");
+  print("<select name='capdes_list' id='capdes_list' onChange='sel_professor(\"capdes_list\", \"capdes\", \"nomcapdes\");'>");
+  print("<option value='' ".(($capdes=='')?" selected":"")."> </option> \n");
+  $consulta1="SELECT usuari, nomreal FROM $bdtutoria.$tbl_prefix"."usu_profes order by usuari asc";
+  $conjunt_resultant1=mysql_query($consulta1, $connect);
+  while($fila1=mysql_fetch_row($conjunt_resultant1)) {
+    print("<option value='$fila1[0]|$fila1[1]' ".(($fila->capdes==$fila1[0])?" selected":"").">$fila1[0]</option> \n");
+  }
+  mysql_free_result($conjunt_resultant1);
+  print("</select>\n");
+  echo "<input type='hidden' name='capdes' id='capdes' value='$fila->capdes'>\n";
+// 		<td align='right'>Nom cap d'estudis: &nbsp;</td>
+// 		<td>
+print("			<input type='text' name='nomcapdes' id='nomcapdes' maxlength='50' value=''>
+				<script language='JavaScript'>document.forms.params.nomcapdes.value='".addslashes($fila->nomcapdes)."';
 				</script>
 ");
 print("
 			&nbsp; 
 			<select name='sexcapdestudis'>
-				<option ".(($fila[19]=='H')?'selected':'').">H</option>
-				<option ".(($fila[19]=='D')?'selected':'').">D</option>
+				<option ".(($fila->sexcapdes == 'H')?'selected':'').">H</option>
+				<option ".(($fila->sexcapdes == 'D')?'selected':'').">D</option>
 			</select>
 		</td>
 	</tr>");
 // Coordinador batxillerat
 print("
-	<tr>
-		<td align='right'>Nom coordinador BTX: &nbsp;</td>
-		<td>
-			<input type='text' name='nomcoordbatx' size='50' maxlength='50' value=''>
-				<script language='JavaScript'>document.forms.params.nomcoordbatx.value='".addslashes($fila[20])."';
+	<tr>");
+  print("<td align='right'>");
+  print("<label for='capdes_list'>Coordinador de batxillerat: </label>");
+  print("</td><td>\n");
+  print("<select name='coordbtx_list' id='coordbtx_list' onChange='sel_professor(\"coordbtx_list\", \"coordbtx\", \"nomcoordbtx\");'>");
+  print("<option value='' ".(($coordbtx=='')?" selected":"")."> </option> \n");
+  $consulta1="SELECT usuari, nomreal FROM $bdtutoria.$tbl_prefix"."usu_profes order by usuari asc";
+  $conjunt_resultant1=mysql_query($consulta1, $connect);
+  while($fila1=mysql_fetch_row($conjunt_resultant1)) {
+    print("<option value='$fila1[0]|$fila1[1]' ".(($fila->coordbtx==$fila1[0])?" selected":"").">$fila1[0]</option> \n");
+  }
+  mysql_free_result($conjunt_resultant1);
+  print("</select>\n");
+  echo "<input type='hidden' name='coordbtx' id='coordbtx' value='$fila->coordbtx'>\n";
+// 		<td align='right'>Nom coordinador BTX: &nbsp;</td>
+// 		<td>
+print("			<input type='text' name='nomcoordbtx' id='nomcoordbtx' maxlength='50' value=''>
+				<script language='JavaScript'>document.forms.params.nomcoordbtx.value='".addslashes($fila->nomcoordbtx)."';
 				</script>
 ");
 print("
 			&nbsp; 
-			<select name='sexcoordbatx'>
-				<option ".(($fila[21]=='H')?'selected':'').">H</option>
-				<option ".(($fila[21]=='D')?'selected':'').">D</option>
+			<select name='sexcoordbtx'>
+				<option ".(($fila->sexcoordbtx == 'H')?'selected':'').">H</option>
+				<option ".(($fila->sexcoordbtx == 'D')?'selected':'').">D</option>
 			</select>
 		</td>
 	</tr>");
@@ -218,14 +272,14 @@ print("
 		<td align='right'>Nom alumne c.c.: &nbsp;</td>
 		<td>
 			<input type='text' name='nomccalumne' size='50' maxlength='50' value=''>
-				<script language='JavaScript'>document.forms.params.nomccalumne.value='".addslashes($fila[22])."';
+				<script language='JavaScript'>document.forms.params.nomccalumne.value='".addslashes($fila->nom_cc_alumne)."';
 				</script>
 ");
 print("
 			&nbsp; 
 			<select name='sexccalumne'>
-				<option ".(($fila[23]=='H')?'selected':'').">H</option>
-				<option ".(($fila[23]=='D')?'selected':'').">D</option>
+				<option ".(($fila->sex_cc_alumne == 'H')?'selected':'').">H</option>
+				<option ".(($fila->sex_cc_alumne == 'D')?'selected':'').">D</option>
 			</select>
 		</td>
 	</tr>");
@@ -235,14 +289,14 @@ print("
 		<td align='right'>Nom profe c.c.: &nbsp;</td>
 		<td>
 			<input type='text' name='nomccprofe' size='50' maxlength='50' value=''>
-				<script language='JavaScript'>document.forms.params.nomccprofe.value='".addslashes($fila[24])."';
+				<script language='JavaScript'>document.forms.params.nomccprofe.value='".addslashes($fila->nom_cc_profe)."';
 				</script>
 ");
 print("
 			&nbsp; 
 			<select name='sexccprofe'>
-				<option ".(($fila[25]=='H')?'selected':'').">H</option>
-				<option ".(($fila[25]=='D')?'selected':'').">D</option>
+				<option ".(($fila->sex_cc_profe == 'H')?'selected':'').">H</option>
+				<option ".(($fila->sex_cc_profe == 'D')?'selected':'').">D</option>
 			</select>
 		</td>
 	</tr>");
@@ -252,28 +306,28 @@ print("
 		<td align='right'>Nom pare c.c.: &nbsp;</td>
 		<td>
 			<input type='text' name='nomccpare' size='50' maxlength='50' value=''>
-				<script language='JavaScript'>document.forms.params.nomccpare.value='".addslashes($fila[26])."';
+				<script language='JavaScript'>document.forms.params.nomccpare.value='".addslashes($fila->nom_cc_pare)."';
 				</script>
 ");
 print("
 			&nbsp; 
 			<select name='sexccpare'>
-				<option ".(($fila[27]=='H')?'selected':'').">H</option>
-				<option ".(($fila[27]=='D')?'selected':'').">D</option>
+				<option ".(($fila->sex_cc_pare == 'H')?'selected':'').">H</option>
+				<option ".(($fila->sex_cc_pare == 'D')?'selected':'').">D</option>
 			</select>
 		</td>
 	</tr>");
-print("<tr><td align='right'>Curs acad&egrave;mic: &nbsp;</td><td><input type='text' name='cursacademi' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.cursacademi.value='".addslashes($fila[8])."';</script></td></tr>\n");
+print("<tr><td align='right'>Curs acad&egrave;mic: &nbsp;</td><td><input type='text' name='cursacademi' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.cursacademi.value='".addslashes($fila->cursacademic)."';</script></td></tr>\n");
 // print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
 // print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); alert(this.form.name + \".\" + camp.name); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
 // print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."' onClick='camp=event.target || event.srcElement; blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."'></td></tr>\n");
-print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."'></td></tr>\n");
-print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."'></td></tr>\n");
-print("<tr><td align='right'>Web centre: &nbsp;</td><td><input type='text' name='webcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.webcentr.value='".addslashes($fila[10])."';</script>\n");
-print("<tr><td align='right'>Email centre: &nbsp;</td><td><input type='text' name='emailcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila[11])."';</script>");
-print("<tr><td align='right'>Retards ESO</td><td><input type='text' name='retard_ESO' size='10' maxlength='10' value='$fila[31]'> Reset trimestral <input type='checkbox' name='rst_ESO' value='1'".(($fila[32]=="1")?" checked":"").">");
-print("<tr><td align='right'>Retards BTX</td><td><input type='text' name='retard_BTX' size='10' maxlength='10' value='$fila[33]'> Reset trimestral <input type='checkbox' name='rst_BTX' value='1'".(($fila[34]=="1")?" checked":"").">");
+print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainicicurs)].", ".date('j-n-Y',$fila->datainicicurs)."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici2T)].", ".date('j-n-Y',$fila->datainici2T)."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici3T)].", ".date('j-n-Y',$fila->datainici3T)."'></td></tr>\n");
+print("<tr><td align='right'>Web centre: &nbsp;</td><td><input type='text' name='webcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.webcentr.value='".addslashes($fila->webcentre)."';</script>\n");
+print("<tr><td align='right'>Email centre: &nbsp;</td><td><input type='text' name='emailcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila->emailcentre)."';</script>");
+print("<tr><td align='right'>Retards ESO</td><td><input type='text' name='retards_ESO' size='10' maxlength='10' value='$fila->retards_ESO'> Reset trimestral <input type='checkbox' name='reset_ESO' value='1'".(($fila->reset_ESO=="1")?" checked":"").">");
+print("<tr><td align='right'>Retards BTX</td><td><input type='text' name='retards_BTX' size='10' maxlength='10' value='$fila->retards_BTX'> Reset trimestral <input type='checkbox' name='reset_BTX' value='1'".(($fila->reset_BTX=="1")?" checked":"").">");
 print("<input type='hidden' name='esborrarlogo' value=''>");
 print("</table></form>");
 print("</td><td valign='top'>");
@@ -284,18 +338,18 @@ print("</td></tr></table>");
 print("</fieldset><br>");
 
 // /////// SMS ////////
-print("<form name='paramssms' method='post' action='$PHP_SELF?idsess=$idsess' onSubmit='document.forms.paramssms.gravarsms.value=\"$fila[0]\";'>");
+print("<form name='paramssms' method='post' action='$PHP_SELF?idsess=$idsess' onSubmit='document.forms.paramssms.gravarsms.value=\"$fila->id\";'>");
 print("<fieldset style='border-width:3; border-style:ridge; border-color:#42A5A5'>");
 print("<table width='100%' border='0'>");
 print("<tr><td width='20%'><input type='hidden' name='gravarsms' value=''><input type='submit' value='Gravar'></td><td width='80%'><font size='+1'>Paràmetres configuració SMS</font></td></tr>");
-print("<tr><td align='right' valign='top'>Nom remitent*: &nbsp;</td><td><input type='text' name='nomremSMS' size='11' maxlength='11' value=''><script language='JavaScript'>document.forms.paramssms.nomremSMS.value='".addslashes($fila[12])."';</script><span style='font-size:10'>*(màx. 11 cars. sense espais. Si es deixa buit, el remitent sera el nom de l'usuari que envia l'SMS)</span></td></tr>");
+print("<tr><td align='right' valign='top'>Nom remitent*: &nbsp;</td><td><input type='text' name='nomremSMS' size='11' maxlength='11' value=''><script language='JavaScript'>document.forms.paramssms.nomremSMS.value='".addslashes($fila->remitentSMS)."';</script><span style='font-size:10'>*(màx. 11 cars. sense espais. Si es deixa buit, el remitent sera el nom de l'usuari que envia l'SMS)</span></td></tr>");
 print("</table>");
 print("<table width='100%' border='0'>");
 print("<tr><td width='30%'><b>Prove&iuml;dor</b></td><td width='10%'><b>Actiu?</b></td><td width='20%'><b>Identificador</b></td><td width='20%'><b>Contrasenya</b></td><td width='20%'><b>Saldo</b></td></tr>");
-print("<tr><td>Lleida Net (<span style='font-size:10; color:blue' title='http://www.lleida.net' onClick='alert(\"Info: http://www.lleida.net\");'>Info</span>)</td><td><input type='radio' name='actiuSMS' value='LleidaNet'".(($fila[13]=="LleidaNet")?" checked":"")."></td><td><input type='text' name='identificSMSLlNet' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.identificSMSLlNet.value='".addslashes($fila[14])."';</script></td><td><input type='text' name='passwdSMSLlNet' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.passwdSMSLlNet.value='".addslashes($fila[15])."';</script></td><td>".saldoSMSLleidaNet()."</td></tr>");
-print("<tr><td>DinaHosting (<span style='font-size:10; color:blue' title='http://www.dinahosting.com/es/tienda/software/sms' onClick='alert(\"Info: http://www.dinahosting.com/es/tienda/software/sms\");'>Info</span>)</td><td><input type='radio' name='actiuSMS' value='DinaHosting'".(($fila[13]=="DinaHosting")?" checked":"")."></td><td><input type='text' name='identificSMSDinHost' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.identificSMSDinHost.value='".addslashes($fila[16])."';</script></td><td><input type='text' name='passwdSMSDinHost' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.passwdSMSDinHost.value='".addslashes($fila[17])."';</script></td><td>".saldoSMSDinaHosting()." cr&egrave;dits</td></tr>");
-print("<tr><td>&nbsp;</td><td><input type='radio' name='actiuSMS' value='cap'".(($fila[13]=="cap")?" checked":"")."> Cap</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
-print("<tr><td>SMS automàtics apercebiments</td><td><input type='checkbox' name='smsauto' value='1'".(($fila[28]=="1")?" checked":"")."></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+print("<tr><td>Lleida Net (<span style='font-size:10; color:blue' title='http://www.lleida.net' onClick='alert(\"Info: http://www.lleida.net\");'>Info</span>)</td><td><input type='radio' name='actiuSMS' value='LleidaNet'".(($fila->proveidorSMS=="LleidaNet")?" checked":"")."></td><td><input type='text' name='identificSMSLlNet' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.identificSMSLlNet.value='".addslashes($fila->identificSMSLlNet)."';</script></td><td><input type='text' name='passwdSMSLlNet' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.passwdSMSLlNet.value='".addslashes($fila->passwdSMSLlNet)."';</script></td><td>".saldoSMSLleidaNet()."</td></tr>");
+print("<tr><td>DinaHosting (<span style='font-size:10; color:blue' title='http://www.dinahosting.com/es/tienda/software/sms' onClick='alert(\"Info: http://www.dinahosting.com/es/tienda/software/sms\");'>Info</span>)</td><td><input type='radio' name='actiuSMS' value='DinaHosting'".(($fila->proveidorSMS=="DinaHosting")?" checked":"")."></td><td><input type='text' name='identificSMSDinahosting' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.identificSMSDinahosting.value='".addslashes($fila->identificSMSDinahosting)."';</script></td><td><input type='text' name='passwdSMSDinahosting' size='20' maxlength='50' value=''><script language='JavaScript'>document.forms.paramssms.passwdSMSDinahosting.value='".addslashes($fila->passwdSMSDinahosting)."';</script></td><td>".saldoSMSDinaHosting()." cr&egrave;dits</td></tr>");
+print("<tr><td>&nbsp;</td><td><input type='radio' name='actiuSMS' value='cap'".(($fila->proveidorSMS=="cap")?" checked":"")."> Cap</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+print("<tr><td>SMS automàtics apercebiments</td><td><input type='checkbox' name='sms_auto' value='1'".(($fila->sms_auto=="1")?" checked":"")."></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 
 
 print("</table>");
@@ -303,6 +357,7 @@ print("</form>");
 print("</fieldset>");
 
 print("</td><td width='5%'>&nbsp;</td></tr></table>");
+
 ?>
 <hr>
 </body>

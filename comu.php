@@ -20,7 +20,9 @@
 */
 //echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
 
+// Paths
 $lib = "lib/";
+$js = "js/";
 
 $quantitatget=count($_GET);
 for ($a=0; $a<$quantitatget; ++$a) {
@@ -79,7 +81,7 @@ if (isset($idsess)) {
   }
   mysql_free_result($conjunt_resultant); 
 }
-if(!$acces) {
+if( !$acces && substr($PHP_SELF,-10) != 'index2.php' && substr($PHP_SELF,-13) != 'index_pda.php' ) {
   if(isset($pda)) print("
     <script language='JavaScript'>
        top.location.href='index_pda.php?sesscad=';
@@ -93,7 +95,7 @@ if(!$acces) {
   exit;
 }
 
-$localitzacio = "caca";
+$localitzacio = "ca";
 
 $ref_incidencia= "F,R,E,A";
 $ref_incidenciaj= "F,FJ,R,RJ,E,A";
@@ -116,6 +118,7 @@ if (0==mysql_num_rows($conjunt_resultant)) {
 $consulta="SELECT * FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";  eval(base64_decode("JGNvcD0nQXBsaWNhdGl1IFR1dG9yaWEgdjEuMDxicj4mY29weTsgQXJ0dXIgR3VpbGxhbWV0ICgyMDAyLTIwMDcpPGJyPmFndWlsbGFtQHh0ZWMubmV0Jzs="));
 $conjunt_resultant=mysql_query($consulta, $connect);
 $fila=mysql_fetch_object($conjunt_resultant);
+// print_r($fila);
 $nomcentre=$fila->nomcentre;
 $adrecacentre=$fila->adrecacentre;
 $CPcentre=$fila->cpcentre;
