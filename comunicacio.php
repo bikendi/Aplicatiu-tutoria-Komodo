@@ -645,19 +645,22 @@ if (isset($enviar) && $enviar!='') {
 		} else  { // enviem e-mail
 		  $subject = $assumpte;
 		  $message = $conting;
-// 		  echo "<p> per a: $p </p>\n";
-		  $psplit = split( "\|", $p );
-// 		  echo "<p> per a: $psplit[0] espare: $esPare </p>\n";
 		  $from = meil_usuari( $sess_user );
 // 		  print_r( $from );
-		  if( !empty($from[0]) ) {
-		    $meils = meil_usuari( $psplit[0] );
-		    foreach( $meils as $to ) {
-		      if( !empty($to) )
-		      enviar_mail_phpmailer_5( $from[0], $to, $subject, $message, $sess_nomreal );
-// 		      echo "<p> From: $psplit[1] < $from[0] >, To: $to , Sbj: $subject , Msg: $message </p>\n";
-		    } // fi foreach
-		  } // fi if no empty from
+// 		  echo "<p> per a: $p </p>\n";
+		  $psplit = split( ";", $p );
+		  foreach( $psplit as $dest ) {
+		    $destsplit = split( "\|", $dest );
+// 		    echo "<p> per a: $destsplit[0] espare: $esPare </p>\n";
+		    if( !empty($from[0]) ) {
+		      $meils = meil_usuari( $destsplit[0] );
+		      foreach( $meils as $to ) {
+			if( !empty($to) )
+			enviar_mail_phpmailer_5( $from[0], $to, $subject, $message, $sess_nomreal );
+  // 		      echo "<p> From: $psplit[1] < $from[0] >, To: $to , Sbj: $subject , Msg: $message </p>\n";
+		      } // fi foreach $meils
+		    } // fi if no empty from
+		  } // fi foreach $p
 		} // fi else if SMS
 		$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub='".((isset($sub)&& $sub!='')?"$sub":"0")."', de='$sess_user|".(($esPare)?"Pares de ":"")."$sess_nomreal', per_a='$p', datahora='$datatimestamp', assumpte='".(($enviar!='siSMS')?addslashes($assumpte):((eregi("NOOK", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK"))."', contingut='".addslashes($conting)."', adjunts='', vist='".(($enviar!='siSMS')?"Enviat_$sess_user/$datatimestamp":"EnviatSMS_$sess_user/$datatimestamp;$res")."'";
 // 		echo "<p> Consulta: $consulta </p>\n";

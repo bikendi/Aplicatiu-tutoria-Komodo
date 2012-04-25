@@ -189,6 +189,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
     $filtreextra = " AND hora IN (SELECT hora from $bdtutoria.$tbl_prefix"."frangeshoraries WHERE extraescolar) ";*/
   
   $filtres = $filtredata . $filtredies . $filtrehores . $filtreprofe . $filtreextra;
+//   echo "<p> Filtres: $filtres </p>\n";
 
 
   print("<table border='0' width='100%'><tr><td align='center' valign='top' width='60'>");
@@ -336,6 +337,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
           $consulta .= "where refalumne='$fila[0]' ";
           $consulta .= "$filtres ";
           $consulta .= "and incidencia='$incid'";
+//           echo "<p> Consulta: $consulta </p>\n";
           $conjunt_resultant1=mysql_query($consulta, $connect);
           print("<td>");
           print("<center>".mysql_result($conjunt_resultant1, 0,0)."</center>");

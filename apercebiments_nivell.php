@@ -537,34 +537,36 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
 //bingen: "signat" ( Per què es necessita if (validacamp()) ??? )
 	   	$textcapa.=(($textcapa!="")?"<br>":"")."<a href=''  title='Elimina apercebiment' onClick='if(confirm(\"Segur que vols eliminar aquest apercebiment?\")){if (validacamp()) {document.forms.introd1.action=document.introd1.action+\"#$fila[0]\"; document.forms.introd1.eliminaapercebiment.value=\"$fila1[0]\"; document.forms.introd1.submit();} } return false;'><img src='imatges/paperera.gif' border='0'></a>" .(($fila1[4]==0)?"&nbsp<a href='' title='Signat' onClick='if (validacamp()) {document.forms.introd1.signaapercebiment.value=\"$fila1[0]\"; document.forms.introd1.submit();} return false;'>S</a>&nbsp" : "&nbsp<a href='' title='No signat' onClick='if (validacamp()) {document.forms.introd1.unsignaapercebiment.value=\"$fila1[0]\"; document.forms.introd1.submit();} return false;'>N</a>&nbsp" )."<b>".$nomDiaSem[date('w',$fila1[2])].", ".date('j-n-Y',$fila1[2])."</b> ".rawurldecode($fila1[3]).(($fila1[4]==0)?"<b> - No signat!</b>" : " - (Signat)" );   
     	} // fi while apercebiments
+    	$filtreextra = " AND hora IN (SELECT hora from $bdtutoria.$tbl_prefix"."frangeshoraries WHERE NOT extraescolar OR extraescolar IS NULL) ";
     	mysql_free_result($conjunt_resultant1);
 		// faltes injustificades
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='F' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='F' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
+//     	echo "<p> Consulta1: $consulta1 </p>\n";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nfaltestot=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
 		// faltes justificades
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='FJ' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='FJ' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nfaltesj=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
     	// retards injustificats
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='R' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='R' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nretardstot=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
     	// retards justificats
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='RJ' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='RJ' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nretardsj=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
     	// expulsions
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='E' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='E' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nexpul=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
     	// anotacions
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='A' and data>='$datatimestampI' and data<='$datatimestampF' ";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='A' and data>='$datatimestampI' and data<='$datatimestampF' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nanotac=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
@@ -587,13 +589,13 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
     	$n_dif_retards = intval($nretardstot) - $n_retards_ap;
 
 		// retards entre classes
-    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='R' and data>='$datatimestampI' and data<='$datatimestampF' AND hora != '1' AND hora != '7'";
+    	$consulta1="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."faltes WHERE refalumne='$fila[0]' and incidencia='R' and data>='$datatimestampI' and data<='$datatimestampF' AND hora != '1' AND hora != '7' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$nrecstot=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
 		
 		// retards entre classes sense notificar
-    	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='REC' ";
+    	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='REC' $filtreextra ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$n_recs_ap = mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);

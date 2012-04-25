@@ -12,7 +12,10 @@
 - ISO-8859-1 -> UTF8
 - Moodle integration
 - $_REQUEST in each file instead of clauget, claupost, etc. in comu.php
-
+- Google Apps integration: Login with google
+- Google Apps integratios: e-mail
+- Google Apps integration: ...?
+- Hints when logging in. For example, to remind to the parents that they can change their phone and e-mail.
 ----------
 
 - join cons_alum.php and cons_alumpares.php 

@@ -97,8 +97,8 @@ function enviar_mail_phpmailer_5( $from, $to, $subject, $message, $from_name='',
 
   if( $mail->Send() ) {
     echo "<p>E-mail enviat de: $from_name < $from > a: $to_name < $to ></p>\n";
-    $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub=0, de='$sess_user|"."$sess_nomreal', per_a='$to_name <$to>', datahora='$datatimestamp', assumpte='Enviat e-mail: ".addslashes($subject)."', contingut='".addslashes($message)."', adjunts='', vist='EnviatE-mail_$sess_user/$datatimestamp'";
-//     echo "<p>Consulta e-mail: $consulta</p>\n";
+    $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub=0, de='$sess_user|"."$sess_nomreal', per_a='|". ($to_name!=''? "$to_name ($to)" : $to ) ."', datahora='$datatimestamp', assumpte='Enviat e-mail: ".addslashes($subject)."', contingut='".addslashes($message)."', adjunts='', vist='EnviatE-mail_$sess_user/$datatimestamp'";
+//      echo "<p>Consulta e-mail: $consulta</p>\n";
     mysql_query($consulta);
     return true;
   } else {
