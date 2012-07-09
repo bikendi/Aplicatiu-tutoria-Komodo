@@ -730,5 +730,5 @@ CREATE TABLE at_11_12_usu_profes (
   telfSMS varchar(9) NOT NULL default '',
   email varchar(64) NOT NULL default ''
 ) TYPE=MyISAM;
-/*INSERT INTO at_11_12_usu_profes VALUES ('', 'Administrador', 'admin', 'aa1111', '137a3a3a7809a828afe701ad71827e81', 2000, '', NULL, '', 2000, '');*/
+INSERT INTO at_11_12_usu_profes VALUES ('', 'Administrador', 'admin', 'aa1111', '137a3a3a7809a828afe701ad71827e81', 2000, '', NULL, '', 2000, '', '');
 
