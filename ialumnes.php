@@ -73,7 +73,7 @@ if(isset($valida)&&$valida==1) {
                    'ú'=>'u','ù'=>'u','ü'=>'u','û'=>'u', 'ç'=>'c','ñ'=>'ny','l·l'=>'l',
                    'Á'=>'a','À'=>'a','Ä'=>'a','Â'=>'a', 'É'=>'e','È'=>'e','Ë'=>'e','Ê'=>'e',
                    'Í'=>'i','Ì'=>'i','Ï'=>'i','Î'=>'i', 'Ó'=>'o','Ò'=>'o','Ö'=>'o','Ô'=>'o',
-                   'Ú'=>'u','Ù'=>'u','Ü'=>'u','Û'=>'u', 'Ç'=>'c','Ñ'=>'ny','L·L'=>'l',' '=>'' );
+                   'Ú'=>'u','Ù'=>'u','Ü'=>'u','Û'=>'u', 'Ç'=>'c','Ñ'=>'ny','L·L'=>'l',' '=>'','\''=>'' );
   $consulta="SELECT numero_mat, nom_alum, cognom_alu, contactes FROM $bdalumnes.$tbl_prefix"."Estudiants";
   $conjunt_resultant=mysql_query($consulta, $connect);
   while($fila=mysql_fetch_row($conjunt_resultant)) {
@@ -84,16 +84,17 @@ if(isset($valida)&&$valida==1) {
       $fila[2]=strtolower($fila[2]);
       $fila[1]=strtr($fila[1],$trans);
       $fila[2]=strtr($fila[2],$trans);
-      $nf=2;
+      $nf=2; // TODO: why 2 and not 1?
       do {
       	$identpare=substr($fila[1],0,1).$fila[2].$nf;
+      	// TODO: conflict with usu_profes?
       	$consulta2="SELECT count(*) FROM $bdtutoria.$tbl_prefix"."pares WHERE identificador='$identpare'";
       	$conjunt_resultant2=mysql_query($consulta2, $connect);
       	if(0==mysql_result($conjunt_resultant2,0,0)) break;
       	mysql_free_result($conjunt_resultant2);
       	++$nf;
-  	   } while (true);
-  	   $telfSMS = substr($fila[3], 0, 9);
+      } while (true);
+      $telfSMS = substr($fila[3], 0, 9);
       $consulta3="INSERT INTO $bdtutoria.$tbl_prefix"."pares (identificador, passwd, refalumne, permisos, telfSMS) VALUES ( '$identpare' , lcase(concat(char(97+round(25*rand())),char(97+round(25*rand())),right(concat('000',round(9999*rand())),4))) , '$fila[0]', '0', '$telfSMS' )";
       mysql_query($consulta3, $connect);
     } // fi if consulta1
