@@ -317,7 +317,7 @@ INSERT INTO `at_11_12_frangeshoraries` VALUES (8, '6', 46801, 50100, FALSE);
 INSERT INTO `at_11_12_frangeshoraries` VALUES (9, 'di', 50101, 51000, FALSE);
 INSERT INTO `at_11_12_frangeshoraries` VALUES (10, '7', 51001, 54300, FALSE);
 INSERT INTO `at_11_12_frangeshoraries` VALUES (11, '8', 54301, 57600, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (11, '9', 57601, 60900, TRUE);
+INSERT INTO `at_11_12_frangeshoraries` VALUES (12, '9', 57601, 60900, TRUE);
 # --------------------------------------------------------
 
 #
