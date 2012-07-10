@@ -38,12 +38,12 @@ if((isset($afegirdesar) && $afegirdesar=='1')||(isset($modificardesar) && $modif
 			exit;    		    
     	}
     	mysql_free_result($conjunt_resultant);
-		if(eregi("^[a-z0-9]{1,4}$",$nomhora)!=true) {
+		if(preg_match("/^[a-z0-9]{1,4}$/i",$nomhora)!=true) {
 			print("<html><script language='JavaScript'>alert('Nom d´hora incorrecte, ha d´esser entre 1 i 4 caracters a-z, A-Z, 0-9.'); location.href='$PHP_SELF?idsess=$idsess';</script></html>");
 			exit;		
 		}
 	}
-	if(ereg("^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$",$hinici)!=true || ereg("^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$",$hfi)!=true) {
+	if(preg_match("/^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/",$hinici)!=true || preg_match("/^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/",$hfi)!=true) {
 		print("<html><script language='JavaScript'>alert('Format d´hora incorrecta, ha d´esser: HH:MM:SS.'); location.href='$PHP_SELF?idsess=$idsess';</script></html>");
 		exit;		
 	}

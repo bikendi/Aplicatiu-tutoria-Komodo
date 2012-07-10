@@ -98,7 +98,7 @@ function validaemail()
 </head>
 <body  bgcolor="#ccdd88" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <?
-$esPare=ereg("Pare_", $sess_privilegis);
+$esPare=preg_match("/Pare_/", $sess_privilegis);
 
 print("
 <div align='right'>

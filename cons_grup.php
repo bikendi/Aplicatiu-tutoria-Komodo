@@ -197,7 +197,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
   else print("<font color='#ff0000'><br><b>Filtre<br>Dies:</b></font><br>");
   print("<input type='hidden' name='dies' value='$dies'>
   <select name='di' size='5' multiple onChange='fdies(); document.introd1.submit();'>");
-  for($i=1;$i<count($nomDiaSem)-1;++$i) print("<option".((ereg($nomDiaSem[$i],$dies))?" selected":"").">$nomDiaSem[$i]</option>");
+  for($i=1;$i<count($nomDiaSem)-1;++$i) print("<option".((preg_match('/'. $nomDiaSem[$i] .'/',$dies))?" selected":"").">$nomDiaSem[$i]</option>");
   print("</select><br>");
 
   // filtre hores

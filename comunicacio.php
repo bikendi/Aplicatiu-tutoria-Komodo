@@ -33,7 +33,7 @@ if(isset($_GET['obrefitxer'])&& $_GET['obrefitxer']!='') {
 @include("comu.php");
 @include("enviaSMS.php");
 require_once $lib.'mail.php';
-$esPare=ereg("Pare_", $sess_privilegis);
+$esPare=preg_match("/Pare_/", $sess_privilegis);
 ?>
 <html>
 <head>
@@ -122,7 +122,7 @@ if (isset ($mostracontingut) && $mostracontingut!='') {
 	$borrapendent=explode(";",$fila[8]);
 // 	$aux = '';
 	for ($i=0; $i<count($borrapendent); ++$i) {
-		if(ereg("Pendent_$sess_user/", $borrapendent[$i])==false) $aux.=(($aux!='')?";":"").$borrapendent[$i];
+		if(preg_match("/Pendent_$sess_user\//", $borrapendent[$i])==false) $aux.=(($aux!='')?";":"").$borrapendent[$i];
 	}
 	$fila[8]=$aux;
 	$consulta="UPDATE $bdtutoria.$tbl_prefix"."comunicacio SET vist='$fila[8]' WHERE id='$fila[0]'";
@@ -147,7 +147,7 @@ if(isset($mouacarpeta) && $mouacarpeta!='') {
 	$conjunt_resultant=mysql_query($consulta, $connect);
 	$vist=mysql_result($conjunt_resultant, 0,0);
 	mysql_free_result($conjunt_resultant);
-	$vist1=eregi_replace("((;Carp_$sess_user/)[a-z0-9]{1,10}$)|((Carp_$sess_user/)[a-z0-9]{1,10};)", "", $vist);
+	$vist1=preg_replace("/((;Carp_$sess_user\/)[a-z0-9]{1,10}$)|((Carp_$sess_user\/)[a-z0-9]{1,10};)/i", "", $vist);
 	if($carpdesti!='General') $vist2=$vist1.(($vist1!="")?";":"")."Carp_$sess_user/$carpdesti";
 	else $vist2=$vist1;
 	$consulta="UPDATE $bdtutoria.$tbl_prefix"."comunicacio SET vist='$vist2' WHERE id='$idmiss'";
@@ -181,7 +181,7 @@ if (isset($pendent) && $pendent!='') {
 	$consulta="SELECT vist FROM $bdtutoria.$tbl_prefix"."comunicacio where id='$pendent' limit 1";
 	$conjunt_resultant=mysql_query($consulta, $connect);
 	$fila= mysql_fetch_row($conjunt_resultant);
-	if(!ereg("Pendent_$sess_user/", $fila[0])) {
+	if(!preg_match("%Pendent_$sess_user/%", $fila[0])) {
 		$consulta="UPDATE $bdtutoria.$tbl_prefix"."comunicacio SET vist='$fila[0];Pendent_$sess_user/$datatimestamp' where id='$pendent' limit 1";
 		mysql_query($consulta, $connect);
 	}
@@ -244,7 +244,7 @@ if (isset($mostraadreces) && $mostraadreces==1) {
 		mysql_free_result($conjunt_resultant);
 		
 	}
-	else if($grups=="ParesTots" || eregi("[?1-9] [?A-Z] ([.?A-Z0-9])+",$grups)) {
+	else if($grups=="ParesTots" || preg_match("/[?1-9] [?A-Z] ([.?A-Z0-9])+/i",$grups)) {
 		if($grups=="ParesTots") $consulta="SELECT cognom_alu, cognom2_al, nom_alum, concat(curs, grup, pla_estudi), numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants order by cognom_alu, cognom2_al";
 		else {
     		$gru=split(' ',$grups);
@@ -618,13 +618,13 @@ if ((isset($nou) && ($nou=='si'||$nou=='siSMS')) || (isset($respon) && $respon!=
 	print("<a href='' onClick='enviarmiss(); return false;'><img src='./imatges/enviar.gif' border='0'> Enviar".((isset($nou)&&$nou=='siSMS')?" SMS":"")."</a> <a href='' onClick='if(confirm(\"Segur que vols Cancelar l´operació?\")) {document.forms.noumisstg.enviar.value=\"no\"; document.forms.noumisstg.submit();} return false;'><img src='./imatges/tornar.gif' border='0'> Cancelar</a><br>");
 	print("<b>De:</b> ".(($esPare)?"Pares de ":"")."$sess_nomreal &nbsp; &nbsp; &nbsp; <b>Per a:</b> <input type='hidden' name='pera' value='".((isset($respon)&&$respon!='')?"$deorig":"")."'><span id='per_a'>".((isset($respon)&&$respon!='')?"$deorignom":"")."</span> <a href='' onClick='mostraAdreces(); return false;'><img src='./imatges/agenda.gif' border='0'>Destinataris</a><br>");
 	if((isset($nou)&&$nou!='siSMS')||(isset($respon) && $respon!='')) {
-	  print("<b>Assumpte:</b> <input type='text' name='assumpte' value='' size='50' maxlength='50'><script language='JavaScript'>document.forms.noumisstg.assumpte.value='".((isset($respon)&&$respon!='')?addslashes("Re: ".ereg_replace( "^Re: ", "", $assumpteorig)):"")."';</script><br>");
+	  print("<b>Assumpte:</b> <input type='text' name='assumpte' value='' size='50' maxlength='50'><script language='JavaScript'>document.forms.noumisstg.assumpte.value='".((isset($respon)&&$respon!='')?addslashes("Re: ".preg_replace( "/^Re: /", "", $assumpteorig)):"")."';</script><br>");
 	  print("<img src='./imatges/adj_arxiu.gif'><b>Adjunts:</b> <input type='hidden' name='adjts' value=''><span id='adjunts'></span>&nbsp; &nbsp; <a href='' onClick='carregaAdjunt(); return false;'>Afegir adjunt</a><br>");
 	  print("<b>Contingut:</b>");
 	}
 	else print("<b>Contingut:</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id='comptacars'>m&agrave;xim 152 caracters</span>");
 	print("</div>");
-	print("<textarea name='conting' ".((isset($nou)&&$nou=='siSMS')?"onKeyUp='contarcars()' ":"")."cols='124' rows='14' wrap='hard' style=' font-size: 11px; font-family: Verdana, sans-serif; background-color: #C0FFFF'>".((isset($respon)&&$respon!='')?"\n\n\n> --------------Text original--------------\n> El ".$nomDiaSem[date('w',$datahoraorig)].", ".date('j-n-Y',$datahoraorig)."&nbsp; ".date('H:i',$datahoraorig).", $deorignom ha dit:\n".ereg_replace("^", ">", $contingutorig):"")."</textarea>");
+	print("<textarea name='conting' ".((isset($nou)&&$nou=='siSMS')?"onKeyUp='contarcars()' ":"")."cols='124' rows='14' wrap='hard' style=' font-size: 11px; font-family: Verdana, sans-serif; background-color: #C0FFFF'>".((isset($respon)&&$respon!='')?"\n\n\n> --------------Text original--------------\n> El ".$nomDiaSem[date('w',$datahoraorig)].", ".date('j-n-Y',$datahoraorig)."&nbsp; ".date('H:i',$datahoraorig).", $deorignom ha dit:\n".preg_replace("/^/", ">", $contingutorig):"")."</textarea>");
 	print("</form>");
 	print("</body></html>");
 	exit;	
@@ -662,7 +662,7 @@ if (isset($enviar) && $enviar!='') {
 		    } // fi if no empty from
 		  } // fi foreach $p
 		} // fi else if SMS
-		$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub='".((isset($sub)&& $sub!='')?"$sub":"0")."', de='$sess_user|".(($esPare)?"Pares de ":"")."$sess_nomreal', per_a='$p', datahora='$datatimestamp', assumpte='".(($enviar!='siSMS')?addslashes($assumpte):((eregi("NOOK", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK"))."', contingut='".addslashes($conting)."', adjunts='', vist='".(($enviar!='siSMS')?"Enviat_$sess_user/$datatimestamp":"EnviatSMS_$sess_user/$datatimestamp;$res")."'";
+		$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub='".((isset($sub)&& $sub!='')?"$sub":"0")."', de='$sess_user|".(($esPare)?"Pares de ":"")."$sess_nomreal', per_a='$p', datahora='$datatimestamp', assumpte='".(($enviar!='siSMS')?addslashes($assumpte):((preg_match("/NOOK/i", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK"))."', contingut='".addslashes($conting)."', adjunts='', vist='".(($enviar!='siSMS')?"Enviat_$sess_user/$datatimestamp":"EnviatSMS_$sess_user/$datatimestamp;$res")."'";
 // 		echo "<p> Consulta: $consulta </p>\n";
 		mysql_query($consulta, $connect);
 		if(isset($adjts) && $adjts!='') {
@@ -682,8 +682,8 @@ if (isset($enviar) && $enviar!='') {
 			$consulta="UPDATE $bdtutoria.$tbl_prefix"."comunicacio SET adjunts='$llistaadjunts' WHERE id='$id'";
 			mysql_query($consulta, $connect);
 		}		
-		if($enviar=='siSMS' && (eregi("NOOK", $res)||$res=="Error connexio"||$res=="Error: No configurat")) print("</head><body><script language='JavaScript'>alert(\"Error: Missatge no enviat\"); parent.superior.document.forms.formselmiss.submit(); location.href=\"buit.php?idsess=$idsess\";</script></body></head></html>");
-		else print("</head><body><script language='JavaScript'>alert(\"Missatge enviat correctament.".((privilegis('-', '-','-') && $enviar=='siSMS' && !(eregi("NOOK", $res)||$res=="Error connexio"))?" Saldo SMS: ".saldoSMS():"")."\"); parent.superior.document.forms.formselmiss.submit(); location.href=\"buit.php?idsess=$idsess\";</script></body></head></html>"); 
+		if($enviar=='siSMS' && (preg_match("/NOOK/i", $res)||$res=="Error connexio"||$res=="Error: No configurat")) print("</head><body><script language='JavaScript'>alert(\"Error: Missatge no enviat\"); parent.superior.document.forms.formselmiss.submit(); location.href=\"buit.php?idsess=$idsess\";</script></body></head></html>");
+		else print("</head><body><script language='JavaScript'>alert(\"Missatge enviat correctament.".((privilegis('-', '-','-') && $enviar=='siSMS' && !(preg_match("/NOOK/i", $res)||$res=="Error connexio"))?" Saldo SMS: ".saldoSMS():"")."\"); parent.superior.document.forms.formselmiss.submit(); location.href=\"buit.php?idsess=$idsess\";</script></body></head></html>"); 
 	}
 	else if($enviar=='no') {
 		if(isset($adjts) && $adjts!='') {
@@ -701,7 +701,7 @@ if (isset($elimina) && $elimina!='') {
 	$consulta="SELECT vist FROM $bdtutoria.$tbl_prefix"."comunicacio where id='$elimina'";
 	$conjunt_resultant=mysql_query($consulta, $connect);
 	$fila=mysql_fetch_row($conjunt_resultant);
-	$fila[0]=eregi_replace("((;Carp_$sess_user/)[a-z0-9]{1,10}$)|((Carp_$sess_user/)[a-z0-9]{1,10};)", "", $fila[0]);
+	$fila[0]=preg_replace("%((;Carp_$sess_user/)[a-z0-9]{1,10}$)|((Carp_$sess_user/)[a-z0-9]{1,10};)%i", "", $fila[0]);
 	$consulta="UPDATE $bdtutoria.$tbl_prefix"."comunicacio SET vist='".(($fila[0]!='')?"$fila[0];":"").((isset($sms)&&$sms=='si')?"EliminaSMS_":"Elimina_")."$sess_user/$datatimestamp' WHERE id='$elimina'";
 	mysql_query($consulta, $connect);
 	mysql_free_result($conjunt_resultant);
@@ -744,7 +744,7 @@ if (isset($historial) && $historial!='') {
 
 if(isset($gcarpetes) && $gcarpetes=='1') {
 	if(isset($afegircarpetadesar) && $afegircarpetadesar=='1') {
-		if (!eregi("^[a-zA-Z0-9]{1,10}$",$nomnovacarpeta)) {
+		if (!preg_match("/^[a-zA-Z0-9]{1,10}$/i",$nomnovacarpeta)) {
 			print("<html><script language='JavaScript'>alert('Error: Nom de carpeta incorrecte o en blanc.'); location.href='$PHP_SELF?idsess=$idsess&gcarpetes=1';</script></html>");
 			exit;
 		}
@@ -960,7 +960,7 @@ if (isset($superior) && $superior=='si') {
 				}
 			}
 			else $nomspera=(($esPare)?"Pares de ":"").$sess_nomreal;
-			print("<tr><td width='5%' valign='top'>$nseleccio.-</td><td width='2%' valign='top'><img id='img$fila[0]' src='".((ereg("Vist_$sess_user/|Enviat_$sess_user/|EnviatSMS_$sess_user/",$fila[7])==false)?"./imatges/banderola.gif' title='Nou, no llegit'":(((ereg("Pendent_$sess_user/",$fila[7])==true))?"./imatges/banderolav.gif' title='Pendent de resposta'":"./imatges/pixelblank.gif'"))."></td><td width='1%' valign='top'>".(($fila[6]!='')?"<img src='./imatges/adj_arxiu.gif'>":"&nbsp;")."</td><td width='29%' valign='top'> De: <span title='Per a: $nomspera'>$remitentnomreal</span></td><td width='43%' valign='top'> <a href='' title='De: $remitentnomreal => Per a: $nomspera' onClick='parent.frames.contingut.location.href=\"$PHP_SELF?idsess=$idsess&mostracontingut=$fila[0]&nseleccio=$nseleccio&carpactual=$carpeta".((isset($sms))?"&sms=si":"")."\"; return false;'>".(($fila[5]!='')?$fila[5]:"N/A")."</a></td><td width='20%' valign='top'> ".$nomDiaSem[date('w',$fila[4])].", ".date('j-n-Y',$fila[4])."&nbsp; ".date('H:i',$fila[4])."</td></tr>");
+			print("<tr><td width='5%' valign='top'>$nseleccio.-</td><td width='2%' valign='top'><img id='img$fila[0]' src='".((preg_match("%Vist_$sess_user/|Enviat_$sess_user/|EnviatSMS_$sess_user/%",$fila[7])==false)?"./imatges/banderola.gif' title='Nou, no llegit'":(((preg_match("%Pendent_$sess_user/%",$fila[7])==true))?"./imatges/banderolav.gif' title='Pendent de resposta'":"./imatges/pixelblank.gif'"))."></td><td width='1%' valign='top'>".(($fila[6]!='')?"<img src='./imatges/adj_arxiu.gif'>":"&nbsp;")."</td><td width='29%' valign='top'> De: <span title='Per a: $nomspera'>$remitentnomreal</span></td><td width='43%' valign='top'> <a href='' title='De: $remitentnomreal => Per a: $nomspera' onClick='parent.frames.contingut.location.href=\"$PHP_SELF?idsess=$idsess&mostracontingut=$fila[0]&nseleccio=$nseleccio&carpactual=$carpeta".((isset($sms))?"&sms=si":"")."\"; return false;'>".(($fila[5]!='')?$fila[5]:"N/A")."</a></td><td width='20%' valign='top'> ".$nomDiaSem[date('w',$fila[4])].", ".date('j-n-Y',$fila[4])."&nbsp; ".date('H:i',$fila[4])."</td></tr>");
 			--$nseleccio;
 		}
 		print("</table>");

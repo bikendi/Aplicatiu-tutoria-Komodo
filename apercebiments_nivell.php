@@ -150,7 +150,7 @@ if(isset($nouapercebiment)&&$nouapercebiment!='') {
 			//echo "<p> telf: $telfSMS </p> \n";
 			$res=enviaSMS($sess_nomreal, $telfSMS, $conting);
 			echo "<p> Resultat SMS: $res </p> \n";
-			$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub=0, de='$sess_user|"."$sess_nomreal', per_a='$pares ($telfSMS)', datahora='$datatimestamp', assumpte='".((eregi("NOOK", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK")."', contingut='".addslashes($conting)."', adjunts='', vist='EnviatSMS_$sess_user/$datatimestamp;$res'";
+			$consulta="INSERT INTO $bdtutoria.$tbl_prefix"."comunicacio SET sub=0, de='$sess_user|"."$sess_nomreal', per_a='$pares ($telfSMS)', datahora='$datatimestamp', assumpte='".((preg_match("/NOOK/i", $res)||$res=="Error connexio"||$res=="Error: No configurat")?"Resultat: Enviament Erròni":"Resultat: Enviament OK")."', contingut='".addslashes($conting)."', adjunts='', vist='EnviatSMS_$sess_user/$datatimestamp;$res'";
     		//echo "<p>Consulta sms: $consulta</p>\n";
 			mysql_query($consulta, $connect);
 		} // fi if telf no buit

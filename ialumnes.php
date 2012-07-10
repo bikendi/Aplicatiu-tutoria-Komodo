@@ -233,7 +233,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
       $nom_al=(($values[4]!="\"-\"")?$values[4]:"\"\"");
       $genere=(($values[5]=="\"H\"")?"\"HOME\"":(($values[5]=="\"D\"")?"\"DONA\"":"\"?\""));
 
-      if(($values[6]=="\"-\"")||(ereg("\*", $values[6]))) {  
+      if(($values[6]=="\"-\"")||(preg_match("/\*/", $values[6]))) {  
       	continue;
       } elseif( substr($values[6], 1, 10) == 'DIVERSITAT' ) {
 /*      	$plaescursgrup=split("[ ]+",$values[6]);
@@ -251,7 +251,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
       $adreca=(($values[7]!="\"-\"")?$values[7]:"\"\"");
       $nom_municipi=(($values[8]!="\"-\"")?$values[8]:"\"\"");
       $codi_postal=(($values[9]!="\"-\"")?$values[9]:"\"\"");
-      if(ereg("[0-9]{9}", $values[10], $te)) { $tel=''; for($i=0; $i<count($te); ++$i) $tel.=(($tel=="")?"":", ").$te[$i];}
+      if(preg_match("/[0-9]{9}/", $values[10], $te)) { $tel=''; for($i=0; $i<count($te); ++$i) $tel.=(($tel=="")?"":", ").$te[$i];}
       $telefon=(($values[10]!="\"-\"")?$tel:"\"\"");
       $cognom1_pa=(($values[11]!="\"-\"")?$values[11]:"\"\"");
       $cognom2_pa=(($values[12]!="\"-\"")?$values[12]:"\"\"");

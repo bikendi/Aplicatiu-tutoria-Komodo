@@ -318,7 +318,7 @@ function ocultaMostraCapa(IdCapa,ocultaMostra) {
   if (ie)   eval( 'document.all.' + IdCapa +'.style.visibility=' + ((ocultaMostra=="v")?'"visible"':'"hidden"') );
 }
 
-document.write("<iframe style='position: absolute; top:<?=(($recordatoris!="")?"30":"17")?>px; border-width:0px; border-style:none' src='<?if(ereg("Administrador", $sess_privilegis)) print("llic.php?idsess=$idsess"); else print("buit.php?idsess=$idsess");?>' id='cos' name='cos' height='100%' width='100%'>Aquest navegador no soporta frames!</iframe>");
+document.write("<iframe style='position: absolute; top:<?=(($recordatoris!="")?"30":"17")?>px; border-width:0px; border-style:none' src='<?if(preg_match("/Administrador/", $sess_privilegis)) print("llic.php?idsess=$idsess"); else print("buit.php?idsess=$idsess");?>' id='cos' name='cos' height='100%' width='100%'>Aquest navegador no soporta frames!</iframe>");
 function redimensiona() {
   if (ie) {
     var ampleBody = document.body.clientWidth;

@@ -153,9 +153,9 @@ function enviaSMSLleidaNet($pRemitent, $pLlistaTelfsDesti, $pText) {
 
 	if($usuariSMS=='' || $passwdSMS=='') $res="Error: No configurat";
 	else {
-		$pText=ereg_replace("\n", " ", $pText);
+		$pText=preg_replace("/\n/", " ", $pText);
 		if($remitent!='') $pRemitent=$remitent;
-		$pRemitent=substr(ereg_replace(" ", "", $pRemitent),0,11);	
+		$pRemitent=substr(preg_replace("/ /", "", $pRemitent),0,11);	
 		$res='';
 		$conexio = fsockopen($proveidorSMS,$portSMS);
 		if($conexio) {
@@ -196,7 +196,7 @@ function saldoSMSLleidaNet() {
 		if($conexio) {
 			fputs($conexio,"1 login $usuariSMS $passwdSMS\r\n");		
 			$login = fgets($conexio,256);
-			ereg("([0-9] )(.*)",$login,$res);
+			preg_match("/([0-9] )(.*)/",$login,$res);
 			$resul=rtrim($res[2]);
 			settype($resul,"string");
 			if ($resul=="NOOK") {

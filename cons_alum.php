@@ -289,7 +289,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   else print("<label for='dies' class='filtre_actiu'><b>Filtre<br>Dies:</b><br></label>");
   print("<input type='hidden' name='dies' value='$dies'>
   <select name='di' size='4' multiple onChange='fdies(); document.introd1.submit();'title=''>");
-  for($i=1;$i<count($nomDiaSem)-1;++$i) print("<option".((ereg($nomDiaSem[$i],$dies))?" selected":"").">$nomDiaSem[$i]</option>");
+  for($i=1;$i<count($nomDiaSem)-1;++$i) print("<option".((preg_match('/' . $nomDiaSem[$i] .'/',$dies))?" selected":"").">$nomDiaSem[$i]</option>");
   print("</select>");
   print("</td>");
   // filtre hores

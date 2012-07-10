@@ -117,7 +117,7 @@ if((isset($grup)&&$grup!="") || (isset($subgrup)&&$subgrup!="")) {
   if(isset($grup)&&$grup!="") $aux=rawurlencode($grup);
   else $aux=rawurlencode($subgrup);
   $consulta="SELECT DISTINCT l.codi, l.nomcredit FROM $bdtutoria.$tbl_prefix"."llistacredits l, $bdtutoria.$tbl_prefix"."horariprofs h WHERE l.codi=h.assign and h.grup like '%$aux%'";
-  if(ereg("Administrador", $sess_privilegis)) $permis=true; else $permis=false;
+  if(preg_match("/Administrador/", $sess_privilegis)) $permis=true; else $permis=false;
   if(!$permis) $consulta.=" and h.idprof='$sess_user'";
   $conjunt_resultant=mysql_query($consulta, $connect);
   $hihaassignselected=false;
@@ -317,9 +317,9 @@ if ($grup!="" || $subgrup!="") {
   	  $conjunt_resultant1=mysql_query($consulta1, $connect);
   	  $numitems=mysql_result($conjunt_resultant1, 0,5);
   	  if(mysql_result($conjunt_resultant1, 0,0)=='si') $modificable=true; else $modificable=false;
-  	  if (ereg($fila[4], mysql_result($conjunt_resultant1, 0,1)) ||mysql_result($conjunt_resultant1, 0,1)=='Tots') $etapaOK=true; else $etapaOK=false;
-  	  if (ereg($fila[2], mysql_result($conjunt_resultant1, 0,3)) ||mysql_result($conjunt_resultant1, 0,3)=='Tots') $cursOK=true; else $cursOK=false;
-       if (ereg($fila[3], mysql_result($conjunt_resultant1, 0,4)) ||mysql_result($conjunt_resultant1, 0,4)=='Tots') $grupOK=true; else $grupOK=false;
+  	  if (preg_match('/'. $fila[4] .'/', mysql_result($conjunt_resultant1, 0,1)) ||mysql_result($conjunt_resultant1, 0,1)=='Tots') $etapaOK=true; else $etapaOK=false;
+  	  if (preg_match('/'. $fila[2] .'/', mysql_result($conjunt_resultant1, 0,3)) ||mysql_result($conjunt_resultant1, 0,3)=='Tots') $cursOK=true; else $cursOK=false;
+       if (preg_match('/'. $fila[3] .'/', mysql_result($conjunt_resultant1, 0,4)) ||mysql_result($conjunt_resultant1, 0,4)=='Tots') $grupOK=true; else $grupOK=false;
        if($etapaOK && $cursOK && $grupOK) {
 	  	if ($nota=='-1') $nota='';
 	  	$not=explode('z',$nota);

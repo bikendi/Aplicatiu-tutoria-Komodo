@@ -59,8 +59,8 @@
 <body  bgcolor="#ccdd88" background="./imatges/fons.gif" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
 <?
-if(ereg("Pare_", $sess_privilegis)) $esPare=true; else $esPare=false;
-if(ereg("Administrador", $sess_privilegis)) $esAdministrador=true; else $esAdministrador=false;
+if(preg_match("/Pare_/", $sess_privilegis)) $esPare=true; else $esPare=false;
+if(preg_match("/Administrador/", $sess_privilegis)) $esAdministrador=true; else $esAdministrador=false;
 if(!$esPare && !$esAdministrador) $esProfessoroTutor=true; else $esProfessoroTutor=false;
 
 if ($esAdministrador) print("

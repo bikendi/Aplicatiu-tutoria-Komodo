@@ -202,7 +202,7 @@ foreach($llistaalumnes as $alum) {
 				$pdf->SetFontSize(7);
 			} else {
 				$pdf->Cell($amplecol/count($aux),4,"$aux[$k]",(($k==0)?"LTB":(($k==(count($aux)-1))?"RTB":"TB")),0,'C',0);
-				if(ereg ("^[-]?[0-9]+([\.][0-9]+)?$", $aux[$k]) && $sumnotesgrup!=-1 && $aux[$k]!='') {$sumnotesgrup=$sumnotesgrup+$aux[$k]; ++$numnotesgrup;}
+				if(preg_match ("/^[-]?[0-9]+([\.][0-9]+)?$/", $aux[$k]) && $sumnotesgrup!=-1 && $aux[$k]!='') {$sumnotesgrup=$sumnotesgrup+$aux[$k]; ++$numnotesgrup;}
 				else if ($aux[$k]!='') $sumnotesgrup=-1;
 			}
 			if($aux[$k]=='I'||$aux[$k]=='1'||$aux[$k]=='2'||$aux[$k]=='3'||$aux[$k]=='4') $pdf->SetTextColor(0,0,0);
