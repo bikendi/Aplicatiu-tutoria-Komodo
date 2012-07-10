@@ -193,7 +193,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
   NOM_MARE varchar(30) default NULL,
   PRIMARY KEY  (numero_mat),
   UNIQUE KEY numero_mat (numero_mat)
-) TYPE=MyISAM";
+)";
   mysql_query($consulta, $connect);
 
   $inserits=0;

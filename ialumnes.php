@@ -209,7 +209,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
   CONTACTES varchar(100) default NULL,
   PRIMARY KEY  (numero_mat),
   UNIQUE KEY numero_mat (numero_mat)
-) TYPE=MyISAM";
+)";
   mysql_query($consulta, $connect);
 
   $inserits=0;

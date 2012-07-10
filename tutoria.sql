@@ -60,7 +60,7 @@ CREATE TABLE at_11_12_Estudiants (
   CONTACTES varchar(100) default NULL,
   PRIMARY KEY  (numero_mat),
   UNIQUE KEY numero_mat (numero_mat)
-) TYPE=MyISAM;
+) ;
 
 # --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE at_11_12_EstudiantsEsborrats (
   NOM_MARE varchar(30) default NULL,
   PRIMARY KEY  (numero_mat),
   UNIQUE KEY numero_mat (numero_mat)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE at_11_12_anotacions (
   id int(11) NOT NULL auto_increment,
   text varchar(200) NOT NULL default '',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 INSERT INTO `at_11_12_anotacions` VALUES (1, '- No treballa a classe');
 INSERT INTO `at_11_12_anotacions` VALUES (2, '- No para de parlar');
@@ -139,7 +139,7 @@ CREATE TABLE at_11_12_apercebiments (
   signat boolean default false,
 -- bingen
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 -- bingen
 -- ALTER TABLE  `at_11_12_apercebiments` ADD  `incidencia` VARCHAR( 4 ) NULL, ADD  `quantitat` SMALLINT NULL, ADD signat BOOLEAN DEFAULT FALSE ;
@@ -166,7 +166,7 @@ CREATE TABLE at_11_12_avaluacions (
   estat varchar(25) NOT NULL default '',
   PRIMARY KEY  (id),
   UNIQUE KEY refaval (refaval)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -188,7 +188,7 @@ CREATE TABLE at_11_12_calendari (
   lectors text NOT NULL,
   lectorsclasf text NOT NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -207,7 +207,7 @@ CREATE TABLE at_11_12_comunicacio (
   adjunts text NOT NULL,
   vist text NOT NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -222,7 +222,7 @@ CREATE TABLE at_11_12_comunicpers (
   grups text,
   PRIMARY KEY  (id,usuari),
   UNIQUE KEY usuari (usuari)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -236,7 +236,7 @@ CREATE TABLE at_11_12_databloqueig (
   data bigint(20) NOT NULL default '0',
   PRIMARY KEY  (id),
   UNIQUE KEY grup (grup)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -253,7 +253,7 @@ CREATE TABLE at_11_12_entrevistes (
   descripcio text,
   public boolean NOT NULL default FALSE,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -271,7 +271,7 @@ CREATE TABLE at_11_12_faltes (
   memo text,
   PRIMARY KEY  (id),
   UNIQUE KEY refalumnedatahora (refalumne,data,hora)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -290,7 +290,7 @@ CREATE TABLE at_11_12_fitxers (
   tamany int(11) NOT NULL default '0',
   public boolean NOT NULL default FALSE,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -305,7 +305,7 @@ CREATE TABLE at_11_12_frangeshoraries (
   fi int(11) NOT NULL default '0',
   extraescolar boolean default FALSE,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 INSERT INTO `at_11_12_frangeshoraries` VALUES (1, '1', 27900, 31200, FALSE);
 INSERT INTO `at_11_12_frangeshoraries` VALUES (2, '2', 31201, 34500, FALSE);
 INSERT INTO `at_11_12_frangeshoraries` VALUES (3, 'p1', 34501, 36300, FALSE);
@@ -335,7 +335,7 @@ CREATE TABLE at_11_12_guardia (
   usuari varchar(50) NOT NULL default '',
   PRIMARY KEY  (id)
 --  UNIQUE KEY refalumnedatahora (refalumne,data,hora)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -351,7 +351,7 @@ CREATE TABLE at_11_12_grupsentorns (
   usuarismembres text NOT NULL,
   recursos text NOT NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -372,7 +372,7 @@ CREATE TABLE at_11_12_grupsfitxers (
   tipus_mime varchar(50) NOT NULL default '',
   tamany bigint(20) NOT NULL default '0',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -394,7 +394,7 @@ CREATE TABLE at_11_12_grupsforums (
   tipus_mime varchar(50) NOT NULL default '',
   tamany bigint(20) NOT NULL default '0',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -409,7 +409,7 @@ CREATE TABLE at_11_12_grupsrecurs (
   nom varchar(40) NOT NULL default '',
   descripcio text NOT NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -425,7 +425,7 @@ CREATE TABLE at_11_12_horariprofs (
   grup varchar(250) NOT NULL default '',
   assign varchar(250) NOT NULL default '',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 INSERT INTO `at_11_12_horariprofs` VALUES (1, 'admin', 'X', 'X', 'admin', '');
 
 # --------------------------------------------------------
@@ -443,7 +443,7 @@ CREATE TABLE at_11_12_informeincid (
   text text,
   public boolean NOT NULL default FALSE,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -459,7 +459,7 @@ CREATE TABLE at_11_12_informelliure (
   titol varchar(100) default NULL,
   contingut text,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -472,7 +472,7 @@ CREATE TABLE at_11_12_informes (
   referencia varchar(30) NOT NULL default '',
   text text,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 INSERT INTO `at_11_12_informes` VALUES (2, 'informe2', '                                                                                         !PARE1\r\n                                                                                         !PARE2\r\n                                                                                         !ADRECA\r\n                                                                                         !CODIPOSTAL !POBLACIO\r\n                                                            \r\n            \r\n            Senyor/a,\r\n            \r\n            Us comuniquem que !VFILL\r\n\r\n                        !ALUMNE\r\n\r\n            que consta !MATRICULAT al curs !ESTUDIS, ha  faltat  a  classe de forma injustificada un total de !NFALTESM hores,  durant el per�ode que va des del !DATAI fins el !DATAF.\r\n            En aquest per�ode tamb� ha fet !NRETARDSM retards injustificats.\r\n\r\n!DETFALM\r\n\r\n!DETRETM\r\n\r\n            Des del comen�ament del curs, ha fet !NFALTESCJ faltes justificades, !NFALTESC faltes injustificades, !NRETARDSCJ retards justificats i !NRETARDSC retards injustificats.\r\n                \r\n            Per  la  qual  cosa  us preguem  posar-vos  en contacte amb nosaltres per tal de concertar una entrevista.\r\n         \r\n            Cordialment,\r\n            EL/LA  TUTOR/A\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n            !TUTOR\r\n\r\n             !POBLACIOCENTRE, a !DATA0 ');
 INSERT INTO `at_11_12_informes` VALUES (3, 'informe3', '                                       AV�S I AMONESTACI� ESCRITA\r\n                                                                                 !PARE1\r\n                                                                                 !PARE2\r\n                                                                                 Pares de l''alumne: !ALUMNE\r\n                                                                                 Curs: !ESTUDIS\r\n                                                            \r\n            Srs.:\r\n            \r\n            Poso   en   el  seu   coneixement  que  d''acord   amb  els  informes  rebuts   dels \r\nprofessors  sobre  !VFILL, ha  com�s  fins  aquest  moment  !NFALTESM  faltes  d''assist�ncia \r\ninjustificades en el present curs acad�mic.\r\n            En  aplicaci�  del  Decret  279/2006,  de  4  de juliol,  sobre  drets  i  deures  dels \r\nalumnes  de  nivell  no universitari  de Catalunya  i de les disposicions  complement�ries \r\ndel  Consell Escolar,  data  13  de mar�  de 2000,  us comuniquem  que  aquest fet  est�\r\ntipificat  com  una conducta  contr�ria a  les normes de conviv�ncia, sancionada amb  la \r\ncorresponent amonestaci�\r\n            En apliaci� de la legislaci� vigent, disposeu d''un termini de tres dies per presentar \r\nles  justificacions que considereu  oportunes mitjan�ant el justificant  extraordinari que  us \r\nadjuntem. En cas contrari, es consideraran com a definitives la tipificaci� i la sanci� abans \r\nesmentades.\r\n\r\n            !POBLACIOCENTRE, a !DATA0,\r\n            El/la  tutor/a !TUTOR\r\n                                                                                                He rebut l''original\r\n                                                                                                Data:\r\n                                                                                                D.N.I.\r\n                                                                                                Signat: Pares/representants legals');
 
@@ -493,7 +493,7 @@ CREATE TABLE at_11_12_llistacredits (
   observacions text NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY codi (codi)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -513,7 +513,7 @@ CREATE TABLE at_11_12_Estudiants_Materies (
   codi_area varchar(15) NOT NULL default '',
   nom_credit varchar(50) NOT NULL default '',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -528,7 +528,7 @@ CREATE TABLE at_11_12_logs (
   ipremota varchar(25) NOT NULL default '',
   text text NOT NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -544,7 +544,7 @@ CREATE TABLE at_11_12_marcshoraris (
   diasem char(3) NOT NULL default '',
   hora varchar(5) NOT NULL default '',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -562,7 +562,7 @@ CREATE TABLE at_11_12_notes (
   memo text NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY ref_avalref_alumref_credit (ref_aval,ref_alum,ref_credit)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -630,7 +630,7 @@ CREATE TABLE at_11_12_pares (
   email2 varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
   UNIQUE KEY identificador (identificador)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -645,7 +645,7 @@ CREATE TABLE at_11_12_pareslogs (
   ipremota varchar(20) NOT NULL default '',
   text text,
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -663,7 +663,7 @@ CREATE TABLE at_11_12_sessions (
   privilegis text NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY idsess (idsess)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -678,7 +678,7 @@ CREATE TABLE at_11_12_subgrups (
   alumnes text,
   PRIMARY KEY  (id),
   UNIQUE KEY ref_subgrup (ref_subgrup)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -693,7 +693,7 @@ CREATE TABLE at_11_12_rel_subgrups (
   curs varchar(15) NOT NULL default '',
   PRIMARY KEY  (id),
   UNIQUE KEY ref_subgrup (ref_subgrup, codi_credit, curs)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -708,7 +708,7 @@ CREATE TABLE at_11_12_dif_subgrups (
   subgrup_orig varchar(15) NOT NULL default '',
   PRIMARY KEY  (id),
   UNIQUE KEY ref_subgrup (ref_subgrup, curs, subgrup_orig)
-) TYPE=MyISAM;
+)  ;
 
 # --------------------------------------------------------
 
@@ -729,6 +729,6 @@ CREATE TABLE at_11_12_usu_profes (
   uid int(11) NOT NULL default '2000',
   telfSMS varchar(9) NOT NULL default '',
   email varchar(64) NOT NULL default ''
-) TYPE=MyISAM;
+)  ;
 INSERT INTO at_11_12_usu_profes VALUES ('', 'Administrador', 'admin', 'aa1111', '137a3a3a7809a828afe701ad71827e81', 2000, '', NULL, '', 2000, '', '');
 
