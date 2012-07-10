@@ -53,7 +53,7 @@ if(isset($horarimarc)) {
   $quantitatpost=count($HTTP_POST_VARS);
   for($i=0; $i<$quantitatpost; ++$i) {
     $key=key($HTTP_POST_VARS);
-    $noms=split('_', $key);
+    $noms=preg_split('/_/', $key);
     if($noms[0]=='hd') {
       if($noms[1]==0) { 
         if(current($HTTP_POST_VARS)=='1') { 

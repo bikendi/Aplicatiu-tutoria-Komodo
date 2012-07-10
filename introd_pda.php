@@ -40,7 +40,7 @@ if(isset($data) and (isset($grup)||isset($subgrup)) and isset($hora)) {
   $quantitatpost=count($HTTP_POST_VARS);
   for($i=0; $i<$quantitatpost; ++$i) {
     $key=key($HTTP_POST_VARS);
-    $noms=split('_', $key);
+    $noms=preg_split('/_/', $key);
     if($noms[0]=='inc') {
       if($noms[1]==0) { 
         if(current($HTTP_POST_VARS)!='') { 
@@ -137,17 +137,17 @@ if (($grup!=""||$subgrup!="") && $hora!="") {
   print("<input type='hidden' name='paginadorseguent' value='$paginadorseguent'>");
   print("<input type='hidden' name='paginadoranterior' value='$paginadoranterior'>");
   if($grup!='') {
-   $gru=split(' ',$grup);
+   $gru=preg_split('/ /',$grup);
    $consulta="SELECT count(*) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."'";
    $conjunt_resultant=mysql_query($consulta, $connect);
    $nregs=mysql_result($conjunt_resultant, 0,0);
    mysql_free_result($conjunt_resultant);
   }
   else {
-   $subgru=split(' ',$subgrup);
+   $subgru=preg_split('/ /',$subgrup);
    $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
    $conjunt_resultant=mysql_query($consulta, $connect);
-   $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+   $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
    if(''==mysql_result($conjunt_resultant, 0,0)) $nregs=0; 
    else $nregs=count($alssubgrup);
    mysql_free_result($conjunt_resultant);
@@ -185,7 +185,7 @@ if (($grup!=""||$subgrup!="") && $hora!="") {
   if($nregs!=0) print("&nbsp;<input type='submit' value='Gravar'>&nbsp; &nbsp; ".$paginador." <input type='checkbox' name='tots'".((isset($tots))?" checked":"")." onClick='document.introd1.submit();'> Tots");
   else print("Aquest subgrup no t&eacute; alumnes.");
   if($grup!='') {
-    $gru=split(' ',$grup);
+    $gru=preg_split('/ /',$grup);
     $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' ORDER BY cognom_alu, cognom2_al ASC LIMIT $paginadoractual,$maxpaginador";
   }
   else {
@@ -205,7 +205,7 @@ if (($grup!=""||$subgrup!="") && $hora!="") {
   print("<tr><td colspan='3'><img src='.imatges/pixelblank.gif' height='1' width='280'></td></tr>");
   $capcal = "<tr bgcolor='#0088cc'><td>&nbsp;</td><td align='right'><b>Hora:</b></td><td align='center' width='38'><b>".$hora."</b></td></tr>";
   
-  $incid=split(',', $ref_incidencia);
+  $incid=preg_split('/,/', $ref_incidencia);
   $compt_capcal=0;
   while ($fila=mysql_fetch_row($conjunt_resultant)) {
     if($compt_capcal%5==0) print($capcal);

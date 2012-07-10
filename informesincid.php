@@ -97,8 +97,8 @@ if($public_chk) $public = 1;
 else $public = 0;
 
 if(isset($informeafg)&&$informeafg!='') {
- $informeafgdat=split(' ', $informeafgdata);
- $informeafgda=split('-', $informeafgdat[1]);
+ $informeafgdat=preg_split('/ /', $informeafgdata);
+ $informeafgda=preg_split('/-/', $informeafgdat[1]);
  $informeafgdatatimestamp=mktime(0,0,0,$informeafgda[1],$informeafgda[0],$informeafgda[2],-1);
  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."informeincid SET ref_alum='$informeafg', data='$informeafgdatatimestamp', id_prof='$informeafgprofessor', hora='$informeafghora', text='".addslashes($informeafgtext)."', public = $public"; 
  mysql_query($consulta, $connect);
@@ -120,8 +120,8 @@ if(isset($informeesborrar)&&$informeesborrar!='') {
   mysql_query($consulta, $connect);
 }
 if(isset($informeupdt)&&$informeupdt!='') {
- $informeupdtdat=split(' ', $informeupdtdata);
- $informeupdtda=split('-', $informeupdtdat[1]);
+ $informeupdtdat=preg_split('/ /', $informeupdtdata);
+ $informeupdtda=preg_split('/-/', $informeupdtdat[1]);
  $informeupdtdatatimestamp=mktime(0,0,0,$informeupdtda[1],$informeupdtda[0],$informeupdtda[2],-1);
  $consulta="UPDATE $bdtutoria.$tbl_prefix"."informeincid SET data='$informeupdtdatatimestamp', id_prof='$informeupdtprofessor', hora='$informeupdthora', text='".addslashes($informeupdttext)."', public = $public WHERE id='$informeupdt' LIMIT 1"; 
  mysql_query($consulta, $connect);
@@ -167,7 +167,7 @@ print("<form name='introd1' method='post' action='".$PHP_SELF."?idsess=$idsess' 
        <option>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </option>");
        if(isset($grup)&&($grup!="")) {
          print("<option".(($nalumne=='-2')?" selected":"").">-- Comu a tot $grup --</option>");
-         $gru=split(' ', $grup);
+         $gru=preg_split('/ /', $grup);
          $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum)  FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')ORDER  BY cognom_alu, cognom2_al, nom_alum";
          $conjunt_resultant=mysql_query($consulta, $connect);
          $llistaalumnes='';

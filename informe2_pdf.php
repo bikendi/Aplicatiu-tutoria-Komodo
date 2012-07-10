@@ -59,7 +59,7 @@ mysql_free_result($conjunt_resultant);
 
 
 if($nalumne=='0') { 
-  $gr=split(' ', $grup);
+  $gr=preg_split('/ /', $grup);
   $consulta="SELECT numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='$gr[0]' and grup='$gr[1]' and pla_estudi='$gr[2]' order by cognom_alu, cognom2_al, nom_alum";
   $conjunt_resultant=mysql_query($consulta, $connect);
   while($fila=mysql_fetch_row($conjunt_resultant)) $llistaalumnes[]=$fila[0];
@@ -72,11 +72,11 @@ $nomtuts=cercaTutor($grup);
   
 $trans["!DATAI"]=$dataI;
 $trans["!DATAF"]=$dataF;
-$datI=split(' ', $dataI);
-$daI=split('-', $datI[1]);
+$datI=preg_split('/ /', $dataI);
+$daI=preg_split('/-/', $datI[1]);
 $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-$datF=split(' ', $dataF);
-$daF=split('-', $datF[1]);
+$datF=preg_split('/ /', $dataF);
+$daF=preg_split('/-/', $datF[1]);
 $datatimestampF=mktime(0,0,0,$daF[1],$daF[0],$daF[2],-1);
 
 foreach($llistaalumnes as $alum) {

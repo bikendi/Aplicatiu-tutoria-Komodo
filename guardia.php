@@ -94,8 +94,8 @@ if( !empty($incidencia) ) {
      $datatimestamp=mktime(date('H'),date('i'),date('s'),date('n'),date('j'),date('Y'),-1);
    }
    else {
-     $dat=split(' ', $datan);
-     $da=split('-', $dat[1]);
+     $dat=preg_split('/ /', $datan);
+     $da=preg_split('/-/', $dat[1]);
      $datatimestamp=mktime(date('H'),date('i'),date('s'),$da[1],$da[0],$da[2],-1);
    }
   }
@@ -192,7 +192,7 @@ print("<input type='hidden' name='nalumne' value='".((isset($nalumne)&&$nalumne!
 print("<select name='alumne' onChange='selalumn(); document.forms.introd1.nouinforme.value=\"-1\"; document.introd1.submit();'>
        <option>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </option>");
 if(isset($grup)&&($grup!="")) {
-         $gru=split(' ', $grup);
+         $gru=preg_split('/ /', $grup);
          $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum)  FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')ORDER  BY cognom_alu, cognom2_al, nom_alum";
          $conjunt_resultant=mysql_query($consulta, $connect);
          $llistaalumnes='';

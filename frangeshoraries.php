@@ -47,9 +47,9 @@ if((isset($afegirdesar) && $afegirdesar=='1')||(isset($modificardesar) && $modif
 		print("<html><script language='JavaScript'>alert('Format d´hora incorrecta, ha d´esser: HH:MM:SS.'); location.href='$PHP_SELF?idsess=$idsess';</script></html>");
 		exit;		
 	}
-	$hinic=split(':',$hinici);
+	$hinic=preg_split('/:/',$hinici);
 	$hinicitimestamp=mktime($hinic[0],$hinic[1],$hinic[2],1,1,1970,-1);
-	$hf=split(':',$hfi);
+	$hf=preg_split('/:/',$hfi);
 	$hfitimestamp=mktime($hf[0],$hf[1],$hf[2],1,1,1970,-1);
 	if($extra) $extraescolar = 1;
 	else $extraescolar = 0;

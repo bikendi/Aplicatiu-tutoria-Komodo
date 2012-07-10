@@ -33,10 +33,10 @@ $maxpaginadorsubgr=8;
 if(isset($totssubgr)) $maxpaginadorsubgr=10000;
 
 if(isset($subgrup)&&($subgrup!='')&&isset($esborrar)&&($esborrar!='')) {
-  $subgru=split(' ',$subgrup);
+  $subgru=preg_split('/ /',$subgrup);
   $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
   $conjunt_resultant=mysql_query($consulta, $connect);
-  $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+  $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
   mysql_free_result($conjunt_resultant);
   $nouconjunt='';
   foreach($alssubgrup as $p) {
@@ -48,10 +48,10 @@ if(isset($subgrup)&&($subgrup!='')&&isset($esborrar)&&($esborrar!='')) {
 }
 
 if(isset($subgrup)&&($subgrup!='')&&isset($afegir)&&($afegir!='')) {
-  $subgru=split(' ',$subgrup);
+  $subgru=preg_split('/ /',$subgrup);
   $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
   $conjunt_resultant=mysql_query($consulta, $connect);
-  $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+  $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
   mysql_free_result($conjunt_resultant);
   $nouconjunt='';
   foreach($alssubgrup as $p) {
@@ -95,7 +95,7 @@ if(isset($subgrup)&&($subgrup!='')&&isset($esborrarsubgrup)&&($esborrarsubgrup!=
   }
   mysql_free_result($conjunt_resultant);
     
-  $subgru=split(' ',$subgrup);
+  $subgru=preg_split('/ /',$subgrup);
   $consulta="DELETE FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
   mysql_query($consulta, $connect);
   $subgrup='';
@@ -117,7 +117,7 @@ if(isset($subgrup)&&($subgrup!='')&&isset($esborrarsubgrup)&&($esborrarsubgrup!=
 	}
 }
 if(isset($esborratotsals) && $esborratotsals=='si') {
-	$subgru=split(' ',$subgrup);
+	$subgru=preg_split('/ /',$subgrup);
 	$consulta="UPDATE $bdtutoria.$tbl_prefix"."subgrups SET alumnes='' WHERE ref_subgrup='$subgru[0]' limit 1";
   	mysql_query($consulta, $connect);	
 }
@@ -208,7 +208,7 @@ function nouSubgrup()
 &nbsp; &nbsp;
 <?
 if ($subgrup!='') {
-$subgru=split(' ',$subgrup);
+$subgru=preg_split('/ /',$subgrup);
 print(" 
  <a href='' title='Elimina el subgrup seleccionat.' onClick='if(!confirm(\"Segur que vols eliminar tot aquest subgrup?\\nSi l esborres, tambe s esborrara en els horaris de professor!\")) return false; document.introd1.esborrarsubgrup.value=\"$subgru[0]\"; document.introd1.submit(); return false;'>Esborrar subgrup</a>
 ");
@@ -227,7 +227,7 @@ if ($subgrup!='') {
   print("<input type='hidden' name='afegirsubgrup' value=''>");
   print("<input type='hidden' name='esborrar' value=''>");
   print("<input type='hidden' name='afegir' value=''>");
-  $subgru=split(' ',$subgrup);
+  $subgru=preg_split('/ /',$subgrup);
 
   $paginadoractualsubgr=0;
   if(!isset($paginadoranteriorsubgr)) $paginadoranteriorsubgr=-1;
@@ -236,7 +236,7 @@ if ($subgrup!='') {
   print("<input type='hidden' name='paginadoranteriorsubgr' value='$paginadoranteriorsubgr'>");
   $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
   $conjunt_resultant=mysql_query($consulta, $connect);
-  $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+  $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
   if(''==mysql_result($conjunt_resultant, 0,0)) $nalumnessubgr=0; 
   else $nalumnessubgr=count($alssubgrup);
   mysql_free_result($conjunt_resultant);
@@ -320,7 +320,7 @@ if ($subgrup!='') {
 </select><br>
 <?
 if ($grup!='') {
-  $grup=split(' ',$grup);
+  $grup=preg_split('/ /',$grup);
 
   $paginadoractual=0;
   if(!isset($paginadoranterior)) $paginadoranterior=-1;

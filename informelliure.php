@@ -55,7 +55,7 @@ if (isset($selalum)&&$selalum!='') {
    if(isset($esborrarselec)&&($esborrarselec!='')) {
      $consulta="SELECT ref_alum FROM $bdtutoria.$tbl_prefix"."informelliure WHERE id='$selalum' limit 1";
      $conjunt_resultant=mysql_query($consulta, $connect);
-     $alsselec=split(',',mysql_result($conjunt_resultant, 0,0));
+     $alsselec=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
      mysql_free_result($conjunt_resultant);
      $nouconjunt='';
      foreach($alsselec as $p) {
@@ -68,7 +68,7 @@ if (isset($selalum)&&$selalum!='') {
    if(isset($afegirselec)&&($afegirselec!='')) {
      $consulta="SELECT ref_alum FROM $bdtutoria.$tbl_prefix"."informelliure WHERE id='$selalum' limit 1";
      $conjunt_resultant=mysql_query($consulta, $connect);
-     $alsselec=split(',',mysql_result($conjunt_resultant, 0,0));
+     $alsselec=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
      mysql_free_result($conjunt_resultant);
      $nouconjunt='';
      foreach($alsselec as $p) {
@@ -111,7 +111,7 @@ print("
   print("<input type='hidden' name='paginadoranteriorselec' value='$paginadoranteriorselec'>");
   $consulta="SELECT ref_alum FROM $bdtutoria.$tbl_prefix"."informelliure WHERE id='$selalum' limit 1";
   $conjunt_resultant=mysql_query($consulta, $connect);
-  $alsselec=split(',',mysql_result($conjunt_resultant, 0,0));
+  $alsselec=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
   if(''==mysql_result($conjunt_resultant, 0,0)) $nalumnesselec=0; 
   else $nalumnesselec=count($alsselec);
   mysql_free_result($conjunt_resultant);
@@ -219,7 +219,7 @@ print("
   }
     
   if ($grup!='' || $subgrup!='') {
-  $gru=split(' ',$grup);
+  $gru=preg_split('/ /',$grup);
   $paginadoractual=0;
   if(!isset($paginadoranterior)) $paginadoranterior=-1;
   if(!isset($paginadorseguent)) $paginadorseguent=-1;
@@ -233,10 +233,10 @@ print("
     mysql_free_result($conjunt_resultant);
   }
   else {
-   $subgru=split(' ',$subgrup);
+   $subgru=preg_split('/ /',$subgrup);
    $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
    $conjunt_resultant=mysql_query($consulta, $connect);
-   $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+   $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
    if(''==mysql_result($conjunt_resultant, 0,0)) $nregs=0; 
    else $nregs=count($alssubgrup);
    mysql_free_result($conjunt_resultant);
@@ -280,7 +280,7 @@ print("
   if($orddre=='orddrecurs') $ordrecons="ORDER BY pla_estudi DESC, curs, grup, cognom_alu, cognom2_al ";
   if($orddre=='orddrecogn') $ordrecons="ORDER BY cognom_alu, cognom2_al ASC ";
   if($grup!='') {
-    $gru=split(' ',$grup);
+    $gru=preg_split('/ /',$grup);
     if($grup!='Tots') $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum), curs, grup, pla_estudi FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' $ordrecons LIMIT $paginadoractual,$maxpaginadordre";
     else $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum), curs, grup, pla_estudi FROM $bdalumnes.$tbl_prefix"."Estudiants $ordrecons LIMIT $paginadoractual,$maxpaginadordre";
   }
@@ -387,8 +387,8 @@ function inflliureSelAlum(id) {
 <body  bgcolor="#ccdd88" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <?php
 if(isset($inflliureafg)&&$inflliureafg=='1') {
- $inflliureafgdat=split(' ', $inflliureafgdata);
- $inflliureafgda=split('-', $inflliureafgdat[1]);
+ $inflliureafgdat=preg_split('/ /', $inflliureafgdata);
+ $inflliureafgda=preg_split('/-/', $inflliureafgdat[1]);
  $inflliureafgdatatimestamp=mktime(0,0,0,$inflliureafgda[1],$inflliureafgda[0],$inflliureafgda[2],-1);
  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."informelliure SET id_prof='$sess_user', ref_alum='', data='$inflliureafgdatatimestamp', titol='".addslashes($inflliureafgtitol)."', contingut='".addslashes($inflliureafgtext)."'"; 
  mysql_query($consulta, $connect);

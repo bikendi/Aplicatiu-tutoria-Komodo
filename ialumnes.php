@@ -57,7 +57,7 @@ print("</td>
 if(isset($valida)&&$valida==1) {
   
   if(isset($esborrar)&&$esborrar!="") {
-    $esbor=split(',', $esborrar);
+    $esbor=preg_split('/,/', $esborrar);
     for ($i=0; $i<count($esbor); ++$i) {
 	  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."EstudiantsEsborrats SELECT * FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE numero_mat='$esbor[$i]'";
 	  mysql_query($consulta, $connect);
@@ -103,7 +103,7 @@ if(isset($valida)&&$valida==1) {
   mysql_free_result($conjunt_resultant);
   
   if(isset($esborrar)&&$esborrar!="") {
-    $esbor=split(',', $esborrar);
+    $esbor=preg_split('/,/', $esborrar);
     for ($i=0; $i<count($esbor); ++$i) {
       
       $consulta="DELETE from $bdtutoria.$tbl_prefix"."entrevistes WHERE ref_alumne='$esbor[$i]'";
@@ -132,7 +132,7 @@ if(isset($valida)&&$valida==1) {
       $consulta="SELECT id, alumnes from $bdtutoria.$tbl_prefix"."subgrups where alumnes like '%$esbor[i]%'";
       $conjunt_resultant=mysql_query($consulta, $connect);
       while($fila=mysql_fetch_row($conjunt_resultant)) {
-        $lalums=split(',', $fila[1]);
+        $lalums=preg_split('/,/', $fila[1]);
         $nlalums='';
         for($j=0; $j<count($lalums); ++$j) {
          if($lalums[$j]!=$esbor[$i]) {
@@ -149,7 +149,7 @@ if(isset($valida)&&$valida==1) {
       $consulta="SELECT id, ref_alum from $bdtutoria.$tbl_prefix"."informelliure where ref_alum like '%$esbor[i]%'";
       $conjunt_resultant=mysql_query($consulta, $connect);
       while($fila=mysql_fetch_row($conjunt_resultant)) {
-        $lalums=split(',', $fila[1]);
+        $lalums=preg_split('/,/', $fila[1]);
         $nlalums='';
         for($j=0; $j<count($lalums); ++$j) {
          if($lalums[$j]!=$esbor[$i]) {
@@ -222,7 +222,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
 	  $linia=str_replace(',',';',$linia); 
       $linia=str_replace('";"','","',$linia);
       $linia=substr_replace($linia, ",", strpos($linia,';'),1);
-      $values=split(',', $linia);
+      $values=preg_split('/,/', $linia);
       $numr=trim($values[0]);
       $idref=str_replace(' ','',$values[1]);
       $idref=trim($idref,"\"");
@@ -236,13 +236,13 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
       if(($values[6]=="\"-\"")||(preg_match("/\*/", $values[6]))) {  
       	continue;
       } elseif( substr($values[6], 1, 10) == 'DIVERSITAT' ) {
-/*      	$plaescursgrup=split("[ ]+",$values[6]);
+/*      	$plaescursgrup=preg_split("/[ ]+/",$values[6]);
       	$plaestudis="\"ESO\"";
       	$curs="\"".$plaescursgrup[1];
       	$grup="\"D\"";*/
 	continue;
       }else {
-      	$plaescursgrup=split("[ ]+",$values[6]);
+      	$plaescursgrup=preg_split("/[ ]+/",$values[6]);
       	$plaestudis="\"".$plaescursgrup[1]."\"";
       	$curs=$plaescursgrup[0]."\"";
       	$grup="\"".$plaescursgrup[2];

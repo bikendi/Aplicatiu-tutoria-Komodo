@@ -63,14 +63,14 @@ print("</form></div><hr>");
 if(($grup!=''||$subgrup!='') && $webprint=='web') {
 
   if($grup!='') {
-  $gru=split(' ', $grup);
+  $gru=preg_split('/ /', $grup);
   $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' ORDER BY cognom_alu, cognom2_al ASC";
   }
   else {
-   $subgru=split(' ',$subgrup);
+   $subgru=preg_split('/ /',$subgrup);
    $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
    $conjunt_resultant=mysql_query($consulta, $connect);
-   $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+   $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
    mysql_free_result($conjunt_resultant);
    $consulta ="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum), curs, grup, pla_estudi ";
    $consulta.="FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE ";

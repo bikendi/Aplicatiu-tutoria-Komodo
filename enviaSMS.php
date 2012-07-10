@@ -202,7 +202,7 @@ function saldoSMSLleidaNet() {
 			if ($resul=="NOOK") {
 			$res="Error: login incorrecte";
 			} else {
-				$saldo=split(" ",$resul);
+				$saldo=preg_split("/ /",$resul);
 				$res="$saldo[1],$saldo[2] crèdits";
 			}
 			fclose($conexio);		

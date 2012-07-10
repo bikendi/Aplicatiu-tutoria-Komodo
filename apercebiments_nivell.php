@@ -496,16 +496,16 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
 	$consulta = "SELECT numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE  1 $where_nivell $where_grup ORDER BY pla_estudi DESC, curs, grup, cognom_alu, cognom2_al, nom_alum"; // bingen
 
   $conjunt_resultant=mysql_query($consulta, $connect);
-  $datI=split(' ', $dataI);
-  $daI=split('-', $datI[1]);
+  $datI=preg_split('/ /', $dataI);
+  $daI=preg_split('/-/', $datI[1]);
   $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-  $datF=split(' ', $dataF);
-  $daF=split('-', $datF[1]);
+  $datF=preg_split('/ /', $dataF);
+  $daF=preg_split('/-/', $datF[1]);
   $datatimestampF=mktime(0,0,0,$daF[1],$daF[0],$daF[2],-1);
  
   $compt_capcal=0;
-  $ref_incid=split(',',$ref_incidenciaj);
-  $ref_incidencia_tex=split(',', $ref_incidencia_textj);
+  $ref_incid=preg_split('/,/',$ref_incidenciaj);
+  $ref_incidencia_tex=preg_split('/,/', $ref_incidencia_textj);
   $capcal="<tr bgcolor='#0088cc'><td colspan='2' align='right'><b>Incidencia:</b></td>";
   for($i=0; $i<count($ref_incid); ++$i)
 		$capcal .= "<td><center>&nbsp;<b>$ref_incid[$i]</b>&nbsp;</center></td>";

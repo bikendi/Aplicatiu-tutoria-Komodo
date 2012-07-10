@@ -89,7 +89,7 @@ switch($opcio) {
 
 function llistarAlumnes() {
 	global $bdalumnes, $tbl_prefix, $connect;
-	$gru=split(' ',$_GET["cge"]);
+	$gru=preg_split('/ /',$_GET["cge"]);
 	$consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' ORDER BY cognom_alu, cognom2_al ASC";
 	$conjunt_resultant=mysql_query($consulta, $connect);
 	header('Content-Type: text/xml');

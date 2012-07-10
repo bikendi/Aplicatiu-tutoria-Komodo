@@ -88,7 +88,7 @@ if(isset($valida)&&$valida==1) {
   mysql_free_result($conjunt_resultant);
   
   if(isset($esborrar)&&$esborrar!="") {
-    $esbor=split(',', $esborrar);
+    $esbor=preg_split('/,/', $esborrar);
     for ($i=0; $i<count($esbor); ++$i) {
       if(file_exists("$dirfotos/$esbor[$i].jpg")) unlink("$dirfotos/$esbor[$i].jpg");
       $consulta="DELETE from $bdtutoria.$tbl_prefix"."entrevistes WHERE ref_alumne='$esbor[$i]'";
@@ -117,7 +117,7 @@ if(isset($valida)&&$valida==1) {
       $consulta="SELECT id, alumnes from $bdtutoria.$tbl_prefix"."subgrups where alumnes like '%$esbor[i]%'";
       $conjunt_resultant=mysql_query($consulta, $connect);
       while($fila=mysql_fetch_row($conjunt_resultant)) {
-        $lalums=split(',', $fila[1]);
+        $lalums=preg_split('/,/', $fila[1]);
         $nlalums='';
         for($j=0; $j<count($lalums); ++$j) {
          if($lalums[$j]!=$esbor[$i]) {
@@ -134,7 +134,7 @@ if(isset($valida)&&$valida==1) {
       $consulta="SELECT id, ref_alum from $bdtutoria.$tbl_prefix"."informelliure where ref_alum like '%$esbor[i]%'";
       $conjunt_resultant=mysql_query($consulta, $connect);
       while($fila=mysql_fetch_row($conjunt_resultant)) {
-        $lalums=split(',', $fila[1]);
+        $lalums=preg_split('/,/', $fila[1]);
         $nlalums='';
         for($j=0; $j<count($lalums); ++$j) {
          if($lalums[$j]!=$esbor[$i]) {

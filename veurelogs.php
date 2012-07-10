@@ -98,11 +98,11 @@ print("</select>
 ");
 
 if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($usuprof)&&$usuprof!='') {
-  $datI=split(' ', $dataI);
-  $daI=split('-', $datI[1]);
+  $datI=preg_split('/ /', $dataI);
+  $daI=preg_split('/-/', $datI[1]);
   $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-  $datF=split(' ', $dataF);
-  $daF=split('-', $datF[1]);
+  $datF=preg_split('/ /', $dataF);
+  $daF=preg_split('/-/', $datF[1]);
   $datatimestampF=mktime(23,59,59,$daF[1],$daF[0],$daF[2],-1);
   $filtredata= "datahora>='$datatimestampI' and datahora<='$datatimestampF' ";
   $consulta  = "select id, usuari, datahora, ipremota, text ";

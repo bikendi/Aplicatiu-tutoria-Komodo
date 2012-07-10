@@ -107,7 +107,7 @@ print("
 </tr></table></div><hr>");
 
 if($esPare) {
-	$nalumn=split("_",$sess_privilegis);
+	$nalumn=preg_split("/_/",$sess_privilegis);
 	$nalumne=$nalumn[1];
     print("<table border='0' width='100%'
     <tr>

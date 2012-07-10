@@ -63,7 +63,7 @@ $nomMesE = array ("de Gener", "de Febrer", "de Març", "d'Abril", "de Maig", "de 
 if( $nal != 'tots' )
   $consulta_nal = " WHERE numero_mat='$nal' LIMIT 1";
 else {
-  $gru=split(' ', $grup);
+  $gru=preg_split('/ /', $grup);
   $consulta_nal = " WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')   ORDER BY cognom_alu, cognom2_al, nom_alum";
 }
 

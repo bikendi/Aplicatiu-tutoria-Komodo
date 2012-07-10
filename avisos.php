@@ -42,7 +42,7 @@ foreach( $llista_grups as $curs ) {
   $res_t = mysql_query($query) OR die("Error:". mysql_error());
   $num_tutors = mysql_num_rows($res_t);
   $grup = mysql_result($res_t,0,1);
-  $grup_array = split(' ', $grup);
+  $grup_array = preg_split('/ /', $grup);
   if( $grup_array[2] = 'ESO' )
     $min_faltes = 10;
   else

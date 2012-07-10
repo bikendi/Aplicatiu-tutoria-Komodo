@@ -114,8 +114,8 @@ if (isset($afegiravaluacio) && $afegiravaluacio=='si') {
  mysql_query($consulta, $connect);	
 }
 if (isset($actualitzaavaluacio) && $actualitzaavaluacio!='') {
- $dat=split(' ', $editaavaluaciodata);
- $da=split('-', $dat[1]);
+ $dat=preg_split('/ /', $editaavaluaciodata);
+ $da=preg_split('/-/', $dat[1]);
  $dattistamp=mktime(0,0,0,$da[1],$da[0],$da[2],-1);
  $consulta="update $bdtutoria.$tbl_prefix"."avaluacions set nomaval='".rawurlencode(stripslashes($editaavaluacionomaval))."', nitems='$editaavaluacionitems', nomitems='$editaavaluacionomitems', valors='$editaavaluaciovalors', data='$dattistamp', modificable='$editaavaluaciomodificable', visiblepares='$editaavaluaciovisiblepares', curs='$editaavaluaciocurs', grup='$editaavaluaciogrup', pla_estudi='$editaavaluaciopla_estudi', observacions='".rawurlencode(stripslashes($editaavaluacioobservacions))."' WHERE id='$actualitzaavaluacio' limit 1";	
  mysql_query($consulta, $connect);

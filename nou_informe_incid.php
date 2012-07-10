@@ -32,8 +32,8 @@ if($public_chk) $public = 1;
 else $public = 0;
 
 if(isset($informeafg)&&$informeafg!='') {
- $informeafgdat=split(' ', $informeafgdata);
- $informeafgda=split('-', $informeafgdat[1]);
+ $informeafgdat=preg_split('/ /', $informeafgdata);
+ $informeafgda=preg_split('/-/', $informeafgdat[1]);
  $informeafgdatatimestamp=mktime(0,0,0,$informeafgda[1],$informeafgda[0],$informeafgda[2],-1);
  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."informeincid SET ref_alum='$informeafg', data='$informeafgdatatimestamp', id_prof='$informeafgprofessor', hora='$informeafghora', text='".addslashes($informeafgtext)."', public = $public"; 
 //  echo "<p> consulta: $consulta</p>\n";

@@ -34,7 +34,7 @@ if(isset($data) and (isset($grup) or isset($subgrup))) {
   $quantitatpost=count($HTTP_POST_VARS);
   for($i=0; $i<$quantitatpost; ++$i) {
     $key=key($HTTP_POST_VARS);
-    $noms=split('_', $key);
+    $noms=preg_split('/_/', $key);
     if($noms[0]=='inc') {
       if($noms[1]==0) { 
         if(current($HTTP_POST_VARS)!='') { 
@@ -77,8 +77,8 @@ if(isset($data) and (isset($grup) or isset($subgrup))) {
      $datatimestamp=mktime(date('H'),date('i'),date('s'),date('n'),date('j'),date('Y'),-1);
    }
    else {
-     $dat=split(' ', $datan);
-     $da=split('-', $dat[1]);
+     $dat=preg_split('/ /', $datan);
+     $da=preg_split('/-/', $dat[1]);
      $datatimestamp=mktime(date('H'),date('i'),date('s'),$da[1],$da[0],$da[2],-1);
    }
   }
@@ -177,17 +177,17 @@ if ($grup!="" || $subgrup!="") {
   print("<input type='hidden' name='paginadorseguent' value='$paginadorseguent'>");
   print("<input type='hidden' name='paginadoranterior' value='$paginadoranterior'>");
   if($grup!='') {
-   $gru=split(' ',$grup);
+   $gru=preg_split('/ /',$grup);
    $consulta="SELECT count(*) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."'";
    $conjunt_resultant=mysql_query($consulta, $connect);
    $nregs=mysql_result($conjunt_resultant, 0,0);
    mysql_free_result($conjunt_resultant);
   }
   else {
-   $subgru=split(' ',$subgrup);
+   $subgru=preg_split('/ /',$subgrup);
    $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
    $conjunt_resultant=mysql_query($consulta, $connect);
-   $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+   $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
    if(''==mysql_result($conjunt_resultant, 0,0)) $nregs=0; 
    else $nregs=count($alssubgrup);
    mysql_free_result($conjunt_resultant);
@@ -225,7 +225,7 @@ if ($grup!="" || $subgrup!="") {
   if($nregs!=0) print("<input type='submit' value='Gravar'>&nbsp; $paginador (<input type='checkbox' name='tots'".((isset($tots))?" checked":"")." onClick='document.introd1.submit();'> Tots)");
   else print("Aquest subgrup no t&eacute; alumnes.");
   if($grup!='') {
-    $gru=split(' ',$grup);
+    $gru=preg_split('/ /',$grup);
     $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum), curs, grup, pla_estudi FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' ORDER BY cognom_alu, cognom2_al ASC LIMIT $paginadoractual,$maxpaginador";
   }
   else {
@@ -244,10 +244,10 @@ if ($grup!="" || $subgrup!="") {
   
   if($grup!='') {
     if(isset($databloqueig)&&$databloqueig!='') {    
-      $auxdatabloquei=split('_', $auxdatabloqueig);
+      $auxdatabloquei=preg_split('/_/', $auxdatabloqueig);
       if($databloqueig!=$auxdatabloquei[1]) {
-        $datblq=split(' ', $databloqueig);
-        $dabl=split('-', $datblq[1]);
+        $datblq=preg_split('/ /', $databloqueig);
+        $dabl=preg_split('/-/', $datblq[1]);
         $databloqtimestamp=mktime(0,0,0,$dabl[1],$dabl[0],$dabl[2],-1);
         if($auxdatabloquei[0]==0) {
 	  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."databloqueig SET grup='$grup', data='$databloqtimestamp'";
@@ -285,7 +285,7 @@ if ($grup!="" || $subgrup!="") {
   }
   $capcal .="</tr>";
   mysql_free_result($conjunt_resultant1);
-  $incid=split(',', $ref_incidenciaj);
+  $incid=preg_split('/,/', $ref_incidenciaj);
   $compt_capcal=0;
   while ($fila=mysql_fetch_row($conjunt_resultant)) {
     if($compt_capcal%5==0) print($capcal);

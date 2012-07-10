@@ -158,7 +158,7 @@ if(isset($fitxeralumnes)&&$fitxeralumnes!='') {
 	$linia=str_replace(',',';',$linia); 
 	$linia=str_replace('";"','","',$linia);
       	$linia=substr_replace($linia, ",", strpos($linia,';'),1);
-      	$values=split(',', $linia);
+      	$values=preg_split('/,/', $linia);
 
       	$numr=trim($values[0]);
 

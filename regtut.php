@@ -51,7 +51,7 @@ if(isset($_GET['obrefitxer'])&& $_GET['obrefitxer']!='') {
 panyacces("Privilegis|Pare");
 echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
 
-$priv=split("_", $sess_privilegis); // per saber si és pare
+$priv=preg_split("/_/", $sess_privilegis); // per saber si és pare
 if( $priv[0] == "Pare" )
   $esPare = true;
 else
@@ -131,8 +131,8 @@ else $public = 0;
 
 // Entrevistes - accions //
 if(isset($entrvafg)&&$entrvafg!='') {
- $entrvafgdat=split(' ', $entrvafgdata);
- $entrvafgda=split('-', $entrvafgdat[1]);
+ $entrvafgdat=preg_split('/ /', $entrvafgdata);
+ $entrvafgda=preg_split('/-/', $entrvafgdat[1]);
  $entrvafgdatatimestamp=mktime(0,0,0,$entrvafgda[1],$entrvafgda[0],$entrvafgda[2],-1);
  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."entrevistes SET ref_alum='$entrvafg', data='$entrvafgdatatimestamp', titol='".addslashes($entrvafgtitol)."', reunits='".addslashes($entrvafgreunits)."', descripcio='".addslashes($entrvafgdescripcio)."', public = $public"; 
  mysql_query($consulta, $connect);
@@ -142,8 +142,8 @@ if(isset($entrvesborrar)&&$entrvesborrar!='' && ! $esPare) {
   mysql_query($consulta, $connect);
 }
 if(isset($entrvupdt)&&$entrvupdt!='' && ! $esPare) {
- $entrvupdtdat=split(' ', $entrvupdtdata);
- $entrvupdtda=split('-', $entrvupdtdat[1]);
+ $entrvupdtdat=preg_split('/ /', $entrvupdtdata);
+ $entrvupdtda=preg_split('/-/', $entrvupdtdat[1]);
  $entrvupdtdatatimestamp=mktime(0,0,0,$entrvupdtda[1],$entrvupdtda[0],$entrvupdtda[2],-1);
  $consulta="UPDATE $bdtutoria.$tbl_prefix"."entrevistes SET data='$entrvupdtdatatimestamp', titol='".addslashes($entrvupdttitol)."', reunits='".addslashes($entrvupdtreunits)."', descripcio='".addslashes($entrvupdtdescripcio)."', public = $public WHERE id='$entrvupdt' LIMIT 1"; 
 //  echo "<p> consulta: $consulta </p>\n";
@@ -152,8 +152,8 @@ if(isset($entrvupdt)&&$entrvupdt!='' && ! $esPare) {
 
 // Informes - accions //
 if(isset($informeafg)&&$informeafg!='' && ! $esPare) {
- $informeafgdat=split(' ', $informeafgdata);
- $informeafgda=split('-', $informeafgdat[1]);
+ $informeafgdat=preg_split('/ /', $informeafgdata);
+ $informeafgda=preg_split('/-/', $informeafgdat[1]);
  $informeafgdatatimestamp=mktime(0,0,0,$informeafgda[1],$informeafgda[0],$informeafgda[2],-1);
  $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."informeincid SET ref_alum='$informeafg', data='$informeafgdatatimestamp', id_prof='$informeafgprofessor', hora='$informeafghora', text='".addslashes($informeafgtext)."', public = $public"; 
 //  echo "<p> consulta: $consulta </p>\n";
@@ -164,8 +164,8 @@ if(isset($informeesborrar)&&$informeesborrar!='' && ! $esPare) {
   mysql_query($consulta, $connect);
 }
 if(isset($informeupdt)&&$informeupdt!='' && ! $esPare) {
- $informeupdtdat=split(' ', $informeupdtdata);
- $informeupdtda=split('-', $informeupdtdat[1]);
+ $informeupdtdat=preg_split('/ /', $informeupdtdata);
+ $informeupdtda=preg_split('/-/', $informeupdtdat[1]);
  $informeupdtdatatimestamp=mktime(0,0,0,$informeupdtda[1],$informeupdtda[0],$informeupdtda[2],-1);
  $consulta="UPDATE $bdtutoria.$tbl_prefix"."informeincid SET data='$informeupdtdatatimestamp', id_prof='$informeupdtprofessor', hora='$informeupdthora', text='".addslashes($informeupdttext)."', public = $public WHERE id='$informeupdt' LIMIT 1"; 
  mysql_query($consulta, $connect);
@@ -174,8 +174,8 @@ if(isset($informeupdt)&&$informeupdt!='' && ! $esPare) {
 // Fitxers - accions //
 if(isset($fitxerdesar)&&$fitxerdesar!='' && ! $esPare) {
  if($MAX_FILE_SIZE>=$fitxerdesarfitxer_size && file_exists($fitxerdesarfitxer)) {
-  $fitxerdesardat=split(' ', $fitxerdesardata);
-  $fitxerdesarda=split('-', $fitxerdesardat[1]);
+  $fitxerdesardat=preg_split('/ /', $fitxerdesardata);
+  $fitxerdesarda=preg_split('/-/', $fitxerdesardat[1]);
   $fitxerdesardatatimestamp=mktime(0,0,0,$fitxerdesarda[1],$fitxerdesarda[0],$fitxerdesarda[2],-1);
   $consulta="INSERT INTO $bdtutoria.$tbl_prefix"."fitxers SET data='$fitxerdesardatatimestamp', ref_alum='$fitxerdesar', nom_fitxer='".addslashes($fitxerdesarfitxer_name)."', descripcio='".addslashes($fitxerdesardescripcio)."', tipus_mime='$fitxerdesarfitxer_type', tamany='$fitxerdesarfitxer_size', public = $public";
   mysql_query($consulta, $connect);
@@ -227,7 +227,7 @@ if(! $esPare) { // és profe
   if(isset($grup)&&($grup!="")) {
     print("<option".(($nalumne=='-1')?" selected":"").">-- De tot el grup --</option>
 	  <option".(($nalumne=='-2')?" selected":"").">-- Comu a tot $grup --</option>");
-    $gru=split(' ', $grup);
+    $gru=preg_split('/ /', $grup);
     $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum)  FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')ORDER  BY cognom_alu, cognom2_al, nom_alum";
     $conjunt_resultant=mysql_query($consulta, $connect);
     $llistaalumnes='';

@@ -109,7 +109,7 @@ print("</form></div><hr>");
 
 if($grup!='') {
 
-  $gru=split(' ', $grup);
+  $gru=preg_split('/ /', $grup);
 
   $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' ORDER BY cognom_alu, cognom2_al ASC";
   $conjunt_resultant=mysql_query($consulta, $connect);

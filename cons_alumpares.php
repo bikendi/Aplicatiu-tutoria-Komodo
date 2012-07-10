@@ -26,7 +26,7 @@
 @include("linkbd.inc.php");
 @include("comu.php");
 @include("comu.js.php");
-$priv=split("_", $sess_privilegis);
+$priv=preg_split("/_/", $sess_privilegis);
 $nalumne=$priv[1];
 
 echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
@@ -127,17 +127,17 @@ print("<table border='0'>
 ");
 
 if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalumne!='') {
-  $datI=split(' ', $dataI);
-  $daI=split('-', $datI[1]);
+  $datI=preg_split('/ /', $dataI);
+  $daI=preg_split('/-/', $datI[1]);
   $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-  $datF=split(' ', $dataF);
-  $daF=split('-', $datF[1]);
+  $datF=preg_split('/ /', $dataF);
+  $daF=preg_split('/-/', $datF[1]);
   $datatimestampF=mktime(0,0,0,$daF[1],$daF[0],$daF[2],-1);
   $filtredata= "and data>='$datatimestampI' and data<='$datatimestampF' ";
   $filtredies='';
   if($dies!="") {
     $filtredies .= "and (";
-    $dis=split(';',$dies);
+    $dis=preg_split('/;/',$dies);
     for($i=0; $i<count($dis); ++$i) {
       if($i!=0) $filtredies .= " or ";
       $numSem=-1;
@@ -149,7 +149,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   $filtrehores='';
   if($hores!="") {
     $filtrehores .= "and (";
-    $hor=split(';',$hores);
+    $hor=preg_split('/;/',$hores);
     for($i=0; $i<count($hor); ++$i) {
       if($i!=0) $filtrehores .= " or ";
       $filtrehores .= "hora='$hor[$i]'";
@@ -159,7 +159,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   $filtreincidencia='';
   if($incidencia!="") {
     $filtreincidencia .= "and (";
-    $inciden=split(';',$incidencia);
+    $inciden=preg_split('/;/',$incidencia);
     for($i=0; $i<count($inciden); ++$i) {
       if($i!=0) $filtreincidencia .= " or ";
       $filtreincidencia .= "incidencia='$inciden[$i]'";
@@ -207,8 +207,8 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   print("</select>\n");
   print("</td>\n");
 
-  $ref_incid=split(',',$ref_incidenciaj);
-  $ref_incidencia_tex=split(',', $ref_incidencia_textj);
+  $ref_incid=preg_split('/,/',$ref_incidenciaj);
+  $ref_incidencia_tex=preg_split('/,/', $ref_incidencia_textj);
   // +2 pels positius i negatius
   print("<td colspan='".(count($ref_incid)+2)."' bgcolor='#0088cc'> <b>Resum:</b> </td> </tr>");
   
@@ -233,7 +233,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   if( ! $extra ) $consulta1 .= " WHERE NOT extraescolar OR extraescolar IS NULL";
   $consulta1 .= " order by inici asc";
   $conjunt_resultant1=mysql_query($consulta1, $connect);
-  $p=split(';',$hores);
+  $p=preg_split('/;/',$hores);
   while($fila1=mysql_fetch_row($conjunt_resultant1)) {
     $sel=false;
     for($j=0; $j<count($p);++$j) if($p[$j]==$fila1[0]) $sel=true;
@@ -283,12 +283,12 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&isset($nalumne)&&$nalu
   print("</tr></table>");
 
   print("<table border='0' width='100%'><tr><td>&nbsp;</td><td bgcolor='#0088cc'><b>Detalls:</b></td></tr><tr><td align='center' valign='top' width='60'>");
-  $incid=split(',', $ref_incidenciaj);
+  $incid=preg_split('/,/', $ref_incidenciaj);
   if($filtreincidencia=='') print("<b>Filtre<br>Incid&egrave;ncia:</b><br>");
   else print("<font color='#ff0000'><b>Filtre<br>Incid&egrave;ncia:</b></font><br>");
   print("<input type='hidden' name='incidencia' value='$incidencia'>
   <select name='incid' size='6' multiple onChange='fincidencia(); document.introd1.submit();'>");
-  $p=split(';',$incidencia);
+  $p=preg_split('/;/',$incidencia);
   for($i=0; $i<count($incid);++$i) {
    $sel=false;
    for($j=0; $j<count($p);++$j) if($p[$j]==$incid[$i]) $sel=true;

@@ -130,34 +130,34 @@ print("</select></td></tr></table></div><hr>");
 
 if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!='')||(isset($subgrup)&&$subgrup!=''))) {
   if($grup!='') {
-  $gru=split(' ', $grup);
+  $gru=preg_split('/ /', $grup);
   $consulta="SELECT count(*) FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')";
   $conjunt_resultant=mysql_query($consulta, $connect);
   $nregs=mysql_result($conjunt_resultant, 0,0);
   mysql_free_result($conjunt_resultant);
   }
   else {
-    $subgru=split(' ',$subgrup);
+    $subgru=preg_split('/ /',$subgrup);
     $consulta="SELECT alumnes FROM $bdtutoria.$tbl_prefix"."subgrups WHERE ref_subgrup='$subgru[0]' limit 1";
     $conjunt_resultant=mysql_query($consulta, $connect);
-    $alssubgrup=split(',',mysql_result($conjunt_resultant, 0,0));
+    $alssubgrup=preg_split('/,/',mysql_result($conjunt_resultant, 0,0));
     if(''==mysql_result($conjunt_resultant, 0,0)) $nregs=0;
     else $nregs=count($alssubgrup); 
     mysql_free_result($conjunt_resultant);
     
   }
-  $datI=split(' ', $dataI);
-  $daI=split('-', $datI[1]);
+  $datI=preg_split('/ /', $dataI);
+  $daI=preg_split('/-/', $datI[1]);
   $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-  $datF=split(' ', $dataF);
-  $daF=split('-', $datF[1]);
+  $datF=preg_split('/ /', $dataF);
+  $daF=preg_split('/-/', $datF[1]);
   $datatimestampF=mktime(0,0,0,$daF[1],$daF[0],$daF[2],-1);
   $filtredata= "and data>='$datatimestampI' and data<='$datatimestampF' ";
 
   $filtredies='';
   if($dies!="") {
     $filtredies .= "and (";
-    $dis=split(';',$dies);
+    $dis=preg_split('/;/',$dies);
     for($i=0; $i<count($dis); ++$i) {
       if($i!=0) $filtredies .= " or ";
       $numSem=-1;
@@ -169,7 +169,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
   $filtrehores='';
   if($hores!="") {
     $filtrehores .= "and (";
-    $hor=split(';',$hores);
+    $hor=preg_split('/;/',$hores);
     for($i=0; $i<count($hor); ++$i) {
       if($i!=0) $filtrehores .= " or ";
       $filtrehores .= "hora='$hor[$i]'";
@@ -209,7 +209,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
   if( ! $extra ) $consulta1 .= " WHERE NOT extraescolar OR extraescolar IS NULL";
   $consulta1 .= " order by inici asc";
   $conjunt_resultant1=mysql_query($consulta1, $connect);
-  $p=split(';',$hores);
+  $p=preg_split('/;/',$hores);
   while($fila1=mysql_fetch_row($conjunt_resultant1)) {
     $sel=false;
     for($j=0; $j<count($p);++$j) if($p[$j]==$fila1[0]) $sel=true;
@@ -282,7 +282,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
       print("<hr>\n");
     } else print("Aquest subgrup no t&eacute; alumnes.");
     if($grup!='') {
-      $gru=split(' ', $grup);
+      $gru=preg_split('/ /', $grup);
       $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum)  FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]') ORDER  BY cognom_alu, cognom2_al, nom_alum ASC LIMIT $paginadoractual,$maxpaginador";
     }
     else {
@@ -301,8 +301,8 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&((isset($grup)&&$grup!
     print("<table border='0' id='taulacos'>");
 
     $compt_capcal=0;
-    $ref_incid=split(',',$ref_incidenciaj);
-    $ref_incidencia_tex=split(',', $ref_incidencia_textj);
+    $ref_incid=preg_split('/,/',$ref_incidenciaj);
+    $ref_incidencia_tex=preg_split('/,/', $ref_incidencia_textj);
     $capcal="<tr bgcolor='#0088cc'><td colspan='2' align='right'><b>Incidencia:</b></td>";
     for($i=0; $i<count($ref_incid); ++$i) 
       $capcal .= "<td><center>$ref_incid[$i]</center></td>";

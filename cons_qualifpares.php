@@ -26,9 +26,9 @@
 @include("linkbd.inc.php");
 @include("comu.php");
 @include("comu.js.php");
-$priv=split("_", $sess_privilegis);
+$priv=preg_split("/_/", $sess_privilegis);
 $nalumne=$priv[1];
-$gr=split(" - ", $sess_nomreal);
+$gr=preg_split("/ - /", $sess_nomreal);
 $grup=$gr[1];
 $nomMesE = array ("de Gener", "de Febrer", "de Març", "d'Abril", "de Maig", "de Juny", "de Juliol", "d'Agost", "de Setembre", "d'Octubre", "de Novembre", "de Desembre");
 

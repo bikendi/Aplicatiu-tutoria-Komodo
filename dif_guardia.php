@@ -43,8 +43,8 @@ $dia=mktime(0,0,0,date('n',$datatimestamp),date('d',$datatimestamp),date('Y',$da
      $datatimestamp=mktime(date('H'),date('i'),date('s'),date('n'),date('j'),date('Y'),-1);
    }
    else {
-     $dat=split(' ', $datan);
-     $da=split('-', $dat[1]);
+     $dat=preg_split('/ /', $datan);
+     $da=preg_split('/-/', $dat[1]);
      $datatimestamp=mktime(date('H'),date('i'),date('s'),$da[1],$da[0],$da[2],-1);
    }
   }

@@ -25,7 +25,7 @@
   $quantitatpost=count($HTTP_POST_VARS);
   for($i=0; $i<$quantitatpost; ++$i) {
     $key=key($HTTP_POST_VARS);
-    $noms=split('_', $key);
+    $noms=preg_split('/_/', $key);
     if($noms[0]=='per') {
       $id=$noms[1];
       $valorvell=$noms[2];
@@ -133,7 +133,7 @@ else {
 }
 
 if(isset($identpares)&&$identpares==1&&$grup!='') {
-      $gru=split(' ', $grup);
+      $gru=preg_split('/ /', $grup);
       $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum), curs, grup, pla_estudi FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]') ORDER  BY cognom_alu, cognom2_al, nom_alum ASC";
       $conjunt_resultant=mysql_query($consulta, $connect);
       $capcal="<tr bgcolor='#0088cc'><td colspan='2'><center>&nbsp;<b>Pares de:</b>&nbsp;</center></td>";
@@ -182,11 +182,11 @@ if(isset($identpares)&&$identpares==1&&$grup!='') {
       </form><hr>");
 }
 if(    (!isset($identpares)||$identpares==0)&&isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''     ) {
-  $datI=split(' ', $dataI);
-  $daI=split('-', $datI[1]);
+  $datI=preg_split('/ /', $dataI);
+  $daI=preg_split('/-/', $datI[1]);
   $datatimestampI=mktime(0,0,0,$daI[1],$daI[0],$daI[2],-1);
-  $datF=split(' ', $dataF);
-  $daF=split('-', $datF[1]);
+  $datF=preg_split('/ /', $dataF);
+  $daF=preg_split('/-/', $datF[1]);
   $datatimestampF=mktime(23,59,59,$daF[1],$daF[0],$daF[2],-1);
   $filtredata= "datahora>='$datatimestampI' and datahora<='$datatimestampF' ";
   $consulta  = "select id, usuari, datahora, ipremota, text ";

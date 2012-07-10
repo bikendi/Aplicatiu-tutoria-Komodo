@@ -147,7 +147,7 @@ print("<select name='alumne' onChange='selalumn(); if(ie) document.informe.windo
 <option>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </option>");
 if(isset($grup)&&($grup!="")) {
   print("<option".(($nalumne=='0')?" selected":"").">Tots</option>");
-  $gru=split(' ', $grup);
+  $gru=preg_split('/ /', $grup);
   $consulta="SELECT numero_mat, concat(cognom_alu,' ',cognom2_al,', ',nom_alum)  FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE (curs='$gru[0]' and grup='$gru[1]' and pla_estudi='$gru[2]')ORDER  BY cognom_alu, cognom2_al, nom_alum";
   $conjunt_resultant=mysql_query($consulta, $connect);
   $llistaalumnes='';

@@ -25,7 +25,7 @@
 @include("linkbd.inc.php");
 @include("comu.php");
 
-$priv=split("_", $sess_privilegis);
+$priv=preg_split("/_/", $sess_privilegis);
 $permisos=$priv[2];
 ?>
 <title>Tutoria - <?print("$nomcentre - $poblaciocentre");?></title>

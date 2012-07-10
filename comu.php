@@ -192,7 +192,7 @@ while($fila=mysql_fetch_row($conjunt_resultant)) {
 mysql_free_result($conjunt_resultant);
 
 if( !empty($grup) && $grup != 'Tots' ) { 
-	$gru = split(' ', $grup);
+	$gru = preg_split('/ /', $grup);
 	$where_grup = " AND (curs='$gru[0]' AND grup='$gru[1]' AND pla_estudi='$gru[2]')";
 }
 
@@ -209,8 +209,8 @@ mysql_free_result($conjunt_resultant);
      $datatimestamp=mktime(date('H'),date('i'),date('s'),date('n'),date('j'),date('Y'),-1);
    }
    else {
-     $dat=split(' ', $data);
-     $da=split('-', $dat[1]);
+     $dat=preg_split('/ /', $data);
+     $da=preg_split('/-/', $dat[1]);
      $datatimestamp=mktime(date('H'),date('i'),date('s'),$da[1],$da[0],$da[2],-1);
    }
   } else {

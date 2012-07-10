@@ -107,7 +107,7 @@ if (isset ($mostracontingut) && $mostracontingut!='') {
 	if(!(isset($sms)&&$sms=='si')) print("<b>Assumpte:</b> $fila[5]<br>");
 	$llistaadjunts='';
 	if ($fila[7]!='') {
-		$adjunts=split(";",$fila[7]);
+		$adjunts=preg_split("/;/",$fila[7]);
 		for($i=0; $i<count($adjunts); ++$i) {
 			$adj=explode("|",$adjunts[$i]);
 			$llistaadjunts.=(($llistaadjunts!="")?", ":"")."<a href='$PHP_SELF?obrefitxer=$adj[0]&obrefitxernom=".addslashes($adj[1])."&obrefitxermime=$adj[2]' title='($adj[3] by.)'><img src='".iconafitxer($adj[1])."' border='0' width='12' height='14'>$adj[1]</a>";	
@@ -247,7 +247,7 @@ if (isset($mostraadreces) && $mostraadreces==1) {
 	else if($grups=="ParesTots" || preg_match("/[?1-9] [?A-Z] ([.?A-Z0-9])+/i",$grups)) {
 		if($grups=="ParesTots") $consulta="SELECT cognom_alu, cognom2_al, nom_alum, concat(curs, grup, pla_estudi), numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants order by cognom_alu, cognom2_al";
 		else {
-    		$gru=split(' ',$grups);
+    		$gru=preg_split('/ /',$grups);
 			$consulta="SELECT cognom_alu, cognom2_al, nom_alum, concat(curs, grup, pla_estudi), numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='".$gru[0]."' AND grup='".$gru[1]."' AND pla_estudi='".$gru[2]."' order by cognom_alu, cognom2_al";	
 // 			echo "<p> consulta: $consulta </p>\n";
 		}
@@ -276,7 +276,7 @@ if (isset($mostraadreces) && $mostraadreces==1) {
 					$grupspersonaltzs=explode(":", $grupspersonalitzats[$i]);
 						if($grups==$grupspersonaltzs[0]) {
 							$esGrupPersonalitzat=true;
-							$elementllista=split(",", $grupspersonaltzs[1]);
+							$elementllista=preg_split("/,/", $grupspersonaltzs[1]);
 							for ($k=0; $k<count($elementllista); ++$k) {
 								$consulta1="SELECT usuari, nomreal, telfSMS FROM $bdusuaris.$tbl_prefix"."usu_profes WHERE usuari='$elementllista[$k]'";
 // 								echo "<p> consulta: $consulta1 </p>\n";
@@ -648,9 +648,9 @@ if (isset($enviar) && $enviar!='') {
 		  $from = meil_usuari( $sess_user );
 // 		  print_r( $from );
 // 		  echo "<p> per a: $p </p>\n";
-		  $psplit = split( ";", $p );
+		  $psplit = preg_split( "/;/", $p );
 		  foreach( $psplit as $dest ) {
-		    $destsplit = split( "\|", $dest );
+		    $destsplit = preg_split( "/\|/", $dest );
 // 		    echo "<p> per a: $destsplit[0] espare: $esPare </p>\n";
 		    if( !empty($from[0]) ) {
 		      $meils = meil_usuari( $destsplit[0] );
@@ -672,7 +672,7 @@ if (isset($enviar) && $enviar!='') {
 			$id=mysql_result($conjunt_resultant,0,0);
 			mysql_free_result($conjunt_resultant);
 			$llistaadjunts="";
-			$adjunts=split(";",$adjts);
+			$adjunts=preg_split("/;/",$adjts);
 			for($i=0; $i<count($adjunts); ++$i) {
 				$adj=explode("|",$adjunts[$i]);
 				$nomadj="c_$id"."_$i";
@@ -687,7 +687,7 @@ if (isset($enviar) && $enviar!='') {
 	}
 	else if($enviar=='no') {
 		if(isset($adjts) && $adjts!='') {
-			$adjunts=split(";",$adjts);
+			$adjunts=preg_split("/;/",$adjts);
 			for($i=0; $i<count($adjunts); ++$i) {
 				$adj=explode("|",$adjunts[$i]);
 				unlink("$dirfitxers/$adj[0]");

@@ -48,7 +48,7 @@ class PDF extends FPDF
     $this->Cell(0,5,"Curs: $cursacademic","",0,'R',0);
 
     $this->SetXY(90,20);
-    $aux=split(" ", $grup);
+    $aux=preg_split("/ /", $grup);
     $this->Cell(12,5,"Curs:",0,0,'L',0);
     $this->SetFont('','b',0);
     $this->Cell(15,5,"$aux[0]",0,0,'L',0);
@@ -91,7 +91,7 @@ $pdf->AliasNbPages();
 $pdf->SetMargins(20, 20, 20);
 $pdf->SetFillColor(180);
 
-$gr=split(' ', $grup);
+$gr=preg_split('/ /', $grup);
 $consulta="SELECT numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='$gr[0]' and grup='$gr[1]' and pla_estudi='$gr[2]' order by cognom_alu, cognom2_al, nom_alum";
 $conjunt_resultant=mysql_query($consulta, $connect);
 while($fila=mysql_fetch_row($conjunt_resultant)) $llistaalumnes[]=$fila[0];
@@ -99,7 +99,7 @@ mysql_free_result($conjunt_resultant);
 
 $pdf->AddPage();
 $pdf->SetFont('Arial','',11);
-$aux=split(" ", $grup);
+$aux=preg_split("/ /", $grup);
 
 $pdf->SetY(35);
 $pdf->Cell(50,5,"","B",0,'',0);
@@ -238,7 +238,7 @@ for($i=0; $i<$totalcredits; ++$i) {
 }
 $pdf->AddPage();
 $pdf->SetFont('Arial','',11);
-$aux=split(" ", $grup);
+$aux=preg_split("/ /", $grup);
 
 $pdf->SetY(35);
 $pdf->SetFont('','b',12); 

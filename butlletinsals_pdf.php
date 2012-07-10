@@ -58,7 +58,7 @@ $pdf->SetFillColor(180);
 
 
 if($nalumne=='0') { 
-  $gr=split(' ', $grup);
+  $gr=preg_split('/ /', $grup);
   $consulta="SELECT numero_mat FROM $bdalumnes.$tbl_prefix"."Estudiants WHERE curs='$gr[0]' and grup='$gr[1]' and pla_estudi='$gr[2]' order by cognom_alu, cognom2_al, nom_alum";
   $conjunt_resultant=mysql_query($consulta, $connect);
   while($fila=mysql_fetch_row($conjunt_resultant)) $llistaalumnes[]=$fila[0];
