@@ -24,38 +24,57 @@
 $lib = "lib/";
 $js = "js/";
 
-$quantitatget=count($_GET);
-for ($a=0; $a<$quantitatget; ++$a) {
-	$clauget=key($_GET);
-	$valorget=((!get_magic_quotes_gpc())?addslashes(current($_GET)):strtr(current($_GET),array('\"'=>'"')));
-	$valorget=current($_GET);
-	next($_GET);
-	if(!isset($$clauget)) eval("\$$clauget='$valorget';");
+foreach( $_GET as $clau => $valor) {
+//   echo "clau: $clau , valor: $valor \n";
+  $valor=((!get_magic_quotes_gpc())?addslashes($valor):strtr($valor,array('\"'=>'"')));
+  if(!isset($$clau)) eval("\$$clau='$valor';");
 }
-$quantitatpost=count($_POST);
-for ($a=0; $a<$quantitatpost; ++$a) {
-	$claupost=key($_POST);
-	$valorpost=((!get_magic_quotes_gpc())?addslashes(current($_POST)):strtr(current($_POST),array('\"'=>'"')));
-	next($_POST);
-	if(!isset($$claupost)) eval("\$$claupost='$valorpost';");	
-}
-$quantitatfiles=count($_FILES);
-for ($a=0; $a<$quantitatfiles; ++$a) {
-	$claufiles=key($_FILES);
-	$valorfiles=current($_FILES);
-	next($_FILES);
+foreach( $_FILES as $clau => $valor) {
 	
-	$nom_tmp=$_FILES[$claufiles]['tmp_name'];
-	$tipus=$_FILES[$claufiles]['type'];
-	$nom=((!get_magic_quotes_gpc())?addslashes($_FILES[$claufiles]['name']):strtr($_FILES[$claufiles]['name'],array('\"'=>'"')));
-	$mida=$_FILES[$claufiles]['size'];
+	$nom_tmp=$_FILES[$clau]['tmp_name'];
+	$tipus=$_FILES[$clau]['type'];
+	$nom=((!get_magic_quotes_gpc())?addslashes($_FILES[$clau]['name']):strtr($_FILES[$clau]['name'],array('\"'=>'"')));
+	$mida=$_FILES[$clau]['size'];
 	
-	if(!isset($$claufiles)) eval("\$$claufiles='$nom_tmp';");
-	if(!isset(${$claufiles."_type"})) eval("\$$claufiles"."_type='$tipus';");
-	if(!isset(${$claufiles."_name"})) eval("\$$claufiles"."_name='$nom';");
-	if(!isset(${$claufiles."_size"})) eval("\$$claufiles"."_size='$mida';");
+	if(!isset($$clau)) eval("\$$clau='$nom_tmp';");
+	if(!isset(${$clau."_type"})) eval("\$$clau"."_type='$tipus';");
+	if(!isset(${$clau."_name"})) eval("\$$clau"."_name='$nom';");
+	if(!isset(${$clau."_size"})) eval("\$$clau"."_size='$mida';");
 		
 }
+
+// $quantitatget=count($_GET);
+// for ($a=0; $a<$quantitatget; ++$a) {
+// 	$clauget=key($_GET);
+// 	$valorget=((!get_magic_quotes_gpc())?addslashes(current($_GET)):strtr(current($_GET),array('\"'=>'"')));
+// 	$valorget=current($_GET);
+// 	next($_GET);
+// 	if(!isset($$clauget)) eval("\$$clauget='$valorget';");
+// }
+// $quantitatpost=count($_POST);
+// for ($a=0; $a<$quantitatpost; ++$a) {
+// 	$claupost=key($_POST);
+// 	$valorpost=((!get_magic_quotes_gpc())?addslashes(current($_POST)):strtr(current($_POST),array('\"'=>'"')));
+// 	next($_POST);
+// 	if(!isset($$claupost)) eval("\$$claupost='$valorpost';");	
+// }
+// $quantitatfiles=count($_FILES);
+// for ($a=0; $a<$quantitatfiles; ++$a) {
+// 	$claufiles=key($_FILES);
+// 	$valorfiles=current($_FILES);
+// 	next($_FILES);
+// 	
+// 	$nom_tmp=$_FILES[$claufiles]['tmp_name'];
+// 	$tipus=$_FILES[$claufiles]['type'];
+// 	$nom=((!get_magic_quotes_gpc())?addslashes($_FILES[$claufiles]['name']):strtr($_FILES[$claufiles]['name'],array('\"'=>'"')));
+// 	$mida=$_FILES[$claufiles]['size'];
+// 	
+// 	if(!isset($$claufiles)) eval("\$$claufiles='$nom_tmp';");
+// 	if(!isset(${$claufiles."_type"})) eval("\$$claufiles"."_type='$tipus';");
+// 	if(!isset(${$claufiles."_name"})) eval("\$$claufiles"."_name='$nom';");
+// 	if(!isset(${$claufiles."_size"})) eval("\$$claufiles"."_size='$mida';");
+// 		
+// }
 $PHP_SELF=$_SERVER['PHP_SELF'];
 //Per al php v5:
 $HTTP_POST_VARS=$_POST;
@@ -339,7 +358,8 @@ function comprovaNoVistUsuari() {
 	          "El sistema desenvolupat intenta ser el màxim configurable possible, facilitant la realització d´avaluacions convencionals o bé, altres tipus d´avaluacions especials. El sistema no comprova en cap cas, si el curriculum de l´alumnes és l´adient, o si els items d´avaluació i els seus valors estan d´acord amb la normativa o bé si el nombre d´avaluacions és l´adequat. És responsabilitat de l´administrador comprovar que aquests s´ajusten a les seves necessitats.<p/>". 
 	          "Per aconseguir això es fa de la següent manera:<br/>".
 	          "En l´apartat \"Avaluació/Definir assignatures\" s´ha de tenir introduïdes totes les assignatures, materies i els seus crèdits corresponents de les etapes educatives del centre. A \"Opcions/Configuració/Crea subgrups\" s´ha de tenir definits tots els subgrups d´alumnes. Posteriorment, a \"Opcions/Configuració/Horaris-privilegis\", cada professor ha de tenir associat a cada hora lectiva el grup o subgrup d´alumnes (aquest requisit ja és necessari per configurar els permisos per que pugui introduïr les Incidències). Per a cada grup o subgrup d´alumnes, ha de tenir associada l´assignatura (crèdit o matèria) adequat, si algún grup o subgrup no ha d´estar ubicat a cap hora lectiva, es pot utilitzar l´opció \"Assigns. addicionals\" per introduïr parelles \"grups d´alumnes-assignatura\".<p/>".
-	          "Noteu que a \"Opcions/Configuració/Horaris-privilegis\" es defineix el següent sobre l´avaluació: 1- els privilegis de cada professor a avaluar el seu grup-subgrup d´alumnes de l´assignatura corresponent, 2- el conjunt d´assignatures, crèdits i/o matèries que ha de tenir cada alumne individualment en aquell moment d´avaluació (el seu curriculum, ja que cada grup o subgrup és un colectiu, de 0, 1 o més alumnes, que tenen associada una determinada assignatura), es pot comprovar si s'ha definit correctament les assignatures que té associades cada alumne visualitzant el butlleti que li correspon i verificant que hi té exactament totes les assignatures i/o crèdits que li corresponen en aquell moment d´avaluació. Si algun alumne o alumnes no té les seves assignatures correctament configurades, vol dir que es necessari revisar les associacions entre grups i/o subgrups i assignatura en els horaris-privilegis dels professors i si es convenient, crear tants subgrups com sigui necessari (un subgrup podria constar d´un sol alumne) per poder ajustar el màxim possible el curriculum de l´alumne.<p/>".
+	          "Noteu que a \"Opcions/Configuració/Horaris-privilegis\" es defineix el següent sobre l´avaluació: 1- els privilegis de cada professor a avaluar el seu grup-subgrup d´alumnes de l´assignatura corresponent, 2- el conjunt d´assignatures, crèdits i/o matèries que ha de tenir cada alumne individualment en aquell moment d´avaluació (el seu curriculum, ja que cada grup o subgrup és un colectiu, de 0, 1 o més alumnes, que tenen associada una determinada assignatura), es pot comprovar si s'ha definit correctament les assignatures que té associades cada alumne visualitzant el butlleti que li correspon i verificant que hi té exactament totes les assignatures i/o crèdits que li corresponen en aquell moment d´avaluació. Si algun alumne o alumnes no té les seves assignatures correctament configurades, vol dir que es necessari revisar les associacions entre grups i/o subgrups i assignatura en els horaris-privilegis dels professors i si es convenient, crear tants subgrups com sigui necessari (un subgrup podria 
+constar d´un sol alumne) per poder ajustar el màxim possible el curriculum de l´alumne.<p/>".
 	          "Un cop fetes les configuracions anteriors, es passa a crear l´avaluació en l´apartat: \"Avaluació/Definir Avaluacions\". Per això, es clica a \"Afegir nova avaluació\" i s´indica una Referència d´avaluació que ha de ser única, es a dir, no pot coincidir amb altres referències d´avaluació, seguidament, configurem els paràmetres que definiexen l´avaluació: el nom extens d´avaluació, el nombre d´items i els seus noms i sigles, les propietats de modificable i visible per pares, els valors possibles per als items d´avaluació, la data d´avaluació, els cursos, grups i pla d´estudis a que es pot aplicar i finalment, les observacions.<p/>".
 	          "Cada avaluació pot tenir dos estats possibles: Avaluació oberta i Avaluació tancada.<p/>".
 	          "L´estat Avaluació oberta és el que s´obté per defecte quan es crea l´avaluació. En aquest estat, la creació del curriculum d´assignatures per alumne bé definit i és totalment dependent del que està indicat en l´apartat \"Opcions/Configuració/Horaris-privilegis\" i també en la llista d´alumnes que forma cada grup i els alumnes que estan indicats en els subgrups de \"Opcions/Configuració/Crear subgrups\", això vol dir que si es modifica alguna cosa d´aquests apartats, pot afectar a la configuració del curriculum i permisos de professor de totes les avaluacions que estiguin en l´estat de Avaluació oberta. Es important tenir en compte que mentre hi hagi avaluacions obertes, aquestes poden estar afectades per les modificacions en els apartats indicats, s´aconsella no modificar res d´aquests apartats en aquesta situació, a no ser que es desitji afectar expressament a la configuració de les avaluacions obertes.<p/>".
