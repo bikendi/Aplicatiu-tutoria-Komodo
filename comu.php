@@ -29,6 +29,11 @@ foreach( $_GET as $clau => $valor) {
   $valor=((!get_magic_quotes_gpc())?addslashes($valor):strtr($valor,array('\"'=>'"')));
   if(!isset($$clau)) eval("\$$clau='$valor';");
 }
+foreach( $_POST as $clau => $valor) {
+//   echo "clau: $clau , valor: $valor \n";
+  $valor=((!get_magic_quotes_gpc())?addslashes($valor):strtr($valor,array('\"'=>'"')));
+  if(!isset($$clau)) eval("\$$clau='$valor';");
+}
 foreach( $_FILES as $clau => $valor) {
 	
 	$nom_tmp=$_FILES[$clau]['tmp_name'];
