@@ -264,7 +264,7 @@ if(!isset($fitxeralumnes)||$fitxeralumnes=='') {
 
   <b>Pas 2:</b><br>
   A continuaci&oacute;, selecciona el fitxer *.csv, creat en el pas anterior, i carrega'l.<p>
-  <input type='hidden' name='MAX_FILE_SIZE' value='500000'>
+  <input type='hidden' name='MAX_FILE_SIZE' value='$max_file_size'>
   &nbsp; &nbsp; <b>Fitxer:</b> <input type='file' name='fitxeralumnes'> <font size='-2'>(m&agrave;x.: <script language='JavaScript'>document.write(document.forms.introd1.MAX_FILE_SIZE.value +\" bytes\");</script>)</font>
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type='submit' value='Carregar'>
   </form>");

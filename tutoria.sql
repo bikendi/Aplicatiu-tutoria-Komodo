@@ -16,25 +16,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# phpMyAdmin SQL Dump
-# version 2.5.7-pl1
-# http://www.phpmyadmin.net
-#
-# Servidor: localhost
-# Tiempo de generaci�n: 10-03-2007 a las 14:43:24
-# Versi�n del servidor: 3.23.54
-# Versi�n de PHP: 4.2.2
-# 
-# Base de datos : `tutoria`
-# 
 
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_Estudiants`
+# Estructura de tabla para la tabla `atk_Estudiants`
 #
 
-CREATE TABLE at_11_12_Estudiants (
+CREATE TABLE atk_Estudiants (
   numero_mat varchar(50) NOT NULL default '0',
   DNI varchar(15) NOT NULL default '',
   COGNOM_ALU varchar(30) NOT NULL default '',
@@ -65,10 +54,10 @@ CREATE TABLE at_11_12_Estudiants (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_EstudiantsEsborrats`
+# Estructura de tabla para la tabla `atk_EstudiantsEsborrats`
 #
 
-CREATE TABLE at_11_12_EstudiantsEsborrats (
+CREATE TABLE atk_EstudiantsEsborrats (
   numero_mat varchar(50) NOT NULL default '0',
   DNI varchar(15) NOT NULL default '',
   COGNOM_ALU varchar(30) NOT NULL default '',
@@ -98,37 +87,37 @@ CREATE TABLE at_11_12_EstudiantsEsborrats (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_anotacions`
+# Estructura de tabla para la tabla `atk_anotacions`
 #
 
-CREATE TABLE at_11_12_anotacions (
+CREATE TABLE atk_anotacions (
   id int(11) NOT NULL auto_increment,
   text varchar(200) NOT NULL default '',
   PRIMARY KEY  (id)
 )  ;
 
-INSERT INTO `at_11_12_anotacions` VALUES (1, '- No treballa a classe');
-INSERT INTO `at_11_12_anotacions` VALUES (2, '- No para de parlar');
-INSERT INTO `at_11_12_anotacions` VALUES (3, '- No porta els deures');
-INSERT INTO `at_11_12_anotacions` VALUES (4, '- No porta el material');
-INSERT INTO `at_11_12_anotacions` VALUES (5, '- Est&agrave treballant una altra assignatura');
-INSERT INTO `at_11_12_anotacions` VALUES (6, '- Comportament inadequat');
-INSERT INTO `at_11_12_anotacions` VALUES (7, '+ Participa');
-INSERT INTO `at_11_12_anotacions` VALUES (8, '+ Ajuda als seus companys/es');
-INSERT INTO `at_11_12_anotacions` VALUES (9, '+ Surt voluntari/a');
-INSERT INTO `at_11_12_anotacions` VALUES (10, '+ Mostra inter&egraves');
-INSERT INTO `at_11_12_anotacions` VALUES (11, '+ Pregunta els dubtes');
-INSERT INTO `at_11_12_anotacions` VALUES (12, '+ Realitza els exercicis b&eacute');
--- INSERT INTO `at_11_12_anotacions` VALUES (13, '');
--- INSERT INTO `at_11_12_anotacions` VALUES (14, '');
--- INSERT INTO `at_11_12_anotacions` VALUES (15, '');
+INSERT INTO `atk_anotacions` VALUES (1, '- No treballa a classe');
+INSERT INTO `atk_anotacions` VALUES (2, '- No para de parlar');
+INSERT INTO `atk_anotacions` VALUES (3, '- No porta els deures');
+INSERT INTO `atk_anotacions` VALUES (4, '- No porta el material');
+INSERT INTO `atk_anotacions` VALUES (5, '- Est\u00E0 treballant una altra assignatura');
+INSERT INTO `atk_anotacions` VALUES (6, '- Comportament inadequat');
+INSERT INTO `atk_anotacions` VALUES (7, '+ Participa');
+INSERT INTO `atk_anotacions` VALUES (8, '+ Ajuda als seus companys/es');
+INSERT INTO `atk_anotacions` VALUES (9, '+ Surt voluntari/a');
+INSERT INTO `atk_anotacions` VALUES (10, '+ Mostra inter\u00E8s');
+INSERT INTO `atk_anotacions` VALUES (11, '+ Pregunta els dubtes');
+INSERT INTO `atk_anotacions` VALUES (12, '+ Realitza els exercicis b\u00E9');
+-- INSERT INTO `atk_anotacions` VALUES (13, '');
+-- INSERT INTO `atk_anotacions` VALUES (14, '');
+-- INSERT INTO `atk_anotacions` VALUES (15, '');
 
 # --------------------------------------------------------
 #
-# Estructura de tabla para la tabla `at_11_12_apercebiments`
+# Estructura de tabla para la tabla `atk_apercebiments`
 #
 
-CREATE TABLE at_11_12_apercebiments (
+CREATE TABLE atk_apercebiments (
   id int(11) NOT NULL auto_increment,
   refalum varchar(20) NOT NULL default '',
   datahora bigint(20) NOT NULL default '0',
@@ -142,14 +131,14 @@ CREATE TABLE at_11_12_apercebiments (
 )  ;
 
 -- bingen
--- ALTER TABLE  `at_11_12_apercebiments` ADD  `incidencia` VARCHAR( 4 ) NULL, ADD  `quantitat` SMALLINT NULL, ADD signat BOOLEAN DEFAULT FALSE ;
+-- ALTER TABLE  `atk_apercebiments` ADD  `incidencia` VARCHAR( 4 ) NULL, ADD  `quantitat` SMALLINT NULL, ADD signat BOOLEAN DEFAULT FALSE ;
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_avaluacions`
+# Estructura de tabla para la tabla `atk_avaluacions`
 #
 
-CREATE TABLE at_11_12_avaluacions (
+CREATE TABLE atk_avaluacions (
   id int(11) NOT NULL auto_increment,
   refaval varchar(10) NOT NULL default '',
   nomaval varchar(50) NOT NULL default '',
@@ -171,10 +160,10 @@ CREATE TABLE at_11_12_avaluacions (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_calendari`
+# Estructura de tabla para la tabla `atk_calendari`
 #
 
-CREATE TABLE at_11_12_calendari (
+CREATE TABLE atk_calendari (
   id int(11) NOT NULL auto_increment,
   data bigint(20) NOT NULL default '0',
   text text NOT NULL,
@@ -193,10 +182,10 @@ CREATE TABLE at_11_12_calendari (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_comunicacio`
+# Estructura de tabla para la tabla `atk_comunicacio`
 #
 
-CREATE TABLE at_11_12_comunicacio (
+CREATE TABLE atk_comunicacio (
   id bigint(20) NOT NULL auto_increment,
   sub bigint(20) NOT NULL default '0',
   de varchar(100) NOT NULL default '',
@@ -212,10 +201,10 @@ CREATE TABLE at_11_12_comunicacio (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_comunicpers`
+# Estructura de tabla para la tabla `atk_comunicpers`
 #
 
-CREATE TABLE at_11_12_comunicpers (
+CREATE TABLE atk_comunicpers (
   id int(11) NOT NULL auto_increment,
   usuari varchar(40) NOT NULL default '',
   carpetes text,
@@ -227,10 +216,10 @@ CREATE TABLE at_11_12_comunicpers (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_databloqueig`
+# Estructura de tabla para la tabla `atk_databloqueig`
 #
 
-CREATE TABLE at_11_12_databloqueig (
+CREATE TABLE atk_databloqueig (
   id int(11) NOT NULL auto_increment,
   grup varchar(150) NOT NULL default '',
   data bigint(20) NOT NULL default '0',
@@ -241,10 +230,10 @@ CREATE TABLE at_11_12_databloqueig (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_entrevistes`
+# Estructura de tabla para la tabla `atk_entrevistes`
 #
 
-CREATE TABLE at_11_12_entrevistes (
+CREATE TABLE atk_entrevistes (
   id int(11) NOT NULL auto_increment,
   ref_alum varchar(25) NOT NULL default '0',
   data bigint(20) NOT NULL default '0',
@@ -258,10 +247,10 @@ CREATE TABLE at_11_12_entrevistes (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_faltes`
+# Estructura de tabla para la tabla `atk_faltes`
 #
 
-CREATE TABLE at_11_12_faltes (
+CREATE TABLE atk_faltes (
   id bigint(20) NOT NULL auto_increment,
   refalumne varchar(20) NOT NULL default '0',
   data bigint(20) NOT NULL default '0',
@@ -276,10 +265,10 @@ CREATE TABLE at_11_12_faltes (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_fitxers`
+# Estructura de tabla para la tabla `atk_fitxers`
 #
 
-CREATE TABLE at_11_12_fitxers (
+CREATE TABLE atk_fitxers (
   id int(11) NOT NULL auto_increment,
   data bigint(20) NOT NULL default '0',
   ref_alum varchar(25) NOT NULL default '0',
@@ -295,10 +284,10 @@ CREATE TABLE at_11_12_fitxers (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_frangeshoraries`
+# Estructura de tabla para la tabla `atk_frangeshoraries`
 #
 
-CREATE TABLE at_11_12_frangeshoraries (
+CREATE TABLE atk_frangeshoraries (
   id int(11) NOT NULL auto_increment,
   hora varchar(4) NOT NULL default '',
   inici int(11) NOT NULL default '0',
@@ -306,25 +295,25 @@ CREATE TABLE at_11_12_frangeshoraries (
   extraescolar boolean default FALSE,
   PRIMARY KEY  (id)
 )  ;
-INSERT INTO `at_11_12_frangeshoraries` VALUES (1, '1', 27900, 31200, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (2, '2', 31201, 34500, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (3, 'p1', 34501, 36300, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (4, '3', 36301, 39600, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (5, '4', 39601, 42900, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (6, 'p2', 42901, 43500, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (7, '5', 43501, 46800, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (8, '6', 46801, 50100, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (9, 'di', 50101, 51000, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (10, '7', 51001, 54300, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (11, '8', 54301, 57600, FALSE);
-INSERT INTO `at_11_12_frangeshoraries` VALUES (12, '9', 57601, 60900, TRUE);
+INSERT INTO `atk_frangeshoraries` VALUES (1, '1', 27900, 31200, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (2, '2', 31201, 34500, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (3, 'p1', 34501, 36300, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (4, '3', 36301, 39600, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (5, '4', 39601, 42900, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (6, 'p2', 42901, 43500, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (7, '5', 43501, 46800, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (8, '6', 46801, 50100, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (9, 'di', 50101, 51000, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (10, '7', 51001, 54300, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (11, '8', 54301, 57600, FALSE);
+INSERT INTO `atk_frangeshoraries` VALUES (12, '9', 57601, 60900, TRUE);
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_guardia`
+# Estructura de tabla para la tabla `atk_guardia`
 #
 
-CREATE TABLE at_11_12_guardia (
+CREATE TABLE atk_guardia (
   id bigint(20) NOT NULL auto_increment,
   incidencia varchar(4) NOT NULL default '',
   refalumne varchar(20) NOT NULL default '0',
@@ -340,10 +329,10 @@ CREATE TABLE at_11_12_guardia (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_grupsentorns`
+# Estructura de tabla para la tabla `atk_grupsentorns`
 #
 
-CREATE TABLE at_11_12_grupsentorns (
+CREATE TABLE atk_grupsentorns (
   id int(11) NOT NULL auto_increment,
   nomcurtgrup varchar(20) NOT NULL default '',
   nomllarggrup text NOT NULL,
@@ -356,10 +345,10 @@ CREATE TABLE at_11_12_grupsentorns (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_grupsfitxers`
+# Estructura de tabla para la tabla `atk_grupsfitxers`
 #
 
-CREATE TABLE at_11_12_grupsfitxers (
+CREATE TABLE atk_grupsfitxers (
   id int(11) NOT NULL auto_increment,
   idrecurs int(11) NOT NULL default '0',
   branca int(11) NOT NULL default '0',
@@ -377,10 +366,10 @@ CREATE TABLE at_11_12_grupsfitxers (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_grupsforums`
+# Estructura de tabla para la tabla `atk_grupsforums`
 #
 
-CREATE TABLE at_11_12_grupsforums (
+CREATE TABLE atk_grupsforums (
   id int(11) NOT NULL auto_increment,
   idrecurs int(11) NOT NULL default '0',
   fil_de_id int(11) NOT NULL default '0',
@@ -399,10 +388,10 @@ CREATE TABLE at_11_12_grupsforums (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_grupsrecurs`
+# Estructura de tabla para la tabla `atk_grupsrecurs`
 #
 
-CREATE TABLE at_11_12_grupsrecurs (
+CREATE TABLE atk_grupsrecurs (
   id int(11) NOT NULL auto_increment,
   tipus varchar(40) NOT NULL default '',
   propietat varchar(5) NOT NULL default '',
@@ -414,10 +403,10 @@ CREATE TABLE at_11_12_grupsrecurs (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_horariprofs`
+# Estructura de tabla para la tabla `atk_horariprofs`
 #
 
-CREATE TABLE at_11_12_horariprofs (
+CREATE TABLE atk_horariprofs (
   id int(11) NOT NULL auto_increment,
   idprof varchar(15) NOT NULL default '',
   diasem char(3) NOT NULL default '',
@@ -426,15 +415,15 @@ CREATE TABLE at_11_12_horariprofs (
   assign varchar(250) NOT NULL default '',
   PRIMARY KEY  (id)
 )  ;
-INSERT INTO `at_11_12_horariprofs` VALUES (1, 'admin', 'X', 'X', 'admin', '');
+INSERT INTO `atk_horariprofs` VALUES (1, 'admin', 'X', 'X', 'admin', '');
 
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_informeincid`
+# Estructura de tabla para la tabla `atk_informeincid`
 #
 
-CREATE TABLE at_11_12_informeincid (
+CREATE TABLE atk_informeincid (
   id int(11) NOT NULL auto_increment,
   ref_alum varchar(25) NOT NULL default '0',
   id_prof varchar(25) NOT NULL default '',
@@ -448,10 +437,10 @@ CREATE TABLE at_11_12_informeincid (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_informelliure`
+# Estructura de tabla para la tabla `atk_informelliure`
 #
 
-CREATE TABLE at_11_12_informelliure (
+CREATE TABLE atk_informelliure (
   id int(11) NOT NULL auto_increment,
   id_prof varchar(25) NOT NULL default '',
   ref_alum text,
@@ -464,25 +453,28 @@ CREATE TABLE at_11_12_informelliure (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_informes`
+# Estructura de tabla para la tabla `atk_informes`
 #
 
-CREATE TABLE at_11_12_informes (
+CREATE TABLE atk_informes (
   id int(11) NOT NULL auto_increment,
   referencia varchar(30) NOT NULL default '',
   text text,
   PRIMARY KEY  (id)
 )  ;
-INSERT INTO `at_11_12_informes` VALUES (2, 'informe2', '                                                                                         !PARE1\r\n                                                                                         !PARE2\r\n                                                                                         !ADRECA\r\n                                                                                         !CODIPOSTAL !POBLACIO\r\n                                                            \r\n            \r\n            Senyor/a,\r\n            \r\n            Us comuniquem que !VFILL\r\n\r\n                        !ALUMNE\r\n\r\n            que consta !MATRICULAT al curs !ESTUDIS, ha  faltat  a  classe de forma injustificada un total de !NFALTESM hores,  durant el per�ode que va des del !DATAI fins el !DATAF.\r\n            En aquest per�ode tamb� ha fet !NRETARDSM retards injustificats.\r\n\r\n!DETFALM\r\n\r\n!DETRETM\r\n\r\n            Des del comen�ament del curs, ha fet !NFALTESCJ faltes justificades, !NFALTESC faltes injustificades, !NRETARDSCJ retards justificats i !NRETARDSC retards injustificats.\r\n                \r\n            Per  la  qual  cosa  us preguem  posar-vos  en contacte amb nosaltres per tal de concertar una entrevista.\r\n         \r\n            Cordialment,\r\n            EL/LA  TUTOR/A\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n            !TUTOR\r\n\r\n             !POBLACIOCENTRE, a !DATA0 ');
-INSERT INTO `at_11_12_informes` VALUES (3, 'informe3', '                                       AV�S I AMONESTACI� ESCRITA\r\n                                                                                 !PARE1\r\n                                                                                 !PARE2\r\n                                                                                 Pares de l''alumne: !ALUMNE\r\n                                                                                 Curs: !ESTUDIS\r\n                                                            \r\n            Srs.:\r\n            \r\n            Poso   en   el  seu   coneixement  que  d''acord   amb  els  informes  rebuts   dels \r\nprofessors  sobre  !VFILL, ha  com�s  fins  aquest  moment  !NFALTESM  faltes  d''assist�ncia \r\ninjustificades en el present curs acad�mic.\r\n            En  aplicaci�  del  Decret  279/2006,  de  4  de juliol,  sobre  drets  i  deures  dels \r\nalumnes  de  nivell  no universitari  de Catalunya  i de les disposicions  complement�ries \r\ndel  Consell Escolar,  data  13  de mar�  de 2000,  us comuniquem  que  aquest fet  est�\r\ntipificat  com  una conducta  contr�ria a  les normes de conviv�ncia, sancionada amb  la \r\ncorresponent amonestaci�\r\n            En apliaci� de la legislaci� vigent, disposeu d''un termini de tres dies per presentar \r\nles  justificacions que considereu  oportunes mitjan�ant el justificant  extraordinari que  us \r\nadjuntem. En cas contrari, es consideraran com a definitives la tipificaci� i la sanci� abans \r\nesmentades.\r\n\r\n            !POBLACIOCENTRE, a !DATA0,\r\n            El/la  tutor/a !TUTOR\r\n                                                                                                He rebut l''original\r\n                                                                                                Data:\r\n                                                                                                D.N.I.\r\n                                                                                                Signat: Pares/representants legals');
+INSERT INTO `atk_informes` VALUES (2, 'informe2', '                                                                                         !PARE1\r\n                                                                                         !PARE2\r\n                                                                                         !ADRECA\r\n                                                                                         !CODIPOSTAL !POBLACIO\r\n                                                            \r\n            \r\n            Senyor/a,\r\n            \r\n            Us comuniquem que !VFILL\r\n\r\n                        !ALUMNE\r\n\r\n            que consta !MATRICULAT al curs !ESTUDIS, ha  faltat  a  classe de forma injustificada un total de !NFALTESM hores,  durant el per�ode que va des del !DATAI fins el !DATAF.\r\n            En aquest per�ode tamb� ha fet !NRETARDSM retards injustificats.\r\n\r\n!DETFALM\r\n\r\n!DETRETM\r\n\r\n            Des del comen�ament del curs, ha fet 
+!NFALTESCJ faltes justificades, !NFALTESC faltes injustificades, !NRETARDSCJ retards justificats i !NRETARDSC retards injustificats.\r\n                \r\n            Per  la  qual  cosa  us preguem  posar-vos  en contacte amb nosaltres per tal de concertar una entrevista.\r\n         \r\n            Cordialment,\r\n            EL/LA  TUTOR/A\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n            !TUTOR\r\n\r\n             !POBLACIOCENTRE, a !DATA0 ');
+INSERT INTO `atk_informes` VALUES (3, 'informe3', '                                       AV�S I AMONESTACI� ESCRITA\r\n                                                                                 !PARE1\r\n                                                                                 !PARE2\r\n                                                                                 Pares de l''alumne: !ALUMNE\r\n                                                                                 Curs: !ESTUDIS\r\n                                                            \r\n            Srs.:\r\n            \r\n            Poso   en   el  seu   coneixement  que  d''acord   amb  els  informes  rebuts   dels \r\nprofessors  sobre  !VFILL, ha  com�s  fins  aquest  moment  !NFALTESM  faltes  d''assist�ncia \r\ninjustificades en el present curs acad�mic.\r\n            En  aplicaci�  del  Decret  279/2006,  de  4  de juliol,  sobre  drets  i  deures  dels \r\nalumnes  de  nivell  no universitari  de Catalunya  i 
+de les disposicions  complement�ries \r\ndel  Consell Escolar,  data  13  de mar�  de 2000,  us comuniquem  que  aquest fet  est�\r\ntipificat  com  una conducta  contr�ria a  les normes de conviv�ncia, sancionada amb  la \r\ncorresponent amonestaci�\r\n            En apliaci� de la legislaci� vigent, disposeu d''un termini de tres dies per presentar \r\nles  justificacions que considereu  oportunes mitjan�ant el justificant  extraordinari que  us \r\nadjuntem. En cas contrari, es consideraran com a definitives la tipificaci� i la sanci� abans \r\nesmentades.\r\n\r\n            !POBLACIOCENTRE, a !DATA0,\r\n            El/la  tutor/a !TUTOR\r\n                                                                                                He rebut l''original\r\n                                                                                                Data:\r\n                                                                                                D.N.I.\r\n                                         
+                                                       Signat: Pares/representants legals');
 
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_llistacredits`
+# Estructura de tabla para la tabla `atk_llistacredits`
 #
 
-CREATE TABLE at_11_12_llistacredits (
+CREATE TABLE atk_llistacredits (
   id int(11) NOT NULL auto_increment,
   codi varchar(25) NOT NULL default '',
   nomcredit varchar(50) NOT NULL default '',
@@ -498,10 +490,10 @@ CREATE TABLE at_11_12_llistacredits (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_Estudiants_Materies`
+# Estructura de tabla para la tabla `atk_Estudiants_Materies`
 #
 
-CREATE TABLE at_11_12_Estudiants_Materies (
+CREATE TABLE atk_Estudiants_Materies (
   id int(11) NOT NULL auto_increment,
   codi_credit varchar(25) NOT NULL default '',
   numero_mat varchar(50) default '0',
@@ -518,10 +510,10 @@ CREATE TABLE at_11_12_Estudiants_Materies (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_logs`
+# Estructura de tabla para la tabla `atk_logs`
 #
 
-CREATE TABLE at_11_12_logs (
+CREATE TABLE atk_logs (
   id bigint(20) NOT NULL auto_increment,
   usuari varchar(25) NOT NULL default '',
   datahora bigint(20) NOT NULL default '0',
@@ -533,10 +525,10 @@ CREATE TABLE at_11_12_logs (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_marcshoraris`
+# Estructura de tabla para la tabla `atk_marcshoraris`
 #
 
-CREATE TABLE at_11_12_marcshoraris (
+CREATE TABLE atk_marcshoraris (
   id int(11) NOT NULL auto_increment,
   curs varchar(5) NOT NULL default '',
   grup varchar(5) NOT NULL default '',
@@ -549,10 +541,10 @@ CREATE TABLE at_11_12_marcshoraris (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_notes`
+# Estructura de tabla para la tabla `atk_notes`
 #
 
-CREATE TABLE at_11_12_notes (
+CREATE TABLE atk_notes (
   id bigint(20) NOT NULL auto_increment,
   ref_aval varchar(25) NOT NULL default '',
   ref_alum varchar(25) NOT NULL default '',
@@ -567,11 +559,11 @@ CREATE TABLE at_11_12_notes (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_parametres`
+# Estructura de tabla para la tabla `atk_parametres`
 #
 
-DROP TABLE IF EXISTS `at_11_12_parametres`;
-CREATE TABLE `at_11_12_parametres` (
+DROP TABLE IF EXISTS `atk_parametres`;
+CREATE TABLE `atk_parametres` (
   `id` int(11) NOT NULL auto_increment,
   `nomcentre` varchar(50) NOT NULL default '',
   `adrecacentre` varchar(50) NOT NULL default '',
@@ -610,16 +602,18 @@ CREATE TABLE `at_11_12_parametres` (
   `passwdSMSDinahosting` varchar(50) NOT NULL default '',
   `identificSMSLlNet` varchar(50) NOT NULL default '',
   `sms_auto` tinyint(1) NOT NULL default '0',
+  max_file_size int(10) NOT NULL default 500000,
+  max_photo_size int(10) NOT NULL default 50000,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_pares`
+# Estructura de tabla para la tabla `atk_pares`
 #
 
-CREATE TABLE at_11_12_pares (
+CREATE TABLE atk_pares (
   id bigint(20) NOT NULL auto_increment,
   identificador varchar(40) NOT NULL default '',
   passwd varchar(10) NOT NULL default '',
@@ -635,10 +629,10 @@ CREATE TABLE at_11_12_pares (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_pareslogs`
+# Estructura de tabla para la tabla `atk_pareslogs`
 #
 
-CREATE TABLE at_11_12_pareslogs (
+CREATE TABLE atk_pareslogs (
   id bigint(20) NOT NULL auto_increment,
   usuari varchar(40) NOT NULL default '',
   datahora bigint(20) NOT NULL default '0',
@@ -650,10 +644,10 @@ CREATE TABLE at_11_12_pareslogs (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_sessions`
+# Estructura de tabla para la tabla `atk_sessions`
 #
 
-CREATE TABLE at_11_12_sessions (
+CREATE TABLE atk_sessions (
   id bigint(20) NOT NULL auto_increment,
   ref_usuari varchar(25) NOT NULL default '',
   ipremota varchar(16) NOT NULL default '',
@@ -668,10 +662,10 @@ CREATE TABLE at_11_12_sessions (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_subgrups`
+# Estructura de tabla para la tabla `atk_subgrups`
 #
 
-CREATE TABLE at_11_12_subgrups (
+CREATE TABLE atk_subgrups (
   id int(11) NOT NULL auto_increment,
   ref_subgrup varchar(15) NOT NULL default '',
   nom text NOT NULL,
@@ -683,10 +677,10 @@ CREATE TABLE at_11_12_subgrups (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_rel_subgrups`
+# Estructura de tabla para la tabla `atk_rel_subgrups`
 #
 
-CREATE TABLE at_11_12_rel_subgrups (
+CREATE TABLE atk_rel_subgrups (
   id int(11) NOT NULL auto_increment,
   ref_subgrup varchar(15) NOT NULL default '',
   codi_credit varchar(15) NOT NULL default '',
@@ -698,10 +692,10 @@ CREATE TABLE at_11_12_rel_subgrups (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_dif_subgrups`
+# Estructura de tabla para la tabla `atk_dif_subgrups`
 #
 
-CREATE TABLE at_11_12_dif_subgrups (
+CREATE TABLE atk_dif_subgrups (
   id int(11) NOT NULL auto_increment,
   ref_subgrup varchar(15) NOT NULL default '',
   curs varchar(15) NOT NULL default '',
@@ -713,10 +707,10 @@ CREATE TABLE at_11_12_dif_subgrups (
 # --------------------------------------------------------
 
 #
-# Estructura de tabla para la tabla `at_11_12_usu_profes`
+# Estructura de tabla para la tabla `atk_usu_profes`
 #
 
-CREATE TABLE at_11_12_usu_profes (
+CREATE TABLE atk_usu_profes (
   ident varchar(15) NOT NULL default '',
   nomreal varchar(92) default NULL,
   usuari varchar(31) default NULL,
@@ -730,5 +724,5 @@ CREATE TABLE at_11_12_usu_profes (
   telfSMS varchar(9) NOT NULL default '',
   email varchar(64) NOT NULL default ''
 )  ;
-INSERT INTO at_11_12_usu_profes VALUES ('', 'Administrador', 'admin', 'aa1111', '137a3a3a7809a828afe701ad71827e81', 2000, '', NULL, '', 2000, '', '');
+INSERT INTO atk_usu_profes VALUES ('', 'Administrador', 'admin', 'aa1111', '137a3a3a7809a828afe701ad71827e81', 2000, '', NULL, '', 2000, '', '');
 

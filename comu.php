@@ -174,6 +174,8 @@ $retards_ESO = $fila->retards_ESO;
 $reset_ESO = $fila->reset_ESO;
 $retards_BTX = $fila->retards_BTX;
 $reset_BTX = $fila->reset_BTX;
+$max_import_size = $fila->max_import_size;
+$max_photo_size = $fila->max_photo_size;
 mysql_free_result($conjunt_resultant);
 if(file_exists("$dirfitxers/logocentre.jpg")) $logocentre = "$dirfitxers/logocentre.jpg";
 else $logocentre = "./imatges/logocentre0.jpg";

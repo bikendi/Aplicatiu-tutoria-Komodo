@@ -25,7 +25,7 @@ $password="";
 
 $connect=mysql_connect($host, $usuari, $password);
 
-$tbl_prefix="at_11_12_";
+$tbl_prefix="atk_";
 $bdtutoria="";
 $bdusuaris="";
 $bdalumnes="";

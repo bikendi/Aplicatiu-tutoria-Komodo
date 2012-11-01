@@ -31,7 +31,7 @@ panyacces("Administrador");
 
 <?
 if(isset($fitxer)&&$fitxer!=''&&$idAlum!='') {
-  if ($fitxer_size<20000 && ($fitxer_type=="image/pjpeg" || $fitxer_type=="image/jpeg")) {
+  if ($fitxer_size<$max_photo_size && ($fitxer_type=="image/pjpeg" || $fitxer_type=="image/jpeg")) {
     copy($fitxer, "$dirfotos/$idAlum.jpg");
     print("<script language='JavaScript'>");
     print("opener.document.introd1.submit();");
@@ -41,7 +41,7 @@ if(isset($fitxer)&&$fitxer!=''&&$idAlum!='') {
   else {
     print("<script language='JavaScript'>");
     print("opener.document.introd1.submit();");
-    print("alert('No es pot canviar. Foto massa gran (>10K) o format incorrecte (no es jpg).');");
+    print("alert('No es pot canviar. Foto massa gran (>$max_photo_size) o format incorrecte (no es jpg).');");
     print("window.close();");
     print("</script>");
   }
@@ -74,7 +74,7 @@ function carregaFoto(pIdAlu, pNom)
   write("<body bgcolor='#c0c0c0'>");
   write("<form action='<?print("$PHP_SELF?idsess=$idsess");?>' method='post' enctype='multipart/form-data'>");
   write("<b>Alumne:</b> "+pNom+"<br><br>");
-  write("<input type='hidden' name='MAX_FILE_SIZE' value='15000'>");
+  write("<input type='hidden' name='MAX_FILE_SIZE' value='<?print($max_photo_size);?>'>");
   write("<font size=-2>La foto ha d'esser format .jpg, de 93x125px aprox. i tamany m&agrave;xim de 10Kby</font><br>");
   write("<input type='hidden' name='idAlum' value='"+pIdAlu+"'>");
   write("Fitxer de la foto: <input type='file' name='fitxer'>");

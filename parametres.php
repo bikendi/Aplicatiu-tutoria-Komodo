@@ -30,7 +30,6 @@ if($_POST['esborrarlogo']!='' && $_POST['esborrarlogo']=='si') {
 @include("comu.php");
 
 echo '<link rel="stylesheet" type="text/css" href="css/comu.css" />';
-
 if(isset($fitxer)&&$fitxer!='') {
   if ($fitxer_size<$MAX_FILE_SIZE && ($fitxer_type=="image/pjpeg" || $fitxer_type=="image/jpeg")) {
     copy($fitxer, "$dirfitxers/logocentre.jpg");
@@ -48,8 +47,7 @@ if(isset($fitxer)&&$fitxer!='') {
   }
   unlink($fitxer);
   exit;
-}
-else if(isset($MAX_FILE_SIZE)) {
+} else if(isset($MAX_FILE_SIZE)) {
         print("<script language='JavaScript'>");
         print("opener.document.params.submit();");
         print("alert('No es pot canviar. Imatge massa gran (>$MAX_FILE_SIZE bytes).');");
@@ -90,7 +88,9 @@ if (isset($gravargeneral)&& $gravargeneral==$fila[0]) {
 	retards_ESO='". $_REQUEST['retards_ESO'] ."',
 	reset_ESO='$reset_ESO',
 	retards_BTX='". $_REQUEST['retards_BTX'] ."',
-	reset_BTX='$reset_BTX'
+	reset_BTX='$reset_BTX',
+	max_import_size='".$_REQUEST['max_import_size']."',
+	max_photo_size='".$_REQUEST['max_photo_size']."'
 	where id='$gravargeneral'";
 // 	echo "<p>Query: $consulta</p>\n";
 	mysql_query($consulta, $connect);
@@ -135,7 +135,7 @@ function carregaLogoCentre()
   write("<body bgcolor='#c0c0c0'>");
   write("<form action='<?print("$PHP_SELF?idsess=$idsess");?>' method='post' enctype='multipart/form-data'>");
   write("<b>Carrega logotip de centre.</b><br>");
-  write("<input type='hidden' name='MAX_FILE_SIZE' value='25000'>");
+  write("<input type='hidden' name='MAX_FILE_SIZE' value='<?print($max_photo_size);?>'>");
   write("<font size=-2>La imatge ha d'esser format .jpg, de 129x115px aprox. i tamany m&agrave;xim de 20Kby</font><br>");
   write("Fitxer de la imatge: <input type='file' name='fitxer'><br>");
   write("<center><input type='submit' value='Canviar'></center>");
@@ -168,11 +168,11 @@ function carregaLogoCentre()
 print("
 <div align='right'>
 <table border='0'><tr>
-<td><font size='6'>Par&agrave;metres de configuraci&oacute;&nbsp; &nbsp; </font>
+<td><font size='6'>Par&agrave;metres de configuraci&oacute;  </font>
 </tr></table>
 </div>
 <hr>");
-$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, director, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, capdes, nomcapdes, sexcapdes, coordbtx, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
+$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, director, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, capdes, nomcapdes, sexcapdes, coordbtx, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX, max_import_size, max_photo_size FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
 // echo "<p> consulta: $consulta </p>\n";
 $conjunt_resultant=mysql_query($consulta, $connect);// OR die(mysql_error());
 $fila=mysql_fetch_object($conjunt_resultant);
@@ -183,11 +183,11 @@ print("<table border='0' width='100%'><tr><td valign='top'>");
 print("<form name='params' method='post' action='$PHP_SELF?idsess=$idsess' onSubmit='document.forms.params.gravargeneral.value=\"$fila->id\";'>");
 print("<table border='0'>");
 print("<tr><td width='20%'><input type='hidden' name='gravargeneral' value=''><input type='submit' value='Gravar'></td><td width='80%'><font size='+1'>Paràmetres configuració generals</font></td></tr>");
-print("<tr><td align='right'>Nom centre: &nbsp;</td><td><input type='text' name='nomcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomcentr.value='".addslashes($fila->nomcentre)."';</script></td></tr>");
-print("<tr><td align='right'>Adreça centre: &nbsp;</td><td><input type='text' name='adrecacentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.adrecacentr.value='".addslashes($fila->adrecacentre)."';</script></td></tr>");
-print("<tr><td align='right'>Codi Postal centre: &nbsp;</td><td><input type='text' name='cpcentr' size='7' maxlength='7' value=''><script language='JavaScript'>document.forms.params.cpcentr.value='".addslashes($fila->cpcentre)."';</script></td></tr>");
-print("<tr><td align='right'>Població centre: &nbsp;</td><td><input type='text' name='poblaciocentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.poblaciocentr.value='".addslashes($fila->poblaciocentre)."';</script></td></tr>");
-print("<tr><td align='right'>Tel&egrave;fon centre: &nbsp;</td><td><input type='text' name='telfcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.telfcentr.value='".addslashes($fila->telfcentre)."';</script></td></tr>");
+print("<tr><td align='right'>Nom centre: </td><td><input type='text' name='nomcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomcentr.value='".addslashes($fila->nomcentre)."';</script></td></tr>");
+print("<tr><td align='right'>Adreça centre: </td><td><input type='text' name='adrecacentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.adrecacentr.value='".addslashes($fila->adrecacentre)."';</script></td></tr>");
+print("<tr><td align='right'>Codi Postal centre: </td><td><input type='text' name='cpcentr' size='7' maxlength='7' value=''><script language='JavaScript'>document.forms.params.cpcentr.value='".addslashes($fila->cpcentre)."';</script></td></tr>");
+print("<tr><td align='right'>Població centre: </td><td><input type='text' name='poblaciocentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.poblaciocentr.value='".addslashes($fila->poblaciocentre)."';</script></td></tr>");
+print("<tr><td align='right'>Tel&egrave;fon centre: </td><td><input type='text' name='telfcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.telfcentr.value='".addslashes($fila->telfcentre)."';</script></td></tr>");
 // director
 print("<tr>");
   print("<td align='right'>");
@@ -203,7 +203,7 @@ print("<tr>");
   mysql_free_result($conjunt_resultant1);
   print("</select>\n");
   echo "<input type='hidden' name='director' id='director' value='$fila->director'>\n";
-// print("<td align='right'>Nom director/a: &nbsp;</td>");
+// print("<td align='right'>Nom director/a: </td>");
 print("<input type='text' name='nomdirector' id='nomdirector' maxlength='50' value=''><script language='JavaScript'>document.forms.params.nomdirector.value='".addslashes($fila->nomdirector)."';</script>");
 print("&nbsp; <select name='sexdirector'><option ".(($fila->sexdirector == 'H')?'selected':'').">H</option><option ".(($fila->sexdirector == 'D')?'selected':'').">D</option></select></td></tr>");
 // cap d'estudis
@@ -222,7 +222,7 @@ print("
   mysql_free_result($conjunt_resultant1);
   print("</select>\n");
   echo "<input type='hidden' name='capdes' id='capdes' value='$fila->capdes'>\n";
-// 		<td align='right'>Nom cap d'estudis: &nbsp;</td>
+// 		<td align='right'>Nom cap d'estudis: </td>
 // 		<td>
 print("			<input type='text' name='nomcapdes' id='nomcapdes' maxlength='50' value=''>
 				<script language='JavaScript'>document.forms.params.nomcapdes.value='".addslashes($fila->nomcapdes)."';
@@ -252,7 +252,7 @@ print("
   mysql_free_result($conjunt_resultant1);
   print("</select>\n");
   echo "<input type='hidden' name='coordbtx' id='coordbtx' value='$fila->coordbtx'>\n";
-// 		<td align='right'>Nom coordinador BTX: &nbsp;</td>
+// 		<td align='right'>Nom coordinador BTX: </td>
 // 		<td>
 print("			<input type='text' name='nomcoordbtx' id='nomcoordbtx' maxlength='50' value=''>
 				<script language='JavaScript'>document.forms.params.nomcoordbtx.value='".addslashes($fila->nomcoordbtx)."';
@@ -269,7 +269,7 @@ print("
 // cc alumne
 print("
 	<tr>
-		<td align='right'>Nom alumne c.c.: &nbsp;</td>
+		<td align='right'>Nom alumne c.c.: </td>
 		<td>
 			<input type='text' name='nomccalumne' size='50' maxlength='50' value=''>
 				<script language='JavaScript'>document.forms.params.nomccalumne.value='".addslashes($fila->nom_cc_alumne)."';
@@ -286,7 +286,7 @@ print("
 // cc profe
 print("
 	<tr>
-		<td align='right'>Nom profe c.c.: &nbsp;</td>
+		<td align='right'>Nom profe c.c.: </td>
 		<td>
 			<input type='text' name='nomccprofe' size='50' maxlength='50' value=''>
 				<script language='JavaScript'>document.forms.params.nomccprofe.value='".addslashes($fila->nom_cc_profe)."';
@@ -303,7 +303,7 @@ print("
 // cc pare
 print("
 	<tr>
-		<td align='right'>Nom pare c.c.: &nbsp;</td>
+		<td align='right'>Nom pare c.c.: </td>
 		<td>
 			<input type='text' name='nomccpare' size='50' maxlength='50' value=''>
 				<script language='JavaScript'>document.forms.params.nomccpare.value='".addslashes($fila->nom_cc_pare)."';
@@ -317,17 +317,21 @@ print("
 			</select>
 		</td>
 	</tr>");
-print("<tr><td align='right'>Curs acad&egrave;mic: &nbsp;</td><td><input type='text' name='cursacademi' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.cursacademi.value='".addslashes($fila->cursacademic)."';</script></td></tr>\n");
-// print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-// print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); alert(this.form.name + \".\" + camp.name); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-// print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."' onClick='camp=event.target || event.srcElement; blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
-print("<tr><td align='right'>Data inici curs: &nbsp;</td><td><input type='text' name='datainicicurs' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainicicurs)].", ".date('j-n-Y',$fila->datainicicurs)."'></td></tr>\n");
-print("<tr><td align='right'>Data inici 2T: &nbsp;</td><td><input type='text' name='datainici2T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici2T)].", ".date('j-n-Y',$fila->datainici2T)."'></td></tr>\n");
-print("<tr><td align='right'>Data inici 3T: &nbsp;</td><td><input type='text' name='datainici3T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici3T)].", ".date('j-n-Y',$fila->datainici3T)."'></td></tr>\n");
-print("<tr><td align='right'>Web centre: &nbsp;</td><td><input type='text' name='webcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.webcentr.value='".addslashes($fila->webcentre)."';</script>\n");
-print("<tr><td align='right'>Email centre: &nbsp;</td><td><input type='text' name='emailcentr' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila->emailcentre)."';</script>");
-print("<tr><td align='right'>Retards ESO</td><td><input type='text' name='retards_ESO' size='10' maxlength='10' value='$fila->retards_ESO'> Reset trimestral <input type='checkbox' name='reset_ESO' value='1'".(($fila->reset_ESO=="1")?" checked":"").">");
-print("<tr><td align='right'>Retards BTX</td><td><input type='text' name='retards_BTX' size='10' maxlength='10' value='$fila->retards_BTX'> Reset trimestral <input type='checkbox' name='reset_BTX' value='1'".(($fila->reset_BTX=="1")?" checked":"").">");
+print("<tr><td align='right'>Curs acad&egrave;mic: </td><td><input type='text' name='cursacademi' size='50' maxlength='50' value=''><script language='JavaScript'>document.forms.params.cursacademi.value='".addslashes($fila->cursacademic)."';</script></td></tr>\n");
+// print("<tr><td align='right'>Data inici curs: </td><td><input type='text' name='datainicicurs' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[9])].", ".date('j-n-Y',$fila[9])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+// print("<tr><td align='right'>Data inici 2T: </td><td><input type='text' name='datainici2T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[29])].", ".date('j-n-Y',$fila[29])."' onClick='camp=event.target || event.srcElement; alert(this.form.name + \".\" + camp.name); blur(); alert(this.form.name + \".\" + camp.name); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+// print("<tr><td align='right'>Data inici 3T: </td><td><input type='text' name='datainici3T' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila[30])].", ".date('j-n-Y',$fila[30])."' onClick='camp=event.target || event.srcElement; blur(); obreCalendari(0,0, this.form.name + \".\" + camp.name);'></td></tr>\n");
+print("<tr><td align='right'>Data inici curs:</td><td><input type='text' name='datainicicurs' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainicicurs)].", ".date('j-n-Y',$fila->datainicicurs)."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 2T:</td><td><input type='text' name='datainici2T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici2T)].", ".date('j-n-Y',$fila->datainici2T)."'></td></tr>\n");
+print("<tr><td align='right'>Data inici 3T:</td><td><input type='text' name='datainici3T' class='datepicker' size='13' maxlength='15' value='".$nomDiaSem[date('w',$fila->datainici3T)].", ".date('j-n-Y',$fila->datainici3T)."'></td></tr>\n");
+print("<tr><td align='right'>Web centre:</td><td><input type='text' name='webcentr' size='50' maxlength='50' value=''></td></tr>
+<script language='JavaScript'>document.forms.params.webcentr.value='".addslashes($fila->webcentre)."';</script>\n");
+print("<tr><td align='right'>Email centre:</td><td><input type='text' name='emailcentr' size='50' maxlength='50' value=''></td></tr>
+<script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila->emailcentre)."';</script>");
+print("<tr><td align='right'>Retards ESO:</td><td><input type='text' name='retards_ESO' size='10' maxlength='10' value='$fila->retards_ESO'> Reset trimestral <input type='checkbox' name='reset_ESO' value='1'".(($fila->reset_ESO=="1")?" checked":"")."> </td></tr>");
+print("<tr><td align='right'>Retards BTX:</td><td><input type='text' name='retards_BTX' size='10' maxlength='10' value='$fila->retards_BTX'> Reset trimestral <input type='checkbox' name='reset_BTX' value='1'".(($fila->reset_BTX=="1")?" checked":"")."> </td></tr>");
+print("<tr><td align='right'>Tamany màxim import:</td><td><input type='text' name='max_import_size' size='10' maxlength='10' value='$fila->max_import_size'> </td></tr>");
+print("<tr><td align='right'>Tamany màxim fotos:</td><td><input type='text' name='max_photo_size' size='10' maxlength='10' value='$fila->max_photo_size'> </td></tr>");
 print("<input type='hidden' name='esborrarlogo' value=''>");
 print("</table></form>");
 print("</td><td valign='top'>");
@@ -342,7 +346,7 @@ print("<form name='paramssms' method='post' action='$PHP_SELF?idsess=$idsess' on
 print("<fieldset style='border-width:3; border-style:ridge; border-color:#42A5A5'>");
 print("<table width='100%' border='0'>");
 print("<tr><td width='20%'><input type='hidden' name='gravarsms' value=''><input type='submit' value='Gravar'></td><td width='80%'><font size='+1'>Paràmetres configuració SMS</font></td></tr>");
-print("<tr><td align='right' valign='top'>Nom remitent*: &nbsp;</td><td><input type='text' name='nomremSMS' size='11' maxlength='11' value=''><script language='JavaScript'>document.forms.paramssms.nomremSMS.value='".addslashes($fila->remitentSMS)."';</script><span style='font-size:10'>*(màx. 11 cars. sense espais. Si es deixa buit, el remitent sera el nom de l'usuari que envia l'SMS)</span></td></tr>");
+print("<tr><td align='right' valign='top'>Nom remitent*: </td><td><input type='text' name='nomremSMS' size='11' maxlength='11' value=''><script language='JavaScript'>document.forms.paramssms.nomremSMS.value='".addslashes($fila->remitentSMS)."';</script><span style='font-size:10'>*(màx. 11 cars. sense espais. Si es deixa buit, el remitent sera el nom de l'usuari que envia l'SMS)</span></td></tr>");
 print("</table>");
 print("<table width='100%' border='0'>");
 print("<tr><td width='30%'><b>Prove&iuml;dor</b></td><td width='10%'><b>Actiu?</b></td><td width='20%'><b>Identificador</b></td><td width='20%'><b>Contrasenya</b></td><td width='20%'><b>Saldo</b></td></tr>");
