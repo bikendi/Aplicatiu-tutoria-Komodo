@@ -597,9 +597,10 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
 		
 		// retards entre classes sense notificar
     	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='REC' ";
-    	$conjunt_resultant1=mysql_query($consulta1, $connect);
-    	$n_recs_ap = mysql_result($conjunt_resultant1, 0,0);
-    	mysql_free_result($conjunt_resultant1);
+    	if( $conjunt_resultant1=mysql_query($consulta1, $connect) {
+	  $n_recs_ap = mysql_result($conjunt_resultant1, 0,0);
+	  mysql_free_result($conjunt_resultant1);
+	}
     	if( empty($n_retards_ap) ) $n_retards_ap = 0;
     	$n_dif_recs = intval($nrecstot) - $n_recs_ap;
 
