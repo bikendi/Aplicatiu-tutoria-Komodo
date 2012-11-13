@@ -571,8 +571,9 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
     	$nanotac=mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
 // bingen
-// OBS!: Què passa si la data inicial no és l'inici de curs? (no xutarà...)
+// TODO: OBS!: Què passa si la data inicial no és l'inici de curs? (no xutarà...)
 		// faltes injustificades sense notificar
+		// TODO: no diferencia extraescolar ($filtreextra)
     	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='F'";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$n_faltes_ap = mysql_result($conjunt_resultant1, 0,0);
@@ -595,7 +596,7 @@ if (isset($dataI)&&$dataI!=''&&isset($dataF)&&$dataF!=''&&(isset($grup)&&$grup!=
     	mysql_free_result($conjunt_resultant1);
 		
 		// retards entre classes sense notificar
-    	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='REC' $filtreextra ";
+    	$consulta1="SELECT max(quantitat) FROM $bdtutoria.$tbl_prefix"."apercebiments WHERE refalum='$fila[0]' and incidencia='REC' ";
     	$conjunt_resultant1=mysql_query($consulta1, $connect);
     	$n_recs_ap = mysql_result($conjunt_resultant1, 0,0);
     	mysql_free_result($conjunt_resultant1);
