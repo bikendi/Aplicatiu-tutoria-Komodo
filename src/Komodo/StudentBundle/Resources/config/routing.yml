@@ -1,0 +1,3 @@
+KomodoStudentBundle_student:
+    resource: "@KomodoStudentBundle/Resources/config/routing/student.yml"
+    prefix:   /student

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Komodo{% endblock %}</title>
+        {% block stylesheets %}
+        <link href="{{ asset('bundles/komodota/css/komodo.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <header>
+            {% block header %}
+            <div id="header_in">
+                <div id="aux_1">
+                    <div id="titulo">
+                        <h1><a href="{{ path('_welcome') }}" title="">
+                                <img src="{{ asset('img/logo_komodo.png') }}" alt="Komodo"/>
+                            </a>
+                        </h1>
+                        <h2> <span id='subtitle_1'>{{ title_1|default('A.T.') }} </span>
+                        <span id='subtitle_2'>{{ title_2|default('KOMODO') }} </span></h2>
+                    </div> <!-- titulo -->
+                    <div id="aux_2">
+            <div>
+                <div id="menu">
+                    {{ knp_menu_render('KomodoTABundle:Builder:mainMenu') }}
+                </div> <!-- menu -->
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div id="login">
+                    {{ 'layout.logged_in_as'|trans({'%username%': '<a href="'~ path('fos_user_profile_show') ~ '">' ~ app.user.username ~ '</a>'}, 'FOSUserBundle') | raw }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                </div> <!-- login -->
+            {% else %}
+                <div id="login">
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                </div> <!-- login -->
+            {% endif %}
+            {% for key, message in app.session.getFlashes() %}
+                <div class="{{ key }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+            </div>
+
+                </div> <!-- aux_2 -->
+                <div id="fake-aux_1" style="clear: both;"></div>
+            </div> <!-- aux_1 -->
+            <div id="fake-cabecera" style="clear: both;"></div>
+        </div> <!-- header_in -->
+        {% endblock %}
+            </header>
+        {% block body %}{% endblock %}
+            {% if app.debug %}
+            {#    <p>Username: {{ app.user.username }}</p> 
+                <p>Request method: {{ app.request.method }}</p>
+                <p>Application Environment: {{ app.environment }}</p>#}
+                <p>request locale: {{app.request.locale}}</p>
+                {#<p>session locale: {{app.session.get('locale')}}</p>#}
+                {#<p>request: {{dump(app.request)}}</p>#}
+                {#<p>session: {{dump(app.session)}}</p>#}
+            {% endif %}
+        <footer>
+            {% block footer %}
+		<p>Komodo Todos los derechos reservados </p>
+		<p>Komodo es Software Libre bajo licencia 
+                    <a id="gnu" href="http://www.gnu.org/copyleft/gpl.html" target="_blank">
+                        GNU General Public License
+                    </a>
+                </p>
+		<p>
+                    <a href="http://validator.w3.org/check?uri=referer">
+                        <img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" />
+                    </a>
+                </p>
+            {% endblock %}
+        </footer>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

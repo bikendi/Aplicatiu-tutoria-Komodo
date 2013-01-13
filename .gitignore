@@ -1,3 +1,15 @@
 # Ignore all backup files
 *~
 
+web/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+build/
+vendor
+composer.phar
+
+/app/config/parameters.yml
+/web/uploads/
+/nbproject/
+

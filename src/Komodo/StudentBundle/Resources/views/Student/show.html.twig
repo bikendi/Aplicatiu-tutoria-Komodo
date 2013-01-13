@@ -1,0 +1,89 @@
+<h1>Student</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Lastname</th>
+            <td>{{ entity.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{{ entity.gender }}</td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td>{{ entity.year }}</td>
+        </tr>
+        <tr>
+            <th>Class</th>
+            <td>{{ entity.class }}</td>
+        </tr>
+        <tr>
+            <th>Level</th>
+            <td>{{ entity.level }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ entity.address }}</td>
+        </tr>
+        <tr>
+            <th>Zipcode</th>
+            <td>{{ entity.zipCode }}</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>{{ entity.city }}</td>
+        </tr>
+        <tr>
+            <th>State</th>
+            <td>{{ entity.state }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>{{ entity.phone }}</td>
+        </tr>
+        <tr>
+            <th>Mothername</th>
+            <td>{{ entity.motherName }}</td>
+        </tr>
+        <tr>
+            <th>Motherlastname</th>
+            <td>{{ entity.motherLastname }}</td>
+        </tr>
+        <tr>
+            <th>Fathername</th>
+            <td>{{ entity.fatherName }}</td>
+        </tr>
+        <tr>
+            <th>Fatherlastname</th>
+            <td>{{ entity.fatherLastname }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('student') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('student_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('student_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

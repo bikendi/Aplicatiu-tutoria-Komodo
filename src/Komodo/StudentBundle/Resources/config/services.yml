@@ -1,0 +1,7 @@
+parameters:
+#    komodo_student.example.class: Komodo\StudentBundle\Example
+
+services:
+#    komodo_student.example:
+#        class: %komodo_student.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

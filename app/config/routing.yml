@@ -1,0 +1,28 @@
+komodo_ta:
+    resource: "@KomodoTABundle/Resources/config/routing.yml"
+    prefix:   /
+
+komodo_student:
+    resource: "@KomodoStudentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+komodo_user:
+    resource: "@KomodoUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+_imagine:
+    resource: .
+    type:     imagine
+    
+# Internal routing configuration to handle ESI
+# ****** WARNING ******
+# This route should be enabled with caution as it can open a security vulnerability
+# see http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released for more information
+# ****** WARNING ******
+#_internal:
+#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#    prefix:   /_internal

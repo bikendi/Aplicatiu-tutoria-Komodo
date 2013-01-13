@@ -1,0 +1,65 @@
+<h1>Student list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Gender</th>
+            <th>Year</th>
+            <th>Class</th>
+            <th>Level</th>
+            <th>Address</th>
+            <th>Zipcode</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Phone</th>
+            <th>Mothername</th>
+            <th>Motherlastname</th>
+            <th>Fathername</th>
+            <th>Fatherlastname</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('student_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.lastname }}</td>
+            <td>{{ entity.gender }}</td>
+            <td>{{ entity.year }}</td>
+            <td>{{ entity.class }}</td>
+            <td>{{ entity.level }}</td>
+            <td>{{ entity.address }}</td>
+            <td>{{ entity.zipCode }}</td>
+            <td>{{ entity.city }}</td>
+            <td>{{ entity.state }}</td>
+            <td>{{ entity.phone }}</td>
+            <td>{{ entity.motherName }}</td>
+            <td>{{ entity.motherLastname }}</td>
+            <td>{{ entity.fatherName }}</td>
+            <td>{{ entity.fatherLastname }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('student_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('student_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('student_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

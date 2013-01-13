@@ -1,0 +1,22 @@
+/* 
+    Document   : css
+    Created on : Jan 12, 2013, 8:12:11 PM
+    Author     : bingen
+    Description:
+*/
+
+header {
+    background-color: #202020;
+}
+#header_in {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom-color: #77ff77;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    background-color: #202020;
+    box-shadow:  0 1px 3px #070707, inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    font-family: Arial,Helvetica,sans-serif;
+}
+
