@@ -89,7 +89,7 @@ if (isset($gravargeneral)&& $gravargeneral==$fila[0]) {
 	reset_ESO='$reset_ESO',
 	retards_BTX='". $_REQUEST['retards_BTX'] ."',
 	reset_BTX='$reset_BTX',
-	max_import_size='".$_REQUEST['max_import_size']."',
+	max_file_size='".$_REQUEST['max_file_size']."',
 	max_photo_size='".$_REQUEST['max_photo_size']."'
 	where id='$gravargeneral'";
 // 	echo "<p>Query: $consulta</p>\n";
@@ -172,7 +172,7 @@ print("
 </tr></table>
 </div>
 <hr>");
-$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, director, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, capdes, nomcapdes, sexcapdes, coordbtx, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX, max_import_size, max_photo_size FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
+$consulta="SELECT id, nomcentre, adrecacentre, cpcentre, poblaciocentre, telfcentre, director, nomdirector, sexdirector, cursacademic, datainicicurs, webcentre, emailcentre, remitentSMS, proveidorSMS, identificSMSLlNet, passwdSMSLlNet, identificSMSDinahosting, passwdSMSDinahosting, capdes, nomcapdes, sexcapdes, coordbtx, nomcoordbtx, sexcoordbtx, nom_cc_alumne, sex_cc_alumne, nom_cc_profe, sex_cc_profe, nom_cc_pare, sex_cc_pare, sms_auto, datainici2T, datainici3T, retards_ESO, reset_ESO, retards_BTX, reset_BTX, max_file_size, max_photo_size FROM $bdtutoria.$tbl_prefix"."parametres LIMIT 1";
 // echo "<p> consulta: $consulta </p>\n";
 $conjunt_resultant=mysql_query($consulta, $connect);// OR die(mysql_error());
 $fila=mysql_fetch_object($conjunt_resultant);
@@ -330,7 +330,7 @@ print("<tr><td align='right'>Email centre:</td><td><input type='text' name='emai
 <script language='JavaScript'>document.forms.params.emailcentr.value='".addslashes($fila->emailcentre)."';</script>");
 print("<tr><td align='right'>Retards ESO:</td><td><input type='text' name='retards_ESO' size='10' maxlength='10' value='$fila->retards_ESO'> Reset trimestral <input type='checkbox' name='reset_ESO' value='1'".(($fila->reset_ESO=="1")?" checked":"")."> </td></tr>");
 print("<tr><td align='right'>Retards BTX:</td><td><input type='text' name='retards_BTX' size='10' maxlength='10' value='$fila->retards_BTX'> Reset trimestral <input type='checkbox' name='reset_BTX' value='1'".(($fila->reset_BTX=="1")?" checked":"")."> </td></tr>");
-print("<tr><td align='right'>Tamany màxim import:</td><td><input type='text' name='max_import_size' size='10' maxlength='10' value='$fila->max_import_size'> </td></tr>");
+print("<tr><td align='right'>Tamany màxim import:</td><td><input type='text' name='max_file_size' size='10' maxlength='10' value='$fila->max_file_size'> </td></tr>");
 print("<tr><td align='right'>Tamany màxim fotos:</td><td><input type='text' name='max_photo_size' size='10' maxlength='10' value='$fila->max_photo_size'> </td></tr>");
 print("<input type='hidden' name='esborrarlogo' value=''>");
 print("</table></form>");
