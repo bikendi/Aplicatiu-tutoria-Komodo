@@ -3,8 +3,8 @@
 #    komodo.db.table_prefix: tak_
 
 services:
-    komodo.tblprefix_subscriber:
-        class: Komodo\TABundle\Subscriber\TablePrefixSubscriber
-        arguments: [%komodo.db.table_prefix%]
-        tags:
-            - { name: doctrine.event_subscriber } 
+#    komodo.tblprefix_subscriber:
+#        class: Komodo\TABundle\Subscriber\TablePrefixSubscriber
+#        arguments: [%komodo.db.table_prefix%]
+#        tags:
+#            - { name: doctrine.event_subscriber } 
